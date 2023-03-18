@@ -1,0 +1,503 @@
+import os
+import pandas as pd
+import yfinance as yf
+
+
+def fetch_data(ticker):
+    data = yf.download(ticker)
+    return data
+
+
+def save_data_to_file(df, ticker):
+    if not os.path.exists('input'):
+        os.makedirs('input')
+    file_path = os.path.join('input', f'{ticker}.csv')
+    df.to_csv(file_path)
+
+
+def load_data_from_file(ticker):
+    file_path = os.path.join('input', f'{ticker}.csv')
+    if os.path.exists(file_path):
+        return pd.read_csv(file_path, index_col=0, parse_dates=True)
+    else:
+        return None
+
+
+def get_adj_close(ticker, start_date, end_date):
+    df_data = load_data_from_file(ticker)
+    if df_data is None:
+        df_data = fetch_data(ticker)
+        save_data_to_file(df_data, ticker)
+    else:
+        df_data = df_data.loc[(df_data.index >= start_date) & (df_data.index <= end_date)]
+
+    return df_data['Adj Close'].to_frame(ticker)
+
+import pandas as pd
+import numpy as np
+import portfolio_simulation as psim
+import data_handler as dm
+from visualization import plot_subplot
+
+def historical_example():
+
+    tickers = ['IEI', 'GSG']
+    start_date = '2001-01-01'
+    end_date = '2021-09-01'
+
+    initial_weights = np.array([0.6, 0.4])
+    initial_investment = 100000
+
+    a_initial_amounts = initial_investment * initial_weights
+
+    portfolio = psim.create_portfolio_from_historical_prices(
+        tickers, start_date, end_date, initial_weights,
+        initial_investment)
+
+    assets = portfolio.assets
+
+    mu = portfolio.calculate_asset_mu()
+    sigma = portfolio.calculate_asset_sigma()
+    correlation_matrix = portfolio.calculate_correlation_matrix()
+    initial_prices = np.array([asset.get_prices()[0] for asset in assets])
+
+    days = 252
+    num_simulations = 1000
+
+    simulation = psim.Simulation(days, num_simulations, mu, sigma, correlation_matrix, initial_prices)
+    asset_prices = simulation.generate_asset_prices()
+
+    # Plot summary charts
+    plot_subplot(portfolio, portfolio.time_info)
+    # Results
+    print("Initial Weights:", initial_weights)
+    print("Initial Investment:", initial_investment)
+    print("Global Start Date:", portfolio.global_start_date)
+    print("Global End Date:", portfolio.global_end_date)
+    print("Asset Mu:", portfolio.calculate_asset_mu())
+    print("Asset Sigma:", portfolio.calculate_asset_sigma())
+    print("Correlation Matrix:", portfolio.calculate_correlation_matrix())
+    print("Portfolio Value:", portfolio.calculate_portfolio_value(a_prices, a_initial_amounts))
+    print("Portfolio Returns:", portfolio.calculate_portfolio_returns(a_prices))
+
+    # Plot summary charts
+
+    plot_summary(assets, portfolio, simulation)
+
+
+def simulated_example():
+    tickers = ['Asset1', 'Asset2']
+    days = 252  # One year of daily data
+    num_simulations = 1000
+
+    a_initial_prices = np.array([100, 100])
+    a_mu = np.array([0.08, 0.1])  # Expected annual returns
+    a_sigma = np.array([0.2, 0.25])  # Annual volatilities
+    a_correlation_matrix = np.array([[1, 0.5],
+                                     [0.5, 1]])  # Correlation between assets
+
+    initial_weights = np.array([0.6, 0.4])
+    initial_amount = 100000
+
+    # Create Simulation object
+    sim = m.Simulation(days, num_simulations, a_mu, a_sigma, a_correlation_matrix, a_initial_prices)
+
+    # Generate simulated asset prices
+    a_asset_prices = sim.generate_asset_prices()
+
+    # Calculate average asset prices across simulations
+    # a_avg_asset_prices = np.mean(a_asset_prices, axis=1)
+
+    # Create Asset objects
+    assets = []
+    for i, ticker in enumerate(tickers):
+        assets.append(m.Asset(ticker, a_asset_prices[i, :, :]))
+
+    # Dummy global start and end dates
+    global_start_date = '2000-01-01'
+    global_end_date = '2001-01-01'
+
+    # Create Portfolio
+    portfolio = m.Portfolio(assets, initial_weights, initial_amount, global_start_date, global_end_date)
+
+    # Results
+    print("Initial Weights:", initial_weights)
+    print("Initial Amount:", initial_amount)
+    print("Portfolio Value:", portfolio.calculate_portfolio_value(a_asset_prices))
+    print("Portfolio Returns:", portfolio.calculate_portfolio_returns(a_asset_prices))
+
+
+if __name__ == '__main__':
+    historical_example() #2765, 2
+    # simulated_example()
+import PyPDF2
+# ok the 1st chunk of the article will be paste into the next text box
+
+# I give information in multiple chunks. Do not  summarize the information until I ask you directly, just acknowledget that it is the nth chunk.
+# Please not that the chunks may be incomplete and may continue in the next chunk.
+
+
+pre_text = '. chunk: '
+
+
+def pdf_to_text(pdf_file):
+    with open(pdf_file, 'rb') as file:
+        pdf_reader = PyPDF2.PdfReader(file)
+        text = ""
+
+        for page_num in range(len(pdf_reader.pages)):
+            page = pdf_reader.pages[page_num]
+            text += page.extract_text()
+
+    return text
+
+
+def split_text(text, max_tokens=4000):
+    chunks = []
+    start = 0
+    end = max_tokens
+
+    nth = 0
+
+    while start < len(text):
+        if end < len(text) and text[end] != ' ':
+            end = end - 1
+        else:
+            nth = nth + 1
+            text_to_append = str(nth) + pre_text + '\n' + text[start:end].strip()
+            chunks.append(text_to_append)
+            start = end
+            end = end + max_tokens
+
+    return chunks
+
+
+def save_chunks(chunks, output_prefix):
+    for i, chunk in enumerate(chunks):
+        with open(f'{output_prefix}_{i}.txt', 'w', encoding='utf-8') as file:
+            file.write(chunk)
+
+
+
+
+input_pdf = "input/rebalance_premium.pdf"
+output_prefix = "output/rebalance_premium"
+
+text = pdf_to_text(input_pdf)
+chunks = split_text(text)
+save_chunks(chunks, output_prefix)import numpy as np
+import pandas as pd
+from scipy.stats import norm
+import data_handler as dh
+
+
+class Asset:
+
+    def __init__(self, name, a_prices, time_dim=None):
+        self.name = name
+        self.a_prices = a_prices
+        if time_dim is None:
+            self.time_dim = range(self.a_prices.shape[1])
+        else:
+            self.time_dim = time_dim
+
+    def calculate_returns(self):
+        self.a_returns = np.diff(self.a_prices, axis=0) / self.a_prices[:-1, :]
+        return self.a_returns
+
+    def get_prices(self):
+        return self.a_prices
+
+    def get_time_dim(self):
+        return self.time_dim
+
+
+class Portfolio:
+
+    def __init__(self, assets, a_initial_weights, initial_investment):
+        self.assets = assets
+        self.a_initial_weights = a_initial_weights
+        self.initial_investment = initial_investment
+
+        self.num_assets = len(self.assets)
+        self.step_dim = self.get_step_dim()
+        self.num_steps = len(self.step_dim)
+        self.num_paths = self.assets[0].get_prices().shape[1]
+
+        self.global_start_date = self.step_dim[0]
+        self.global_end_date = self.step_dim[-1]
+
+        self.df_weights = pd.DataFrame(columns=[asset.name for asset in assets])
+
+        a_initial_quantities = self.calculate_initial_quantities(initial_investment)
+        self.a_quantities = self.initialize_quantities(a_initial_quantities)
+        self.compute_and_store_weights()
+
+    def get_step_dim(self):
+        return self.assets[0].get_time_dim()
+
+    def calculate_initial_quantities(self, initial_investment):
+        a_initial_prices = np.array([asset.get_prices()[0] for asset in self.assets])
+        # a_initial_quantities = (initial_investment * self.a_initial_weights) / a_initial_prices
+        a_initial_quantities = (initial_investment * self.a_initial_weights[:, np.newaxis]) / a_initial_prices
+        return a_initial_quantities
+
+    def initialize_quantities(self, a_initial_quantities):
+        a_quantities = np.zeros((self.num_assets, self.num_steps, self.num_paths))
+        a_quantities[:, 0, :] = a_initial_quantities
+        return a_quantities
+
+    def compute_and_store_weights(self):
+        self.df_weights = pd.DataFrame(data=self.a_initial_weights.reshape(1, -1),
+                                       columns=[asset.name for asset in self.assets])
+
+    def update_quantities(self):
+        # Use this method to update quantities when rebalancing or at each step
+        # For now, it assumes no rebalancing and sets the quantities equal to the previous step
+        for step in range(1, self.num_steps):
+            self.a_quantities[:, step, :] = self.a_quantities[:, step - 1, :]
+
+    def calculate_portfolio_value(self, a_prices, a_quantities):
+        return np.sum(a_prices * a_quantities, axis=0)
+
+    def get_all_asset_prices(self):
+        a_prices = np.array([asset.get_prices() for asset in self.assets])
+        return a_prices
+
+
+
+class Simulation:
+    def __init__(self, days, num_simulations, a_mu, a_sigma, a_correlation_matrix, a_initial_prices):
+        self.days = days
+        self.num_simulations = num_simulations
+        self.a_mu = a_mu
+        self.a_sigma = a_sigma
+        self.a_correlation_matrix = a_correlation_matrix
+        self.a_initial_prices = a_initial_prices
+
+    def generate_asset_prices(self):
+        a_asset_prices = []
+        for i in range(len(self.a_mu)):
+            asset_prices = self.simulate_asset_prices(self.a_mu[i], self.a_sigma[i], self.a_correlation_matrix[i], self.a_initial_prices[i])
+            a_asset_prices.append(asset_prices)
+
+        a_asset_prices = np.array(a_asset_prices)
+        return a_asset_prices
+
+    def simulate_asset_prices(self, mu, sigma, a_correlation, initial_price):
+        dt = 1/252
+        dW = norm.rvs(size=(self.days, self.num_simulations)) * np.sqrt(dt)
+        dW = np.vstack((np.zeros(self.num_simulations), dW))
+        a_prices = np.zeros((self.days + 1, self.num_simulations))
+        a_prices[0] = initial_price
+        for i in range(1, self.days + 1):
+            dS = mu * a_prices[i - 1] * dt + sigma * a_prices[i - 1] * dW[i]
+            a_prices[i] = a_prices[i - 1] + dS
+
+        return a_prices
+
+
+# def create_portfolio_from_historical_prices(tickers, start_date, end_date, a_initial_weights, initial_investment):
+#     # Iterate over tickers and get adjusted close prices
+#     l_prices_df = [dh.get_adj_close(ticker, start_date, end_date) for ticker in tickers]
+#
+#     merged_df = pd.concat(l_prices_df, axis=1, keys=tickers)
+#
+#     # Drop the rows with missing values
+#     merged_df.dropna(inplace=True)
+#
+#     # Convert the merged dataframe to a 3D numpy array
+#     a_prices = merged_df.values.reshape(len(tickers), -1, 1)
+#
+#     # Create Asset objects
+#     assets = [Asset(ticker, a_prices[i, :, :]) for i, ticker in enumerate(tickers)]
+#
+#     time_info = merged_df.index
+#
+#     # Create Portfolio object
+#     portfolio = Portfolio(assets, a_initial_weights, initial_investment, start_date, end_date, time_info)
+#
+#     return portfolio
+
+
+def create_portfolio_from_historical_prices(tickers, start_date, end_date, a_initial_weights, initial_investment):
+    # Iterate over tickers and get adjusted close prices
+    l_prices_df = [dh.get_adj_close(ticker, start_date, end_date) for ticker in tickers]
+
+    merged_df = pd.concat(l_prices_df, axis=1, keys=tickers)
+
+    # Drop the rows with missing values
+    merged_df.dropna(inplace=True)
+
+    # Convert the merged dataframe to a 3D numpy array
+    a_prices = merged_df.values.reshape(len(tickers), -1, 1)
+
+    # Create Asset objects
+    assets = [Asset(ticker, a_prices[i, :, :], time_dim=merged_df.index) for i, ticker in enumerate(tickers)]
+
+    # step_dim = merged_df.index
+
+    # Create Portfolio object
+    portfolio = Portfolio(assets, a_initial_weights, initial_investment)
+
+    return portfolio
+import unittest
+import numpy as np
+import pandas as pd
+from portfolio_simulation import Asset, Portfolio, create_portfolio_from_historical_prices
+
+
+class TestAsset(unittest.TestCase):
+
+    def setUp(self):
+        self.a_prices = np.array([[100, 110, 120],
+                                  [100*1.1, 110*1.1, 120*1.1],
+                                  [100*1.1*1.1, 110*1.1*1.1, 120*1.1*1.1]])
+        self.asset = Asset("Test Asset", self.a_prices)
+
+    def test_init(self):
+        self.assertEqual(self.asset.name, "Test Asset")
+        np.testing.assert_array_equal(self.asset.a_prices, self.a_prices)
+
+    def test_calculate_returns(self):
+        a_expected_returns = np.array([[0.1, 0.1, 0.1],
+                                       [0.1, 0.1, 0.1]])
+        a_returns = self.asset.calculate_returns()
+        np.testing.assert_array_almost_equal(a_returns, a_expected_returns)
+
+    def test_get_prices(self):
+        a_prices = self.asset.get_prices()
+        np.testing.assert_array_equal(a_prices, self.a_prices)
+
+
+class TestPortfolio(unittest.TestCase):
+
+    def setUp(self):
+        a_prices1 = np.array([[100, 110, 120],
+                              [110, 120, 130],
+                              [120, 130, 140]])
+        a_prices2 = np.array([[200, 210, 220],
+                              [210, 220, 230],
+                              [220, 230, 240]])
+        asset1 = Asset("Asset 1", a_prices1)
+        asset2 = Asset("Asset 2", a_prices2)
+        self.assets = [asset1, asset2]
+        self.a_initial_weights = np.array([0.6, 0.4])
+        self.initial_investment = 10000
+        self.portfolio = Portfolio(self.assets, self.a_initial_weights, self.initial_investment)
+
+    def test_init(self):
+        self.assertEqual(self.portfolio.assets, self.assets)
+        np.testing.assert_array_equal(self.portfolio.a_initial_weights, self.a_initial_weights)
+        self.assertEqual(self.portfolio.initial_investment, self.initial_investment)
+
+    def test_get_step_dim(self):
+        a_expected_step_dim = range(3)
+        a_step_dim = self.portfolio.get_step_dim()
+        np.testing.assert_array_equal(a_step_dim, a_expected_step_dim)
+
+    def test_calculate_initial_quantities(self):
+        a_expected_initial_quantities = np.array([[10000*0.6/100, 10000*0.6/110, 10000*0.6/120],
+                                                  [10000*0.4/200, 10000*0.4/210, 10000*0.4/220]])
+        a_initial_quantities = self.portfolio.calculate_initial_quantities(self.initial_investment)
+        np.testing.assert_array_almost_equal(a_initial_quantities, a_expected_initial_quantities)
+
+    # Add the rest of the tests that we have already discussed in our previous conversations
+    def test_portfolio_initialization(self):
+        tickers = ["AAPL", "MSFT"]
+        start_date = "2020-01-01"
+        end_date = "2020-12-31"
+        a_initial_weights = np.array([0.6, 0.4])
+        initial_investment = 10000
+
+        portfolio = create_portfolio_from_historical_prices(tickers, start_date, end_date, a_initial_weights, initial_investment)
+
+        self.assertEqual(len(portfolio.assets), 2)
+        self.assertTrue(isinstance(portfolio.assets[0], Asset))
+        self.assertTrue(isinstance(portfolio.assets[1], Asset))
+        self.assertTrue(np.array_equal(portfolio.a_initial_weights, a_initial_weights))
+        self.assertEqual(portfolio.initial_investment, initial_investment)
+
+    def test_portfolio_value_calculation(self):
+        tickers = ["AAPL", "MSFT"]
+        start_date = "2020-01-01"
+        end_date = "2020-12-31"
+        a_initial_weights = np.array([0.6, 0.4])
+        initial_investment = 10000
+
+        portfolio = create_portfolio_from_historical_prices(tickers, start_date, end_date, a_initial_weights, initial_investment)
+
+        a_prices = portfolio.get_all_asset_prices()
+        a_quantities = portfolio.a_quantities
+        a_portfolio_values = portfolio.calculate_portfolio_value(a_prices, a_quantities)
+
+        self.assertEqual(a_portfolio_values.shape, (a_prices.shape[1], a_prices.shape[2]))
+
+        # Check if the initial portfolio value is equal to the initial investment
+        initial_portfolio_value = a_portfolio_values[0, 0]
+        self.assertAlmostEqual(initial_portfolio_value, initial_investment, delta=1e-6)
+
+
+
+if __name__ == "__main__":
+    unittest.main()
+import matplotlib.pyplot as plt
+
+
+def plot_asset_prices(portfolio, time_info):
+    fig, ax = plt.subplots()
+    for i, asset in enumerate(portfolio.assets):
+        ax.plot(time_info, asset.get_prices(), label=asset.name)
+    ax.set_xlabel('Time')
+    ax.set_ylabel('Price')
+    ax.set_title('Asset Prices')
+    ax.legend()
+    plt.show()
+
+
+def plot_portfolio_value(portfolio, time_info):
+    fig, ax = plt.subplots()
+    a_portfolio_value = portfolio.calculate_portfolio_value(portfolio.get_all_asset_prices(), portfolio.a_quantities)
+    ax.plot(time_info, a_portfolio_value)
+    ax.set_xlabel('Time')
+    ax.set_ylabel('Portfolio Value')
+    ax.set_title('Portfolio Value')
+    plt.show()
+
+
+def plot_weights(portfolio, time_info):
+    fig, ax = plt.subplots()
+    for i, asset in enumerate(portfolio.assets):
+        ax.plot(time_info, portfolio.df_weights[asset.name], label=asset.name)
+    ax.set_xlabel('Time')
+    ax.set_ylabel('Weight')
+    ax.set_title('Asset Weights in Portfolio')
+    ax.legend()
+    plt.show()
+
+
+def plot_subplot(portfolio, time_info):
+    fig, axes = plt.subplots(3, 1, figsize=(10, 15), sharex=True)
+
+    # Asset Prices
+    for i, asset in enumerate(portfolio.assets):
+        axes[0].plot(time_info, asset.get_prices(), label=asset.name)
+    axes[0].set_ylabel('Price')
+    axes[0].set_title('Asset Prices')
+    axes[0].legend()
+
+    # Portfolio Value
+    a_portfolio_value = portfolio.calculate_portfolio_value(portfolio.get_all_asset_prices(), portfolio.a_initial_quantities)
+    axes[1].plot(time_info, a_portfolio_value)
+    axes[1].set_ylabel('Portfolio Value')
+    axes[1].set_title('Portfolio Value')
+
+    # Asset Weights
+    for i, asset in enumerate(portfolio.assets):
+        axes[2].plot(time_info, portfolio.df_weights[asset.name], label=asset.name)
+    axes[2].set_xlabel('Time')
+    axes[2].set_ylabel('Weight')
+    axes[2].set_title('Asset Weights in Portfolio')
+    axes[2].legend()
+
+    plt.show()
