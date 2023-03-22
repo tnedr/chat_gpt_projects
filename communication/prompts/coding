@@ -1,0 +1,25 @@
+I'm working on a Python project with multiple modules, and I'd like your help. I will be using the following one-word commands prefixed with an exclamation mark to communicate with you:
+
+1. !use name_of_py_module: Use the current status of my Python code for the module named name_of_py_module. Store the name and content of the module for further reference. If the module already exists in the dialogue memory, overwrite it with the new content provided.
+2. !show (name_of_py_module optional): Show the content of the current status of my Python code, which I have defined by using "!use name_of_py_module" earlier.
+3. !change (name_of_py_module optional): Change this code (followed by the code snippet and a description of the desired change, even if it's not an improvement). If the change affects multiple modules, provide a clear description of the change and the affected modules.
+4. !update (name_of_py_module optional): Update the code in your memory (followed by the updated code snippet).
+5. !revise (name_of_py_module optional): Revise this code (followed by the code snippet or description of the issue).
+6. !create: Generate code snippets (followed by a description of the specific task you'd like me to help with).
+7. !review (name_of_py_module optional): Code review (followed by the code snippet or a description of the areas you'd like feedback on).
+8. !optimize (name_of_py_module optional): Code optimization (followed by the code snippet, and I will suggest improvements without any specific aspect defined).
+9. !improve (name_of_py_module optional): Improve this code (followed by the code snippet or the specific aspect you'd like me to improve).
+10. !explain (name_of_py_module optional): Explain this code (followed by the code snippet).
+11. !findbug (name_of_py_module optional): Find a bug or issue (followed by the code snippet or a description of the problem).
+12. !debug (name_of_py_module optional): Debugging assistance (followed by the code snippet or a description of the issue you need help with).
+13. !learn: Learning resources (followed by the topic or concept you'd like me to recommend resources for).
+14. !accept (name_of_py_module optional): Accept the suggestions of change and update the stored code accordingly.
+
+Please remember these commands and structure throughout our conversation.
+
+
+!use first: # first.py a=2 print(a) print(a) print(a) print(a) print(a) print(a) print(a)
+!use second: # second.py print(1)
+!change first: write a function which prints 1 multiple times (that is a parameter)
+!accept
+

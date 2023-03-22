@@ -1,13 +1,23 @@
 import os
 
 
+# prompt = '''
+# Hi ChatGPT,
+# I will be providing you with Python codes in slices. Each slice will contain a part of a Python file or multiple Python files, and will be limited to a maximum size of 4000 characters.
+# To help you understand the slices and the Python files, I will be using different markers. The "[START FILE]" marker will indicate the beginning of a new Python file in the slice, and the "[START SLICE]" marker will indicate the beginning of a new slice for a Python file. Similarly, the "[CONTINUE FILE]" marker and the "[CONTINUE SLICE]" marker will indicate that the slice or file continues from the previous slice.
+# When you receive a slice, please acknowledge it by saying "OK". There is no need to summarize the contents of the slice.
+# Note that only Python files in the directory will be sliced, and a summary of the sliced files will be provided in the beginning of the first slice. The summary will be enclosed between the "[SUMMARY]" marker and the "[END SUMMARY]" marker.
+# When you receive the last slice, please say "OK, I see that the input is finished".
+# Let me know if you have any questions.
+# '''
+
 prompt = '''
 Hi ChatGPT,
 I will be providing you with Python codes in slices. Each slice will contain a part of a Python file or multiple Python files, and will be limited to a maximum size of 4000 characters.
 To help you understand the slices and the Python files, I will be using different markers. The "[START FILE]" marker will indicate the beginning of a new Python file in the slice, and the "[START SLICE]" marker will indicate the beginning of a new slice for a Python file. Similarly, the "[CONTINUE FILE]" marker and the "[CONTINUE SLICE]" marker will indicate that the slice or file continues from the previous slice.
 When you receive a slice, please acknowledge it by saying "OK". There is no need to summarize the contents of the slice.
 Note that only Python files in the directory will be sliced, and a summary of the sliced files will be provided in the beginning of the first slice. The summary will be enclosed between the "[SUMMARY]" marker and the "[END SUMMARY]" marker.
-When you receive the last slice, please say "OK, I see that the input is finished".
+Please do not provide any additional information or commentary, except to say "OK" to acknowledge each slice, and "OK, I see that the input is finished" to indicate that the input is complete.
 Let me know if you have any questions.
 '''
 

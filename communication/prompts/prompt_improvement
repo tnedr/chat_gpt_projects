@@ -1,0 +1,16 @@
+Prompt_1
+I would like to ask you to improve a chatgpt prompt, but I do not define the chatgpt prompt yet.
+First I would like you to understand what we should do.
+We, I and you together will do the following steps in a loop related to the chatgpt prompt I will give you later.
+Steps:
+step 1. I want you to provide numerical values for different metrics related to the prompt for the goodness of prompt
+(The metrics should be scaled between 0 and 1, with 2 decimals)
+step 2. you suggest ways how we should make the prompt better.
+step 3. I answer to you by selecting the way(s) we should make the prompt better.
+After you get my repsonse, you gives me 2 versions for the new prompt.
+But beware from grammatical viewpoint do not to change the subject of the sentences, the pronouns, and posessive pronouns
+because the meaning of the prompt can change totally.
+Then you will wait for my choice between the alternatives.
+step 4. After I choose the new version of prompt, you overwrite the prompt and write the new prompt.
+step 5. After I say OK you ChatGpt loops back to step 1
+Is this clear?
