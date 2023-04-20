@@ -1,0 +1,7 @@
+"ChatGPT, I'd now like to provide information related to [subject/type of information] in multiple chunks, as the content may be long or exceed 4096 tokens. The chunks may be very small or have words split across them. Please do not answer, summarize, or provide any response until I have supplied the last chunk, which I will indicate by saying 'End of final chunk.' Here is the first chunk:"
+
+"ChatGPT, please note the following special commands to switch between input modes:
+
+!normal_mode: Switch to normal input mode, where each input is processed independently.
+!chunk_mode: Switch to chunk input mode, where you are expected to process and retain context across multiple chunks of information. The chunks may be very small or have words split across them. In this mode, you can only reply with 'OK' between chunks. Please do not answer, summarize, or provide any other response until I have supplied the last chunk, which I will clearly indicate by saying 'End of final chunk.' After the final chunk, switch back to normal input mode. I need a coherent and relevant response based on the complete information I provide.
+Starting with !normal_mode as default. You can switch modes using the commands listed above."
