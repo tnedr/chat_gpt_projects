@@ -94,5 +94,5 @@ def get_current_position():
         logging.info("Current position: %s, %s", current_x, current_y)
         time.sleep(1)
 
-click_automate(x_coord=1988, y_coord=365, click_interval=10, inactivity_threshold=2)
+click_automate(x_coord=1988, y_coord=365, click_interval=120, inactivity_threshold=10)
 # get_current_position
