@@ -12,19 +12,25 @@ class User:
         self.last_activity_time = time.time()
         self.active = True
         self.inactivity_logged = False
+        self.activity_logged = False
 
     def update_activity(self):
         current_active = is_mouse_moving() or keyboard.is_pressed('*')
         if current_active != self.active:
-            if current_active:
-                logging.info("User became active")
-                self.inactivity_logged = False
-            else:
-                if not self.inactivity_logged and time.time() - self.last_activity_time > self.inactivity_threshold:
-                    logging.info("User became inactive for the threshold duration")
-                    self.inactivity_logged = True
             self.active = current_active
+            if current_active:
+                if not self.activity_logged:
+                    logging.info("User became active")
+                    self.activity_logged = True
+                    self.inactivity_logged = False
+            else:
+                self.activity_logged = False
             self.last_activity_time = time.time()
+
+        if not self.active and not self.inactivity_logged:
+            if time.time() - self.last_activity_time > self.inactivity_threshold:
+                logging.info("User became inactive for the threshold duration")
+                self.inactivity_logged = True
 
     def is_inactive(self):
         current_time = time.time()
@@ -87,5 +93,5 @@ def get_current_position():
         logging.info("Current position: %s, %s", current_x, current_y)
         time.sleep(1)
 
-click_automate(x_coord=1988, y_coord=365, click_interval=15, inactivity_threshold=5)
+click_automate(x_coord=1988, y_coord=365, click_interval=10, inactivity_threshold=2)
 # get_current_position()
