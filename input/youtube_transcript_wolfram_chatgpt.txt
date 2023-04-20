@@ -1,0 +1,1776 @@
+okay hello everyone well usually in this time slot each week I do a science and
+technology q a for kids and others which I've been doing for about three years now where I try and answer arbitrary
+questions about uh Science and Technology uh today I thought I would do something slightly different I just
+wrote a piece about chat GPT uh what's it actually doing why does it work I
+thought I would talk a bit about that here and then throw this open for questions and I'm happy to try and talk
+about um uh all things kind of chat GPT AI large language models and so on uh that
+I might know about all right so bursting onto the scene what a couple
+months ago now was our friend chat GPT I have to say it was a surprise to me that
+it worked so well I'd been kind of following the technology of neural nets for I worked out now 43 years or so
+and there have been moments of significant Improvement and a long periods of time
+where kind of it was an interesting idea but it wasn't clear where it was going to go the fact that chat GPT can work as
+well as it does can produce kind of reasonable human-like essays is quite
+remarkable quite unexpected I think even unexpected to its creators and the thing that I want to talk about
+is first of all how does chat sheet BT basically work and second of all why does it work why is it even possible to
+do what has always seemed to be kind of a pinnacle of human kind of uh uh
+intellectual achievement of you know write that essay describing something
+why is that possible I think what Chachi PT is showing us is some things about
+science and about language and about thinking things that we kind of might
+have suspected from long ago but haven't really known and it's really showing us a piece of sort of scientific evidence
+for this okay so what what what is chat GPT
+really doing basically the um uh the the kind of the
+um uh the starting point is it is trying
+to write reasonable it is trying to take an initial piece of text that you might
+give and is trying to continue that piece of text in a reasonable human-like
+way that is sort of characteristic of typical human writing
+so you give it a prompt you say something you ask something and
+it's kind of thinking to itself I've read the whole web I've read millions of books
+how would those typically continue from this prompt that I've been given what's
+the what's the sort of the reasonable expected continuation based on kind of
+some kind of average of you know a few billion pages from the web a few million
+books and so on so that that's what it's that's what it's always trying to do it's always trying to uh continue from
+the initial prompt that it's given it's trying to continue in sort of a statistically sensible way so let's say
+let me uh start sharing here um let's say that um uh you had given it
+the um you had said initially the best thing about AI is its ability to
+then chat GPT has to ask um what's it um
+what's it going to say next now what one thing I should explain about chat gbt that's kind of shocking when you first
+hear about it is those essays that it's writing it's writing it one word at a time
+as as it writes each word it doesn't have a global plan about what's going to happen it's simply saying what's the
+best word to put down next based on what I've already written and it's remarkable
+that in the end one can get an essay that sort of feels like it's coherent and has a structure and so on but really
+in a sense it's being written one word at a time so let's say that the the prompts have been the best thing about
+AI is its ability too okay what strategy going to do next well it's uh what it's
+going to do is it's going to say well what's what what what should the next word be based on everything I've seen on
+the web and Etc et cetera et cetera what's the most likely next word and it knows certain probabilities
+um what it figures out our probabilities it says learn has probability 4.5 predict 3.5 percent and so on and so
+then what it will then do is to put down the next the next word it thinks it should put down so one strategy it could
+adopt is I'll always put down the word that has the highest probability based
+on what I've seen from the web and so on turns out
+um that particular strategy of just saying put down the thing with the highest probability
+um doesn't work very well nobody really knows why one can have some guesses um but it's something where if you do
+that you end up getting these kind of very flat often repetitive even sometimes word for word repetitive kinds
+of essays so it turns out and this is typical of of what one season a kind of
+a large engineering system like this there's a certain kind of touch of voodoo that's needed to make things work
+well and one piece of that is saying don't always take the highest probability word take some with some
+probability take a word of lower than lower than highest probability and there's a whole mechanism it's a usually
+called its temperature parameter temperature um sort of by analogy with statistical
+physics and so on you're kind of jiggling things up to a certain extent and the higher the temperature the more
+you're kind of jiggling things up and not just doing the most obvious thing of
+taking the highest probability word so it turns out a temperature parameter of 0.8 apparently seems to work best for
+producing things like essays so okay well let's see what it what it
+takes um one of the things that that's that's nice to do is to kind of to get some sort of concrete view of what's
+going on um we can actually um uh start looking at um uh sort of on
+on our computer what what's it doing I I should say that this um what what I'll talk about here is is is based on this
+piece that I wrote um that just came out a couple of days ago um and uh the um and I should say that
+every every piece of code there is is click to copy so if I if I click every
+every picture is click to copy if I click this I will get a piece of woven language code that will generate that
+let me go down here and start showing you um kind of what um
+uh um how how this really works so what
+um chat GPT in the end is um uh oops not
+seeing screen interesting oh well okay that's ah there we go
+okay well I was let me let me show you again then what um uh
+what I was showing before this is the the piece that I wrote and I just wanted to emphasize that every every picture
+and so on that's in this piece uh has click to copy code you just click it
+paste it into a woven language Notebook on a desktop computer or in the cloud
+um and you can just run it um okay so let's see how let's see let's
+actually run uh an approximation at least to chat GPT so open AI uh produced
+a series of models over the last several years um and chat GPT is based on the GPT 3.5
+I think model um these models got progressively bigger progressively more impossible to run
+directly on one's local computer um this is a small version of the chat of the gpt2 model which is something you
+can just run on your computer and it's a part of our uh wolf neural net repository
+um and you can just uh uh pick it up from there and um uh this this is now
+the um kind of the the neural net that's inside um
+uh a simplified version of Chachi PT and we'll talk about what all of these inerts really are later
+but for now um we can uh um just do something like
+say let's use that model and let's have it tell us the um the the words with the
+top five probabilities um based on uh the starting prompt uh
+the best thing about AI is its ability too so that's those are the top five words let me let me I probably can ask
+it 20 words here so let's say um let's see these are probably sorted right we probably want to sort these in reverse
+order um and uh uh this will now show us the
+um uh oh I see this is this is sorting okay so
+this is um this is showing us uh these words with different probabilities here
+um actually confused by why this didn't oh I know I didn't I know I didn't do that
+I know I didn't do that um let me just uh
+make this do what I expect okay here we go so this is um this is that sequence
+of words um uh uh it's now by the by the 20th
+word we're getting down to keep I don't know let's let's go just for fun let's go find out what the 50th word was okay
+so down here we're we're um uh we're seeing words that were thought to be
+less likely what does it mean to be less likely it means that based on
+essentially chat gpt's extrapolation from what it has seen on billions of
+documents on the web this is the word which these are the words which are uh have certain probabilities of occurring
+next in that particular sentence okay so now let's say we want to uh we
+want to go on we want to say um let's let's say we want to say the best thing about its ability to and the
+next word it might pick might be learn but then what's the word it's going to pick after that well we could we could
+figure that out by just saying um here let's uh let's say the next word
+was learn okay then let's say that what we would get next we'll fill in the learn there
+and we just say let's get the next top five properties for next word okay so
+the next word is from that's the most probable next word is from so we could
+say learn from and then the next most probable word is experience all right so
+let's write a piece of code that automates that we're going to uh nestedly apply this function that is
+just taking the um the the most likely word so to speak let's do that ten times
+um and uh this is this is now the um uh what we get this is using the the gpt2
+model um this is asking what the most likely continuation of that piece of text is
+okay so the it there there it goes now this is this is the case where it's
+always picking the most probable word as I said before um it uh
+um it very quickly ends up um in the in this zero temperature case
+it very quickly ends up getting itself kind of Tangled in some in some Loop let's see if I have the example of what
+it actually does in that case um the uh
+um let's see uh
+yeah here we go um and um
+this um this is not a particularly good uh
+impressive essay and it gets itself quite quite Tangled Up if you don't always pick the most
+probable word things work much better um so for example
+um uh here are some examples of what happens when you use this temperature to
+kind of jiggle things up a bit and not always pick the most most the word that's estimated is most probable
+um it's worth realizing that there's a I showed you a few examples of um
+um of less powerful words there's a there's a huge spectrum of how of different words that can occur with
+progressively lower probabilities it's kind of a a typical observation about language that the the um which you see
+here as well that the nth most common word has probability about one over n and that's what you see for the word
+that will follow next and you also see that in general for for words and text
+okay well we can um uh we could ask what happens
+in the zero temperature case for a um uh
+let's see for for um uh for the actual um
+um uh gpt3 model um this is uh this is what it does for
+zero temperature now one feature of this is if you use some um well for example uh this is a a link
+to the API for open AI um that's in our packlet repository
+um if you use that link and you simply call um gpt3 it will because this is always
+picking the most probable word it'll be the same every time so there's no there's no Randomness to this what
+happens usually when you're picking uh this these words with when you're picking non when you have non-zero
+temperature and you're picking words that aren't always the most probable word is there's a certain Randomness
+that's being added and that Randomness will cause you to get a different essay every time and that's why if you say
+regenerate this essay most likely you will get a a different essay every time
+you read every time you press that regenerate button because it's going to pick different random numbers to decide
+which uh which of the of the words ranked words it's going to
+um it's it's going to use so this is a typical example of a temperature 0.8
+um type um assay generated by gpt3
+okay so the next big question is we've got these probabilities
+um for words and so on where do those probabilities come from so what I was saying is that the
+probabilities are basically a reflection of what's out there on the web
+and those are the things that chat GPT has learned from it's trying to imitate
+the statistics of what it's seen all right so let's take some simpler examples of that let's say we're dealing
+not with so traffic gbt essentially deals with putting down words at a time actually their their pieces of words but
+we can assume for the simpler cases they're just words um but what if let's start off to
+understand this let's start off thinking about putting down individual letters at a time so first question is
+um if we're going to just put down letters uh one at a time what is the um
+uh with with what probability should we put down what letter how do we work that
+out okay let's pick some random text let's pick the Wikipedia article about
+cats and let's just count letters in the Wikipedia article about cats and we see
+that you know e is the winner a is the is the runner-up t comes next
+um That's So based on uh the the sample of English text from the Wikipedia
+article about cats this is what we would think about the statistics of of
+different letters let's try the Wikipedia article about dogs um okay we have uh probably slightly
+different we have an O shows up more uh with higher probability probably because
+there's an o in the word dog and so on but if we keep going and we we say well what about um uh a really so that's for
+these specific samples of English let's let's keep going let's let's um uh let's make um uh a um
+let's see there we go let's um let's use a a very large sample of English let's
+say we have a few million books and we use that as our sample of English and ask what are the uh probabilities for
+different letters in that very large sample and we'll see what many people will immediately know that e is the most
+common letter followed by T A Etc okay so these are our probabilities so
+now let's say that we want to just start generating uh generating text according
+to those probabilities so this is um see this is probably just yeah just um
+and just fill those in oh there we go there are the frequencies and let's just fill in let's just have it start
+generating letters this is just generating letters um according to the probabilities that
+we get from um uh from the occurrence of those letters
+in English so that was asking it to generate 500 letters with the correct probabilities to correspond to English
+text that's really bad English text there but that's um uh that's that
+should have the number of E's should be about 12 the number of T's should be about nine percent and so on okay we can
+make it a little bit more like English text by going ahead and um let's fill in um uh let's append a certain probability
+to have a space and now we can let's let's make a bigger version of this
+um and now uh this is generating um quotes English text with the correct
+probabilities for letters and spaces and so on um
+we can make it a little bit more realistic by uh um by having it be the case that um uh
+the um uh the the um
+the word lengths in this case here we're just chopping it into words by saying
+there's an 18 chance that a character is a space which is some uh here what we're doing
+is we're saying let's let's insist that words have the correct distribution of lengths and this is now the text that we
+get where the words have the correct distribution of length the letters have the correct probability of occurring with e being the most common and so on
+clearly clearly not English clearly a lose if if chat GPT was generating this
+it would be a fail um but this is something which at the level of individual letters is
+statistically correct if we said um if we asked you know can you tell
+that this isn't English by just looking at the chances of different letters
+um it would say this is English um and and different languages for example have different characteristic
+signatures of frequencies you know if we were to pick this or I don't know what um you know I'm sure if we pick this for
+English and we were to do the corresponding thing for let's say which we'd pick let's try
+um Spanish here for example um and uh
+um will get slightly different uh frequencies okay those are those are
+somewhat similar but not quite the same Okay so
+that's what happens if um uh this is sort of generating English text with the
+correct single letter statistics we could just plot the um the uh let's just
+plot the um probabilities for those individual letters oh boy more
+complicated than it needed to be um okay that's just uh um that's just the probability for uh
+each letter to occur so e is the most common Q is very rare Etc
+in this case what we're assuming is that every letter is sort of picked at random independently
+however in actual English we know that's not the case for example if we've had a
+queue that's been picked then with overwhelming probability the next letter that will occur as a u
+and similarly other kinds of combinations of letters other kinds of two grams other kinds of pairs of
+letters so we can instead of asking for the probability of just an individual letter we could for example say
+um what's the probability for a pair of letters um coming together see here we go
+um so this is this is asking um uh this is saying given that the letter B
+occurred what's the probability for the next letter to be e so it's fairly High the probability for the next letter to
+be f is very low over here when there's a q the the probability for next letters
+is only substantial when there's a u um as as the next letter
+so that's that's what it looks like to have um um that that's what the um this
+combination of pairs of letters the probability is for combinations of pairs of letters so now let's say that we try
+and generate text letter at a time um with uh not just dealing with the
+individual probabilities of letters but also the probability is a pairs of letters okay so now we do that and um
+it's going to start looking a bit more a little bit more like real real English
+text there's a couple of actual words here like on and thee and well Tesla I guess is a word of sorts
+um and uh uh this is this is now sort of getting a bit closer to to actual
+English text because it's capturing more of the statistics of English we can go on instead of just dealing
+with the having the correct probabilities for individual letters pairs of letters and so on we can go on and say let's have the correct
+probabilities for uh triples of letters uh combinations of four letters and so on
+um the uh and this is um um actually this these numbers are
+probably off by one because those are really letters on their own these are pairs of letters and so on so this is uh
+six tuples of letters and we can see that by the time you've got by the time you're saying I want to follow the
+probabilities for for six tuples of letters we're getting complete English words like average and so on and the
+fact that that's how it finishes that's why auto complete um when you type on a phone or something
+like that can work as well as it does Because by the time you have AV ER there's there's really only there's only
+a limited number of words that can follow that and so you've pretty much determined it and and that's that's how
+the probabilities work when you're dealing with with blocks of letters rather than rather than small numbers of
+letters okay so that's kind of the idea um of sort of you're capturing the
+statistics of letters the statistics of sequences of letters and you're using that to randomly generate kind of text
+like things so let's um uh we can also do that
+uh not just with probabilities of individual letters with probabilities of
+words so in English there are maybe 40 or 50 000 sort of Fairly commonly used
+words and we could simply say based on some large sample from millions of books
+or something what are the probabilities of those different words and and the probabilities of different words have
+changed over time and so on but let's say we we say what what let's say over the course of all books or for the
+current time what are the probabilities for all those let's say 50 000 different words and now just start generating
+sentences where we picked those words at random um but with the with the probabilities
+that correspond to the uh frequencies with which they occur in
+sort of these samples of English text so there's a a sentence we get by by that method and it's a sentence where well
+these words are you know occurring with the right probability this sentence doesn't really mean anything it's just a
+collection of random words now we can do the same thing we did with letters instead of just saying we use a
+certain probability for an individual word we say we correctly work out the
+probabilities for pairs of words based on a sample of English text and so on we
+do that it's actually a computationally already comparatively difficult thing to do this even for pairs of words because
+we're dealing with sort of 50 000 Square different possibilities Etc et cetera but now let's say we start with a
+particular word let's say we start with the word cat that's our sort of uh prompt here
+um then these are sentences that are generated with the correct probabilities for pairs of words so we'll see things
+like the book and um well throughout in is a little bit bizarre but um
+confirmation procedure I guess those are that's a pair of words that occur
+together a bunch in at least in the in the um uh in the place where that all
+this text was sampled from so this is what you get when you're sampling text sort of pairs of words at a time this is
+kind of a very pre kind of chat GPT this is a a very sort of super minimalist
+version in which it's just dealing with statistics of pairs of words as opposed
+to the much more elaborate stuff that it's that it's really doing now you could say well how about to to do
+something uh more like what chat GPT does let's just instead of picking pairs
+of words let's pick combinations of five words or 20 words or 200 words you know
+let's let's ask it to given the prompt that we've specified let's ask it to add
+in the next 200 words with the probability that at the with the with
+what you would expect based on what's out there on the web so maybe we just make a table of what's
+the chance of having this three word combination forward five word combination okay here's the problem with
+that the problem is there just isn't enough English text that's ever been or text of any language that's ever been
+written to be able to estimate those probabilities in this direct way well in other words
+the um by the time you're at um you know it's the the maybe 40 000 common English words that means the number of pairs of
+words that you have to ask the probability of is 1.6 billion the number of triples is 60 trillion and you pretty
+quickly um end up with something where you couldn't possibly that there just isn't enough text that's been written in the
+few billion web pages that exist and so on to be able to sample all of those 60
+trillion triples of words and say what's the probability of each one of these truffles by the time you get to like a
+20 word essay uh you you're dealing with the number of possibilities being more than the number of particles in the
+universe you wouldn't even be able to record those probabilities even if you had text you know written by sort of an
+infinite collection of monkeys or something imitating humans that was able to do that
+so how do we deal with this how does Church EBT
+um the uh um it's um uh uh how how did um
+uh how does it deal with the fact that it um
+it can't sample from the web enough text to be able to just make a
+table of all those probabilities well the key idea which is a super old idea in the history of science is to make a
+model what is a Model A model is something where you're kind of summarizing data you're summarizing
+things in a way where you don't have to have every piece of data you can make you can just have a model which allows
+you to predict more data even if you didn't immediately have it so quintessential example very early
+example of modeling was Galileo late 1500s you know trying to figure out
+things about objects falling under Gravity and you know going up the Tower
+of Pisa and dropping cannonballs off different levels on the Tower of Pisa and saying how long does it take for
+these things to hit the ground so he could make a plot um gosh that's remarkably complicated
+way to make this plot okay um could make a plot of uh you know I
+don't know how many floors that actually are on the Tower of Pisa but but um imagine there were this number of flaws
+you can make a plot and you could say uh measure you know in those days by taking
+his pulse or something how long did it take for the Cannonball to hit the ground and so this is
+um as a function of what floor it was dropped from how long it took the Cannonball to hit the ground
+so there's data about specific times for specific flaws but what if you want to
+know how long would it take for the Cannonball to hit the ground if you were on the the 35th floor which didn't
+happen to have been explicitly measured so this is where kind of the idea of well let's make a model comes in and
+sort of a typical thing you might do is to say well let's just assume that it's
+a straight line assume that um uh that the the time to hit the ground is a is a
+function of the of the floor and this is this is the best straight line we can fit through that data this allows us to
+predict um what uh uh what the time to hit the ground from from a floor that we didn't
+explicitly visit will be so essentially this this um
+this model is uh is a way of sort of
+summarizing the data and summarizing what we expect to do when we continue from this data the reason this is going
+to be relevant to us is as I mentioned there isn't enough data to know these probabilities for different words just
+from actual text that exists so you have to have something where you're making a model where you're saying assume this is
+sort of how things generally work this is how we would figure out the answer when we haven't explicitly made a
+measurement so you know we can make different models and we'll get different results so for example uh we could say you know here's
+a here's another model that we might pick this is a quadratic curve um uh through these these particular
+um data points now it's it's worth realizing that there's
+there's no modelist model you're always making certain assumptions about how things work
+and in the case of these problems in physics like dropping balls from from
+towers and so on we have a pretty good expectation that these sort of simple
+mathematical models mathematical formulas and so on are likely to be things that will work doesn't always
+happen that way you know this is another mathematical function this is the best version it has some parameters in this
+model this is the best version of that model for fitting this data and you can see it's a completely crummy fit to this
+data so if we assume that this is sort of in general the way things work we won't be able to correctly reproduce
+what this what the stator is saying um the in the case of this model I think it
+has three parameters that are trying to fit this data and doesn't do very well
+um and uh in the work chat gbt is doing it basically has 175 billion parameters
+that it's trying to fit to make a model of human language and it's trying to
+hope that when it has to estimate the probability of something in human language that it does better than this
+that with its 175 billion parameters that the underlying structure it's using
+is such that it's going to be able to more correctly than this for example estimate the probabilities of things
+um so let's see all right so the next big thing to talk about is uh doing things
+like dropping balls from Towers of Pisa and so on that's something where we've
+learned over the last 300 years since Galileo and so on that there are simple mathematical formulas that govern those
+kinds of processes physical processes in nature but when it comes to a task like what's
+the most probable next word or some other kind of human-like task we don't
+have a simple kind of mathematics style model so for example we might say here's
+a typical human-like task we're given um we're asked to recognize uh from an
+array of from an image an array of pixels which which digit out of the 10
+possibilities is this is this one and and so we um uh and and you know we
+humans do a pretty good job of saying well that's a four that's a two and so on but
+uh we we need to ask sort of how how do we think about this problem so one thing we could say is let's try and do the
+thing that we were doing where we say let's just collect the data and figure out the answer based on collecting data
+so we might say well let's let's get ourselves a whole collection of fours and let's just ask ourselves
+um when we are presented with a particular array of pixel values does that array of pixel values match
+one of the fours that we've got in our sample the chance of that happening is is incredibly small and it's clear that
+we humans do something better than that we don't it doesn't matter where the individual pixels fell here so long as
+it roughly is in the shape of the four we're going to recognize it as a four so the question then is
+um how does that work and uh what um what's what we found is that um uh
+it's um well let's say this is using uh this is actually using this sort of a
+standard machine learning problem um this is using a simple neural net um to uh recognize these handwritten
+digits and so we see it gets the right answer there but if we say well what's it really doing let's say we give it a
+set of progressively more blurred digits here at the beginning it gets them right
+then it quotes gets them wrong what does it even mean that it gets them wrong we know that this was a two that we put
+in here and we know we just kept on blurring that too and so we can say well it got it wrong because we knew it was
+supposed to be a two but if we sort of zoom out and ask what's happening at a
+at a broader level we say well if we were humans looking at those images
+would we conclude that that's a two or Not by the time it gets blurred enough we humans wouldn't even know it's a two
+so to sort of assess whether the machine is doing the right thing what we're
+really asking is does it do something more or less what what like what we humans do so that becomes the question is it not
+we don't get to ask for these kind of human-like tasks there's no obvious right answer it's just does it do
+something that follows what US humans do and you know that question of of uh
+what's the right answer okay for humans we might say well up there you know most
+humans would recognize that as a two If instead we had visual systems like bees or octopuses or something like this we
+might come to completely different conclusions once things get sort of blurred out um we might the question of what we
+consider to be two like might be quite different it's a very human answer that that uh to say that that that still
+looks like a two for example depends on our visual system it's not something where there's sort of a mathematically
+precise definition of that has to be a two Okay so
+question is how do these models how do these models which we're using for
+things like image recognition how do they actually work the the most popular
+by far and most successful at present time uh approach to doing this is to use
+neural Nets and so okay what what what is a neural net it's kind of an idealization of what
+we think is going on in the brain what's going on in the brain what we all have about 100 billion neurons in our brains
+which are nerve cells that have the feature that when they get excited they
+produce electrical signals maybe a thousand times a second um they and each nerve cell has
+it's it's taking that electrical signal and it's it has sort of wire-like
+projections from the from the nerve cell that are connecting to um maybe a thousand maybe 10 000 other
+nerve cells and so what happens in a sort of rough approximation is that uh
+you'll have electrical activity in one nerve cell and that will kind of uh get
+communicate itself to other nerve cells and there's this whole network of nerves
+that is has this elaborate pattern of electrical con electrical activity
+so um and roughly the way it seems to work is
+that the extent to which one nerve cell will affect others is determined by uh
+sort of the the weights associated with these different connections and so one
+connection might have a very strong positive effect on another nerve cell if the first nerve cell is fired then it's
+like it makes it very likely the next nerve cell will fire all that connection might be an inhibitory connection where
+the if one nerve cell fires it makes it very unlikely for the next nerve cell to fire there's some whole combination of
+these weights associated with these different connections between nerve cells so you know what actually happens when
+we're trying to recognize a two in an image for example well the you know the
+the light the photons from from the from the image fall on the cells at the back
+of our eye and a retina there's a photoreceptor cells they convert that
+light into electrical signals the electrical signals um end up going through nerves that get
+to the visual cortex at the back of our head um and uh there's an array of of uh of
+nerves that correspond to all the different essentially pixel positions in the image and then what's happening is
+that within our brains there's this sequence of connections they're sort of layers of neurons that process the
+electrical signals that are coming in and eventually we get to the point where we kind of form a thought that that
+image that we're seeing in front of us is a two and then we might say it's a two um but that process of sort of forming
+the thought that's what we're talking about as kind of this process of recognition I was talking about it in
+the in the actual neural Nets that we have in brains but what is being done in
+all of these models including things like chat GPT is an idealization of that neural net
+okay so for example in um uh in the particular neuron that we were using for
+image recognition this is kind of a or from language representation of that neural net
+um and we we're going to talk about um not in total detail but we're going to talk about all these pieces in here
+um it's it's very kind of engineering slash biological there's a lot of different funky little pieces here that
+go together to actually have the result of recognizing digits and so on
+uh this particular neural net was constructed in 1998 um and it's really was done as a piece
+of engineering so uh how do we think about the way this
+neural net works essentially that the sort of the key idea is the idea of attractors that's an
+idea that actually emerged from mathematical physics and so on um but it's a key idea when we when
+we're thinking about neural Nets and such like and so what what is that idea the idea is let's say we've got all
+these different um uh handwritten digits the ones the twos Etc et cetera et cetera what we want is if we lay all
+these digits out in some way what we want is that if we are sort of near the ones we are kind of attracted to the one
+spot if we're kind of if the thing we have is kind of near the twos we're attracted to the two spot it's kind of
+the idea of attractors is imagine that you have some I don't know mountainscape
+or something like this and you are you're you know you're a drop of water that falls somewhere on the mountain you
+are going to sort of roll down the mountain until you get to this minimum that uh is for the from your particular
+part of the mountain but then there'll be a watershed and if you're a raindrop that falls somewhere else you'll roll
+down to a different uh a different minimum a different Lake and it's the same kind of thing here when you move
+far enough away from the thing that looks like a one and you'll roll down into the into the twos attractor rather
+than the one's attractor that's kind of the idea there now
+Let's see we can um uh let's let's make a kind of idealized version of this let's say we've got a bunch of points on
+the plane let's say those are coffee shops and you say I'm always going to go
+to the closest coffee shop to me well this so-called Lauren eye diagram shows
+you this this sort of the division the watersheds between coffee shops if you're on this side of this Watershed
+you'll go to this coffee shop if you're on that side you'll go to this coffee shop so that that's kind of a a minimal
+version of this idea of attractors all right so let's talk about neural Nets and the relationship to attractors
+so let's take an even simpler version let's just take these three attractors there's the zero attractor the plus one
+attract to the minus one attractor what's going to say if we are if we fall in this region we'll we'll have these
+have coordinates X and Y coordinates so if we're in this region here we're going to eventually we're going to want to go
+to say the result is zero we're in the zero we're in the The Basin of the zero
+attractor and um we we want to produce a zero okay so that we can we can kind of
+say um uh we can say as a function of the position X and Y that we start from what
+output do we want to get well um in this on this side we want to get a one this one we want to get uh what is
+that a minus one there we want to get a zero this is the thing that we're trying to uh we're we're trying to we're trying
+to set up is something where we'll have this this kind of behavior okay well now let's let's pull in a
+neural net so this is a a typical tiny neural net each of these dots represents
+a an artificial neuron each of these lines represents a connection between
+neurons and the kind of the the blue to redness represents the weight associated
+with that connection with blue being the most negative red being the most positive here and this is showing
+different this is showing a neural net with particular choices for these weights by which one neuron affects
+others okay so how do we use this neural nut well we feed in inputs at the top we say
+those top two neurons got values 0.5 and minus 0.8 for example interpreting that
+in terms of the thing we're trying to work with that's saying we're at position x equals 0.5 y equals minus 0.8
+in that diagram that we had drawn so now this neural net is basically just Computing a certain function of these
+values X and Y and at each step what it's doing is it's it's taking these weights and it's simply taking so for
+this neuron here what it's doing is it's saying I want this weight multiplied by this value here this weight multiplied
+by this value here and then what it says is I'm going to add those two numbers up
+the numbers based on uh the the the weights multiplied by the original
+number then there's a thing we add we add a constant offset a different offset
+for for uh but we add this constant offset and then we say we get some number out and then the kind of the the
+weird thing one does which is sort of inspired by what seems to happen biologically is we have some kind of
+threshold in function we say for example this is a very common one to use relu
+um if that total number is less than zero make it be not its actual value but
+just zero if it's greater than zero make it be its actual value and there are a variety of different uh so-called
+activation functions activation because they're they're what determine what the activity of the next neuron sort of down
+the line will be based on the input to that neuron so here again
+at every step we're just collecting the values from the neurons at the previous layer uh multiplying by weights adding
+this offset applying that activation function relu to get this value minus
+3.8 in this case and what's Happening Here is we start off with these values 0.5 minus 0.8 we go through this whole
+neural net in this particular case at the end it comes out with value minus one
+okay what um uh
+what does that neural net that's neural net here the one we've just been showing
+what does that do as we change those inputs well we can plot it that's what
+that neural net actually does so as a function so remember what our goal is to uh
+every time we have a value in this region we want to give a a zero this region we want to give a minus one and
+so on this is what that particular neural net succeeds in doing so it didn't quite make it to give you know
+the zero one minus one values but it's kind of close so this is a neural net that's been kind
+of uh set up to be as close as it can be for one of that size and shape and so on
+to giving us the exact function we wanted to compute well how do we think about what this
+neural net is doing the neural net is just Computing some mathematical function so for the particular neuron
+that I was showing if the W's are the weights and the B's are the offsets and
+so on the f is the activation function this is the messy sort of algebraic formula that says what the value of the
+output is going to be as a function of X and Y the values of the inputs
+so now the question is well as we look at simpler neural Nets what what kinds
+of functions can we actually compute so this is at the sort of minimum level this is a single uh this is a neuron
+here it's getting input from two other neurons what function is it Computing well it depends on the weights these are
+the functions that get computed for these different choices of Weights very simple functions in all cases just these
+ramps so now we can ask well okay let's use a slightly more sophisticated neural net
+um his his still a very small neural net this is the best it can do in
+reproducing the function we want to get slightly bigger neuron that does slightly better and even bigger neural
+net up it pretty much nailed it didn't quite nail it right at the boundary it's a bit confused instead of going straight
+from red to blue it's got this area where it's giving yellow and so on um but in a first approximation this
+little neural net was a pretty good representation of the mathematical function that we wanted to compute
+and this is the same story as as what we're doing
+um in uh in that um uh recognition of digits
+where again we've got a neural net it happens to have I don't know what it was I think it's about um uh 40 000 um
+parameters in this particular case that uh um
+that that specify kind of um uh that are
+doing the same kind of thing of working out the function that goes from the array of pixels at the beginning to
+values zero through nine and so on um
+well again we can we can ask the question uh
+uh you know is it getting the right answer well again it's it's a hard question that's really a human level
+question to to because the question whether it put a one in the wrong place
+so to speak it's a question of how we would Define that well we can do similar kinds of things
+let's say we have other kinds of images we might try and make a neural that distinguishes cats from dogs and here
+we're showing sort of how it distinguishes those things and mostly the cats are over in this corner the dogs are over in this corner
+um but you know the question of what should it really ultimately do uh you
+know what should it do if we put a dog in a cat suit should it say that's a cat
+or should it say it's a dog um it's going to say some definite thing the question is does it sort of agree
+with what we humans would would assess it to to be
+well you know one question you might ask is well what's this neural net doing inside when it works out it's sort of
+Katniss or its dogness and let's say we start with um let's do this and we can
+actually do the same uh let's say we start with an image um well maybe you know let's say we
+start with an image of a cat here now we can um uh
+we can say what's going on inside the neural net when it decides that this is actually an image of a cat
+um well what we can do normally when we are looking at the insides of a neural net it's really hard to tell what's
+happening in the case where the neural net corresponds to an image we can at least at least neural Nets tend to be
+set up so that they sort of preserve the the pixel structure of the image so for example here we can go this is just
+going what is this going this is going um uh 10 layers down no this is no this
+is actually sorry this is actually going just one layer down in the neural net and what happens in this particular
+neuron that is it takes that image of a cat and it breaks it up into a lot of different kind of variants of that image
+now at this level we can kind of say well it's doing things that we can sort of recognize it's kind of looking at um
+cat outlines without the background it's trying to pull the cat out of the background it's doing things that we can
+sort of Imagine uh you know describing in words what what's going on and in fact many of the things that it's doing
+are things that we know from studying neurophysiology of brains are what the first levels of visual processing and
+brains actually do by the time we're sort of deeper in the neural net um it's much harder to tell what's going
+on let's say we go uh 10 10 layers down in the neural net
+um then uh we've got again sort of this is in the mind of the neuron that this
+is what it's thinking about to try and decide is it a cat or a dog things have become much more abstract
+um much harder to to explicitly recognize but that's kind of um uh what
+uh sort of a representation for us of what's happening in the kind of Mind of the neural net and you know if we say
+well what's a theory for how cat recognition works um it's uh
+um it's not it's not clear we can have a theory in the sense of sort of a narrative description a simple way of
+describing how does the thing tell that it's a cat you know we we can't um uh
+and if you even ask a sort of human how do you tell we say well it's got these pointy ears it's got this and that thing
+um it's hard probably for a human to describe how they do that recognition and when we look inside the neural net
+it's we don't get to sort of uh have a there's no guarantee that there's a sort
+of simple narrative for what it's doing and typically there isn't okay
+so we've talked about how neural Nets can successfully go from a cat image to
+saying that's a cat this is that's a dog how do you set the neural net up to do
+that so the way we normally write programs is we say well I'm thinking about how
+should this program work what should it do should it first take the image of the
+cat figure out does it have uh you know what are the shape of its ears does it have whiskers all these kinds of things
+that's sort of the the typical engineering way to make a program um that's what people did back
+15 years ago 20 years ago in trying to make uh sort of recognize images of
+things that was the typical kind of approach was to try and recognize sort
+of human explainable features of images and so on um to as a way to kind of recognize
+things the big idea of machine learning is you don't have to do that instead what you
+can do is just give a bunch of examples where you say this is a cat this is a dog and have it be the case that you
+have a system which can learn from those examples and where you just have to give it enough examples and then when you
+show it a new cat image that's never seen before it'll correctly say that's a cat versus that's a dog
+so let's let's talk about how that how that's actually done
+um and uh what we're interested in is can we take one of those neural Nets I
+showed that the neural Nets where they have all these weights and as you change the weights you change the function the
+neural net is Computing let's say you have a neural net and you want to make it compute a particular function so
+let's say let's take a very simple case let's say we have a neural net we just want it to compute as a function of X we
+wanted to compute this particular function here okay so let's pick a neural net there's a there's a neural net without weights
+let's fill in random weights in that neural net for every random collection
+of Weights in the neural Nets the neural net will compute something it won't be the function we want but the law is
+compute something it'll always be the case that when you feed in some value up here you'll get out some value down here
+and these are plots of the function that you get by doing that okay the the big idea is that if you do
+it the right way and you can give enough examples of
+um uh um of um uh of what function you are
+trying to learn um you will be able to progressively tweak the weights in this neural net so
+that eventually you'll get a neural net that correctly computes this function so again what we're doing here is this is
+we're just describing if this is X this is let's say you know G of X down
+here this is the value of x up here and this is a g of X for some function G and
+that function G that we want is this kind of uh Square wave type thing here
+now in this particular case this neural net with these weights is not Computing
+the function we wanted it's Computing this function here but as we progressively train this neural net we
+tweak the weights until eventually we get a neural net that actually computes the function we want this particular
+case it took 10 million examples to get to the point where we have the neural net that we want
+Okay so the um how does this actually work how is this
+actually done how does one uh as I said at the beginning we just had we started off the neural Nets where we had random
+weights with random weights this function X to G of X with that
+particular choice of Weights is this thing here which isn't even close to what we wanted so even if we have when we have examples
+of functions examples of results we how do we go from those to train the neural
+rats essentially what we're doing is we we run we say we've got this neural net
+uh we say let's pick a value of x 0.2 for example let's run it through the
+neural net let's see what value we get okay we get this value here oh we say that value is not correct based on what
+we were trying to based on the training data that we have based on this function that we're trying to we're trying to
+train the neural Nets to generate that training it isn't the correct result uh
+it should have been let's say a minus one and it was in fact a 0.7 or
+something okay so then the idea is that knowing that we got it wrong
+we we can measure how much we got it wrong and we can do that for many different samples we can take let's say
+a thousand examples of this mapping from value X to function G of X that the
+neural net computes and we can say of those thousand examples um how far off were they and we can
+compute what's often called the loss which is take all those values of what what we should have got versus what we
+actually got and for example take the sum of the squares of the differences between those values
+um and that gives us a sense of if if all the values were right on that would be zero but in fact it's not zero
+because we didn't actually get the right answer without knowing that and so then
+what we're trying to do is to progressively reduce that loss we're trying to progressively tweak the neural
+net so that we reduce that loss so for example this is what it would typically look like you you typically have this is
+the loss as a function of the number of examples you've shown and what you see is that as you show more and more
+examples the loss progressively decreases reflecting the fact that the
+the function that's being computed by the neural net is getting closer to the function we actually wanted and eventually the loss is really quite
+small here and then the function is really computed by the neural net is really close to the one we wanted that's
+kind of the idea of training a neural net we're trying to tweak the weights to reduce the loss to to get to where we
+want okay so let's say we've got a neural that's particular form of Weights we compute the loss
+the loss is really bad it's we're pretty far away how do we arrange to
+incrementally get closer to the right answer well we have to tweak the weights but what direction do we tweak the
+weights in okay so this is a tricky thing that that um uh got figured out
+well in the 1980s for further on that's how to do this in a reasonably it was known how to do this in simple cases I
+should say that the the idea of neural Nets originated in 1943
+um uh Warren McCulloch and Walter Pitts were the two guys who wrote this sort of
+original paper that described these idealized neural Nets and what's inside chat GPT is basically a big version of
+what was described in 1943 and there was sort of a long history of people doing things with just one layer of neural
+Nets and that didn't work very well and then early 1980s um it uh started to be some knowledge of
+how to deal with with more layers of neural Nets and then when gpus start to exist and computers got faster sort of
+big breakthrough around 2012 where it became possible to deal with uh sort of
+training and using sort of deep neural Nets um by the way I for people who are interested I did a discussion with a
+friend of mine named Tara sanovsky who's been involved with neural nets for about 45 years now and has been quite
+instrumental in many of the many of the developments that have happened I did a discussion with him that was live
+streamed a few days ago which you can you can find on the web and so on if you're interested in that that history but back to back to sort of how these
+things work what we want to do is we found the loss is bad let's reduce the
+loss how do we reduce the loss we need to tweak the weights what direction do we tweak the weights in in order to
+reduce the loss well this turns out to be a big application of calculus because
+basically what's happening is our neural net corresponds to a function it has it's a function of the weights
+it's a function of once we when we compute the loss we are basically
+working out the value of this neural net function for lots of values of X and Y and so on and that object that thing
+we're Computing is a big complicated we can think of it as an algebraic formula that we can think of as being a function
+of all those weights so how do we make the thing better how do we reduce the
+overall value how do we tweak the weights to reduce this this overall loss quantity well we can kind of use
+calculus we can kind of say we can think of this as sort of a surface as a
+function of all of these weights and we can say we want to minimize this function as a function of the weights so
+for example we might have a in a very simplified case well this is not good
+um in a very simplified case we might have um
+a h some as a function of just two weights
+so for example in those neural Nets I was just showing they had I don't know 15 weights or something
+um in the real example of an image recognition network it might be 40 000 weights in Chachi DT it's 175 billion
+weights but here we're just looking at two weights and we're asking if this was
+the loss as a function of the value of those weights how would we find uh the
+the um uh the minimum how would we find the how will we find the best values of those weights see oh there we go
+um so this is a typical procedure to use so-called gradient descent basically
+what you do is you say I'm at this position on this lost surface lost
+surface where the the coordinates of the surface are weights what I want to do is I want to get to a lower point on this
+lost surface and I want to do that by changing the weights always following
+this gradient Vector kind of down the hill the steepest descent down the hill and that's something that you just have
+to use calculus and you just work out derivatives at this point as a function of these weights and the direction where
+you are finding the the maximum uh of these derivatives you you're going down
+the hill as much as you can okay so that's that's kind of how you try to minimize the loss is by tweaking the
+weights so that you follow this gradient descent thing to to get to the minimum
+now there's a there's a bit of a bug with this because the surface that corresponds to all the weights it might
+have as this picture shows it might have more than one minimum and actually this Minima might not be all at the same
+height so for example if you're on a mountain Escape there might be a mountain lake there might be a very high
+altitude Mountain Lake and all of the water that's kind of following seepers are sent down to get to the minimum only
+manages to get to that high altitude Mountain Lake even though there's a low altitude Mountain Lake that will be a
+much lower value of the loss so to speak that isn't reached by this gradient descent method it's never you you get
+stuck in a local minimum you never reach the more Global minimum and that's kind of what uh what potentially happens in
+um uh in neural Nets is you can be okay I'm going to reduce the loss I'm going
+to tweak the weights but whoops I can't really get very far I can't reduce the loss enough to be able to successfully
+reproduce my function with my neural net or whatever I can't tweak the weights enough because I got stuck in a local
+minimum I don't know how to get out of that local minimum so this was a the
+sort of big breakthrough in Surprise of 2012 in in the development of neural Nets was the following Discovery you
+might have thought that you'd have the best chance of getting a neural net to work well when it was a simple mirror on
+that you kind of get your arms around it and figure out all these weights and do all these calculations and so on but
+actually it turns out things get easier when the neural get net and the problem it's trying to solve gets more
+complicated and roughly the intuition seems to be this although one didn't expect this
+nobody I think expected this I I certainly didn't didn't expect this that
+um it's sort of obvious after the fact okay the issue is you are you going to get stuck
+as you try and follow this gradient descent well if you're in a kind of low
+dimensional space it's quite easy to get stuck you just get into the one of these Mountain Lakes
+you can't go any further but in a high dimensional space there are many different directions you could go and
+the chances are any local minimum you get to you'll be able to escape from that local minimum because there'll
+always be some Dimension some direction you can go that allows you to escape and that's what seems to be happening it's
+not totally obvious it would work that way but that's what seems to be happening um in in these neural Nets is there's
+always sort of a when you have a complicated enough neural net there's always a way to escape there's always a way to reduce the the loss and so on
+okay so so that's kind of the um uh this idea of you tweak the weights to
+reduce the loss that's what's going on in all neural Nets and you can um uh uh
+there are different schemes for you know what how you do the gradient descent and how big the steps are and there are all
+kinds of different things there are different ways you can calculate the loss when we're doing it for language we're calculating probabilities of words
+based or probabilities of sequences of words based on the model versus based on what we actually see in the data as
+opposed to just distances between numbers and so on but it's the same basic idea okay so when that happens
+um let's see uh we can potentially get
+um uh every time we run one of these neural Nets we do all this tweaking of
+weights and so on we get something where yes we got an ill on that that reproduces the thing we want okay so
+there these are the results from four different neural Nets that all successfully pretty much reproduce this
+function now you might ask well what happens if I go
+um uh let's see what happens if I
+um yeah what happens if I go outside the range where I had explicitly trained the
+neural net I'm telling it I told it my function X goes to G of X for this range
+here the one in white but then I say well I've got the neural net now let me try running it for a value of x that I
+never trained it for what's it going to give well that will depend on which
+particular set of choices about which minimum which weight tweaking Etc et cetera et cetera it went to and so when
+the neural net tries to figure out things that it wasn't explicitly trained on it's going to give completely
+different answers depending on the details of how the neural net happened to get trained that's it's kind of like
+it knows the things which it's already seen examples of it's kind of it's it's
+going to be constrained to basically reproduce those examples when you're dealing with things that are kind of out
+of the box it it might think differently out of the box so to speak depending on the details
+of that neural net all right so
+let's see this whole question about training neural Nets is um uh
+it's a it's a giant Modern Art so to speak of how to train a neural net and
+the um over the last particularly the last decade there's been sort of increasingly elaborate
+sort of knowledge of that art of training neural Nets and there's been a certain amount of lore about how these neural Nets should get trained that's
+that's developed so how does that what's what's sort of in that law well kind of the the first
+question is um uh you know what kind of architecture of neural net how should you how many
+neurons how many neurons at each layer how should they be connected together what should you use
+um and uh there have been a number of kind of observations in sort of the art of
+neural Nets that have emerged so what was believed at the beginning was uh
+every different task you want a neural net to do you would need a different architecture to do it you would somehow
+optimize the architecture for each task it's turned out that that hasn't that isn't the case it's much more that you
+that there are generic neural net architectures that seem to go across a lot of different tasks and you might say
+isn't that just like what happens with computers and you Universal computers you need only you can run different
+software on the same computer same Hardware different software that was the kind of idea from the 1930s that
+launched the whole computer Revolution the whole notion of software and so on is this a repetition of that I don't
+actually think so I think this is actually something slightly different I think that the reason that the neural
+Nets the the sort of a small number of architectures cover a lot of the tasks
+neuronauts can do is because those tasks that neural ads can do are tasks that we humans are also pretty good at doing and
+these neural Nets are kind of reproducing something about the way we humans do tasks and so while the tasks
+you're asking the neural net to do are tasks that are sort of human-like any human-like neuron that is going to be
+able to do those tasks now there are other tasks that are different kinds of computations that neural Nets and humans
+are pretty bad at doing and those will be sort of out of this zone of it doesn't really matter what architecture
+you have well uh okay so there are all kinds of other
+things that um um that people sort of wondered about like they said well let's make instead
+of making these very simple neurons that were just like the ones from 1943 let's make a more complicated Assemblies of
+things and and let's put more detail into the in internal operations of the neural net turns out most of that stuff
+doesn't seem to matter and I think that's unsurprising from a lot of science that I've done uh not
+specifically related to neural Nets I I think that that um um that's a uh
+um um that that's something um
+um that isn't too surprising now when it comes to neural Nets and sort of how they're architected
+um there are a few features that um uh it is useful to to sort of capture a few
+features this is not the right thing that's the right thing um the um
+uh there are a few features of um the data that you're looking at with the
+neural net that it is useful to that it seems useful to capture in the actual
+architecture of the neural net it's probably not in the end ultimately completely necessary it's probably the
+case that you could use a much more generic neural net and with enough training enough enough kind of uh sort
+of tweaking from the actual data you'd be able to learn all these things but for example if you've got a neural net
+that's dealing with images it is useful to initially arrange the neurons in an
+array that's like the pixels and so this is sort of representation for the particular Network called the net that
+we were showing uh for image Rec for for um uh digit recognition uh this is sort
+of a representation of there's a first layer of of neurons here that sort of thickens up into multiple multiple
+different copies of the image which we actually saw um looking at those pictures and then it
+keeps going and eventually it rearranges what one thing about neural Nets to to understand is that neural Nets take
+everything they're dealing with and grinds it up into numbers computers take everything they're
+dealing with and eventually grinds it up grind it up into zeros and ones into bits neural Nets right now are grinding
+things up into uh into arbitrary numbers you know 3.72 they're they're real
+numbers not not necessarily just zeros and ones it's not clear how important
+that is it is necessary when you're going to incrementally improve weights and kind of use calculus-like things to
+do that it's necessary to have these continuous numbers to be able to do that but in any case whether you're showing
+the neural net a picture a piece of text whatever in the end it's got to be represented in terms of numbers and
+that's um uh that's sort of a but but but how those numbers are arranged like
+for example here there's an array of numbers which are sort of arranged in the in the pixel positions and so on the
+whole array is reconstituted and rearranged and flattened and so on and in the end you're going to get probabilities for each of the uh each of
+the ten digits that will be just a sequence of of numbers here sort of a rearranged collection of numbers
+Okay so let's see
+right picture there we go okay so this is um uh so
+we're talking about sort of um uh how complicated and you're wrong that
+do you need to achieve it to perform a particular task sometimes pretty hard to estimate that because you don't really
+know how hard the task is but say you want a neural net that plays a game well you can compute the complete Game tree
+for the game all the possible sequences of games that could occur might be some as a huge game tree
+but if you want to get human level play for that game you don't need to
+reproduce that whole game tree if you were going to do very systematic computer computation and just play the
+game by looking at all the possibilities you'd need that whole game tree but or you need to be able to go through that
+whole game tree but in the case of if you're trying to achieve sort of human-like performance the humans might
+have found some heuristic that dramatically simplifies it and you might need just some much simpler uh much
+simpler neural net so so this is an example of well if the neural net is way too simple then it it doesn't have the
+ability to reproduce in this case the function we wanted but you'll see that as the neural Nets get a bit more complicated
+um we eventually get to the point where we can indeed reproduce the function we wanted all right well okay so
+and and you can ask you know are there theorems about what um uh what functions you can reproduce with what what neural
+Nets basically as soon as you have any neurons in the middle you can at least in principle reproduce any function but
+you might need an extremely large number of neurons to do that um and uh uh it's also the case that
+that neural net might not be trainable it might not be the case that you can find some for example gradient that
+always makes the loss go down and so on just by tweaking weights it might be that that you you couldn't incrementally
+get to that result well okay so uh oops let's say you've got
+um a uh you've decided on your architecture of your neural net and now
+you want to train your neural net okay so the next big thing is you have to have the data to train your neural net
+from and there are two basic categories of training that one does for neural Nets supervised learning and
+unsupervised learning so in supervised learning you give the neural net a bunch
+of examples of what you want it to learn so you might say um here are uh 10 000 pictures of cats
+10 000 pictures of dogs the pictures of cats are all tagged as being this is a picture of a cat dogs or there's a
+picture of a dog and you're feeding the neural net these uh these things that are
+um kind of explicit things that you want it to learn now that that's what one has to do for many forms of of machine
+learning um it can be non-trivial to get the data often there are sources of data that
+where you're sort of piggybacking on something else like you might get images from the web and they might have alt tags that were text describing the image
+and that's how you might be able to associate the you know the description of the image the fact this is a cat to
+the actual image or you might have you know if you're doing um uh audio kinds of things you might
+have something where you um uh uh you might say let's get a bunch of
+videos which have closed captions and that will give us the the sort of supervised information on here's the
+audio here's the text that corresponded with that audio that's what we have to learn so that's some that's sort of one style
+of of uh teaching neural Nets is supervised learning where you've got data which explicitly is examples of
+here's the input you're supposed to that you're going to get is the output you're supposed to give and that's great when
+you can get it um sometimes it's very very difficult to get the um the necessary data to be able
+to train the the machine Learning System and when people say oh can you use machine learning for this task well if
+there's no training data the answer is probably going to be no um unless that task is something that
+you can either get a sort of proxy for that task from somewhere else or you can or you just have to blindly hope that
+something that um uh sort of was transferred from some other domain might
+might work just as when you're doing mathematical models you might sort of say well linear models or something
+worked in these places maybe we can blindly help their work here doesn't doesn't tend to work that well
+okay the other the other form of um uh no I should explain another thing about
+about neural that's kind of important which is that there's something been very critical over the last decade or so
+the notion of transfer learning so that once you've kind of learned a certain
+amount with a neural net being able to transfer the learning that's happening when you're on that to a new neural net
+to give it a kind of Head Start is very important now that that transfer might be or the first neural net learned the
+most important features to pick out an image let's feed the second neural net those most important features and Let It
+Go on from there or it might be something uh where you're using one neural net uh to provide training data
+for another neural on that so you're making them compete against each other a variety of other things like that that
+those are actually those have different different names the transfer learning thing is mostly the first thing I was talking about
+Okay so their issues about how do you get enough training data how many times do you show
+the same example to a neural net you know it's probably a little bit like humans for us when we memorize things
+it's often useful to go back and just re-think about that exact same example
+that you were trying to memorize before again so it is with neural Nets and the
+uh there's also questions like well you know you've got the image of a cat that looks like this maybe you can get what
+is the equivalent of another image of a cat just by doing some simple image processing on the first cat and it turns
+out that that seems to work that notion of data augmentation seems to work surprisingly well even fairly simple
+Transmissions are almost as good as new in terms of providing more data
+well uh okay the the um
+um sort of a the other big
+um form of of um of learning that uh learning methodology
+that that one tends to use is unsupervised learning where you don't have to explicitly give sort of uh thing
+you got as input example of output so for example in um
+in the case of this time to keep track of of um
+um yeah the um uh in the case of something like chat
+GPT there's a there's a wonderful trick you can use let's say chat gbt's mission is to continue a piece of text okay how
+do you train it well you've just got a whole bunch of text and you say okay you
+know chat GPT Network here's the text up to this point let's mask out the text after that point can you predict what's
+going to come what you know can you learn to predict what happens if you take off the mask
+and that's the task that it you don't have to explicitly give it you know input output your your you're implicitly
+able to get that just from the original data that you've been provided so essentially what's happening when you're
+training the neural net of chat GPT is you're saying here's all this English text it's from billions of web pages now
+look at the text up to this point and say can you correctly predict what text
+will come later okay it gets it wrong you can say well it's it's giving it getting it it's getting it wrong so
+let's that's provides uh you know that that means it's has a uh there's some
+loss associated with that let's see if we can tweak the weights and the neural net to get it closer to correctly
+predicting what's going to come next so in any case the the end result of all
+of this is you um make a neuron that I I could show you neural that training in
+uh um I could show you more from language it's very easy to train uh neural Nets to um
+let's see oh maybe I shouldn't do the spell yeah
+let's see um let's just let's just do one
+so here's here's a collection of handwritten digits um this is what is this going to be
+there's maybe 50 100 digits uh
+oh there we go so this is a a supervised training story where where here all the
+zeros and they say that that's a hundred and zero and it says it's a zero those are the Nines It says it's a nine okay
+so let's take a random sample of um I don't know two thousand of those
+um and now we're going to use that okay there's our random sample of two thousand
+um hundred and digit and what it was supposed to be okay so let's take it let's go to neural net let's say let's
+try taking this Lynette neural net this is now a um
+um um an un an untrained neural net
+um and now we can just say if we wanted to we could should be able to say uh just train that neural net
+with this data there's that data there
+you go on line 32 um
+let's say uh
+train this and so what's going to happen is this is showing us the loss and this
+is showing us as it's as it's being presented with more and more of those examples and it's being shown the same
+example many many times you'll see the losses going down and it's gradually
+learning okay now now we have a trained neural net and now we could go back to our original collection
+um of uh of digits let's close that up um let's go back to our original
+collection of digits let's pick a random digit here let's see whether from
+um let's just pick Let's just pick another random sample here um
+let's pick five examples there from um oh I should have not called it to do
+that okay there we go so now we can take this trained neural net here's our trained neural net and let's take the
+train neural net and let's feed it that particular nine there now remember we
+only trained it on 2 000 examples so it didn't have very much training but oops I shouldn't have done that I should have
+just used that okay um okay it successfully told us it was a
+nine that's kind of what it looks like to train this is you know wolfen language version of training a neural
+net this was a super simple neural that with only two thousand examples um but that's kind of what it looks like to do that um do that training
+okay so uh
+let's see the um uh the thing with with chat GPT is that
+your um well let's let's you know we can we can keep going and talk about the
+training of of of of that but let's um
+before we get to training of of chat GPT I'm going to talk about one more thing
+which is we need to talk about uh this question of kind of
+well let's see do we really need to talk about this yeah I would probably talk about this the question of how you
+represent uh kind of things like words with numbers so let's say we are going to have um
+we're we've got all these words and we could just number every word in English we
+could say apple is 75 pair is 43 Etc et
+cetera et cetera um but there's more useful ways to label words in English by numbers
+and the more useful way is to get collections of numbers that have the property that words with nearby meanings
+have nearby collections of numbers so it's as if we're replacing every word
+somewhere in some meaning space and we're trying to set it up so that words
+will have a position and meaning space with the property that if two words are nearby and meaning space they must mean
+close to the same thing so here for example are a collection of words laid
+out in one of these meaning spaces um sort of actual meaning spaces like
+the one used by Chachi pitia like uh what is that one it's probably 12 000
+dimensional maybe um this one here is just two-dimensional we're just putting things like dog and
+cat alligator crocodile and then a bunch of fruits here and what the main thing
+to notice about this is that things with similar meanings like alligator and crocodile wind up nearby
+in this meaning space and you know Peach and apricot wind up nearby in meaning
+space so in other words we're representing these words by collections of numbers in this case just pairs of
+numbers just coordinates which have the property that those coordinates are some kind of representation of the meaning of
+these words so and we can do the same thing when it
+comes to images for example we could ask whether
+um when we looked at and that's exactly what we had when we were looking at um a
+picture like this we're sort of laying out different handwritten digits in some
+kind of uh meaning of the of the handwritten digit space where in that
+meaning space the one the ones that mean one were over here the ones that mean three were over here and so on so a
+question is how do you find how do you actually uh generate coordinates that represent the so-called embeddings of of
+things so that when they're sort of nearby in meaning they will have nearby coordinates okay so there's a number of
+neat tricks that are used to do this so a typical kind of setup is
+um imagine we have this is just a representation of the neural net that we use to recognize digits it has these
+multiple layers each one there's just Little Wolf and language representation of that
+um what actually does this network do well in the end what it's doing is it's
+taking that collection of pixels at the beginning and in the end what it's doing is it's Computing
+um what are the probabilities for a particular configuration it's got It's going to produce a collection of numbers
+at the end because remember neural nets all they ever deal with are collections of numbers so what it's going to do is it's going to produce a collection of
+numbers at the end where uh each position in this collection of numbers
+there'll be 10 numbers here each position is the probability that the thing that the neural net was shown
+corresponded to a zero or one a two or three or four so what you see here is the numbers are
+absurdly small except in the case of four so we can then deduce from this immediately okay that image was was
+supposed to be a four so this is kind of the output of the neural net as this collection probabilities where in this
+particular case it was really certain that the thing is a four so that's what we deduce now
+the the thing we can do is we say well let's let's back up one layer in the
+neural net before we get to that that um let's just say before we had there's a
+there's a layer that kind of tries to tries to make the neuron that actually make a decision it's I think it's a soft
+Max layer um that uh is um is at the end that's
+trying to sort of force the decision it's trying to exponentially pull apart these numbers so that the big number
+gets bigger and the small numbers get smaller okay but one layer before those numbers are a bit more sober in size
+before it's been sort of torn apart to make a decision those numbers are much more sober in size and these numbers at
+this layer give some pretty decent indication of of the fullness of what we're seeing they this has more
+information about what that thing that was showing actually is and we can think about these numbers as giving some kind
+of signature some kind of uh um some some kind of trace of what kind
+kind of a thing we were seeing this is sort of specifying in some sense features of
+what we were seeing that later on we'll just decide that's a four but all these other sort of subsidiary numbers are are
+already useful we go back so you know this is um we can Define these feature
+vectors that represent this is kind of the a feature Vector representing that
+image there that's the feature representing this image here and we see that yeah these the the features for
+different fours these vectors will be a little bit different um but they're dramatically different between a four and an eight but we can
+use these these vectors to represent kind of uh the the important aspects of
+of this four here for it for instance and if we go back a couple more layers
+in that neural net it turns out we can get an array of like 500 numbers that
+are a pretty good representation a pretty good sort of feature signature of of any of these images and we do the
+same thing for pictures of cats and dogs we can get this kind of signature of what what the sort of feature Vector
+associated with what is important about that image and then we can take those
+those feature vectors and we can say let's let's um let's lay things out
+according to different values and those feature vectors and then we'll get this
+kind of um uh embedding in in the case of what we can think of as some kind of
+meaning space in the case of words if we look at the raw um
+uh yeah so so how do we do that for words well the idea is uh just like for
+the for for getting sort of a a a feature Vector associated with like
+let's say images we have a task like we're trying to recognize digits and then we back up from the from the final
+answer we're training a neural net to do that task but what we end up doing is we back up from that final we we nailed the
+task and we say what was the thing that was just before you you managed to nail the task that's our representation of
+the relevant features of the thing well you can do the same thing for words so for example if we say the blank cat
+and we then ask in in our training data what is that blank likely to be
+um the you know is it black is it white whatever else um that we could try and make a network
+that predicts what is that intermediate word likely to be what are the probabilities for that intermediate work
+we can train a network to be good at predicting the probabilities for Blackness whiteness versus whatever
+other tabbiness for cats or whatever it is um and uh
+once we've got that we can then back up from the final answer and say let's look
+at the innards of the network and let's see what it had done as it got towards coming up with that final result that
+thing we get right before it gets to a little bit before it gets to the final result that will be a good representation of features that were
+important about those words and that's how we can then deduce what um we can
+deduce these sort of feature vectors for words so
+um in the case of gpt2 for example um we can we can compute those feature
+vectors they are extremely uninformative when we look at them in the full feature
+vectors uh if we what is more informative is we sort of project these feature vectors down to a smaller number
+of Dimensions we'll discover that the cat one is closer to the dog one probably than it is to the chair one but
+that's that's kind of so what what what chat GPT is doing when it deals with
+words is it uh it's it's always representing them using
+these feature vectors that um using this kind of embedding that turns them into
+these collections of numbers that have the property that nearby words are have
+have similar representations actually I'm I'm getting a little bit ahead of myself there because because the the
+way chat GPT works it uses these kinds of embeddings but it does so for for
+whole chunks of text rather than for individual words we'll get there okay
+so I think we're we're getting on getting on fairly well here
+um how about the actuality of of of chat
+GPT well it's ignoring that millions of neurons
+uh 175 billion connections between them and uh what is its basic architecture
+um the uh um it's uh the sort of a big idea that
+actually came out of language translation networks where the task was start from English end up with French or
+whatever else was this idea of what are called Transformers it's an architecture of neural Nets that were more
+complicated architectures used before there's actually a simpler one um and the notion is as I mentioned when
+one's dealing with images it's convenient to have these neurons kind of attached to pixels at least to sort of
+laid out in a kind of uh which pixel is next to which pixel kind of way there's a so-called convolutional neural Nets or
+convenants are the the typical things that are used there in the case of language what Transformers do is they
+are dealing with the fact that language is in a sequence and with a convene for
+an image one saying there's this pixel here what it what's happening in the neighboring nearby pixels in the image
+in a Transformer what one's doing is one saying this is here's a word let's look
+at the preceding words let's look at the words that came before this word and in
+particular let's pay attention differently to different ones of those words so
+I mean this gets this gets quite elaborate in engineeringly quite quickly
+um and uh uh you know it's it's very typical of a sophisticated engineering
+system that there's lots of detail here and I'm not going to go into much of that detail but but um this is a piece
+of the um uh this is sort of the in a sense the front end of of okay so
+remember what is chat GPT ultimately doing it's a neural net whose goal is to
+continue a piece of text so it's gonna it's gonna essentially ingest the piece of text so far reading in each token of
+the text the tokens are either words or pieces of words like things like the ing at the end of a word might be a separate
+token they're they're sort of convenient pieces of words they're about 50 000 different possible tokens it's reading
+through the text The Prompt that you wrote the text that it's generated so far it's reading through all of those
+things it is then going to generate uh it's it's it's
+then going to its goal is to then continue that text in particular it's
+going to tell you every time you run through this whole neural net it's going to give you one new token it's going to
+tell you what the next token should be or what the probabilities for different choices of the next token should be so
+one piece of this is the embedding uh part where what's happening is it's
+reading a token and it is doing I mean this is just uh you know it's it gets
+into a lot of detail here so for example let's say that the the sequence we were reading was hello hello hello hello
+hello bye bye bye bye bye this is showing the resulting
+um this is showing the embeddings that you get okay this this is showing you're trying
+to represent I said before we were talking about embeddings for words now we're talking about embeddings for whole
+chunks of text and we're asking what is the sequence of numbers that should
+represent that collection of that piece of text
+and the way you set that up I mean again this is this is getting pretty deep into
+the entrails of the creature um and uh uh
+well what what what what you can think of is there are are
+different components to this embedding vector and
+let's see what am I doing here this this picture is showing across the page it's
+showing the contribution from each word and down the page it's showing the
+different uh different pieces of the feature Vector that are being built up
+and the way it works is to it takes each word and it has
+um it then the position of the word is encoded by a
+um uh you could just encode it by saying the binary the the position of the word
+as a binary digit that says is word number seven it's you know zero zero zero one one or something but that
+doesn't work as well as essentially learning this sort of random looking collection of things which are
+essentially position tags for Words anyway the end result is you're going to make this thing that represents the um
+uh uh where you have both where each level is a different sort of
+feature associated with each of these words and uh that's that's the thing that's going to be fed into the next
+level of the of the neural net okay so the next big piece is
+so-called attention Block in which I I don't know how much this is worth
+explaining I talk about this a bit more in the in the thing that I wrote but essentially what's happening is
+the in the end it's just a great big neural net but that neural net
+has doesn't have every possible connection in it it has connections for example
+only connections that look back in the that look to places that were earlier in
+that text and the it it is in a sense concentrating differently on different
+parts of that text and you can you can make a picture here of the amount of attention that it is paying and by
+attention I mean it's literally the number the the the the the the size of effectively the weights that it's that
+it's using to uh with which it is waiting different
+parts of the sequence that came in and the way it works I think for um for gpt3
+what it does is it um uh
+so first of all it has this embedding Vector which for gpt3 is about is 12 288
+um I don't know why it's that particular oh I do know why it's that number it's multiples of things
+um long and uh uh it's
+it's taking
+it's trying to put together a an embedding Vector to represent the text so far in which it has had
+contributions from words at different positions and it's it's sort of it's figured out how much contribution it
+should get from words at each different position um well okay so it does that then it feeds
+the whole thing to a a layer of neural Nets where sort of it
+has some uh it's a um what is it it's a a 12 000 by 12 000
+array um which specifies what where there are 12 000 by 12 000 weights which specify
+for each incoming neuron each each neuron that's incoming has this weight
+to this outgoing neuron and the result is you get this whole assembly of
+Weights which looks like nothing in particular this is uh but these are weights that have been learned by by
+chat GPT to be useful for its task of continuing text and you know you can
+play little games you can you can try and visualize those weights by kind of making moving averages
+um and you can kind of see that the weights sort of roughly are kind of like randomly chosen but this is kind of
+showing you a little bit of the detail inside that Randomness and in a sense you can think of this as being sort of a
+view into the brain of the of chat GPT of showing you at the level of these
+individual weights that are in this neural net um what what its representation of human
+languages write down the level you know it's kind of like you take apart a computer and you look at individual bits
+inside the CPU um this is kind of the same sort of thing thing for the representation that
+chat GPT has of language and turns out there isn't just one of these attention
+layers okay what happens is the the different elements of the feature Vector
+for the text get there are different blocks of that
+feature Vector that gets separated out and handled differently nobody really
+knows what the interpretation of those blocks is it's just been found to be a good thing to do to not treat the whole
+feature Vector the same but to break it into blocks and treat blocks of pieces in that feature Vector differently maybe
+there's an interpretation of one piece of that feature Vector that this is I don't know words that are about motion
+or something it won't be anything like that it won't be anything as human understandable as that it's kind of like
+a human genome or something it's all all the traits are all mixed up in the specification it's or it's like what um
+uh it's it's not something where we can easily have a sort of narrative description of what's going on but
+what's been found is that you break this kind of feature Vector of of features of
+the text up and you have these separate attention heads that um have this sort
+of re-weighting process going on for each one you do that and this is where you know this is like it's crazy that
+things like this work but um you do that let's see 96 times for for chat GPT
+you're making you're doing the same process 96 times over and uh this is for
+gpt2 the simpler version this is kind of a representation of the of of of the the
+things that come out of these attention layers um attention blocks what the uh what the
+sort of Weights that were used there were and you know these may look there
+there is some regularity I don't know what it means but if you look at the the size of the weights they're not
+perfectly for some layers they're gaussian distributed for some layers they're not I have no idea what the
+significance of that is it's just a feature of what um uh what chat GPT
+learned as it was trying to understand human language from from the web
+um so okay
+the um uh so again there's you know we've talked
+about kind of what the the uh in in the end that what's happening
+is it's just a great big neural net and it's being it's being trained from it
+we're trying to deduce the weights for the neural net by showing it a whole bunch of text and saying uh what weights
+do you have to have in the neural net so that the um
+uh so that the continuation of the text will have the right probabilities for what word comes
+next that's its goal so how uh and so
+I've sort of described the outline of how that's done um in the end one has to feed it the
+reason it's sort of even possible to do this is that there's a lot of training data to feed it so it's been fed a
+significant fraction of what's on the web there are Maybe I don't know depends how you describe
+this but there are maybe six billion maybe 10 billion uh kind of reasonably
+human written pages on the web where humans actually typed that stuff it wasn't mostly machine generated et
+cetera et cetera et cetera that's on the publicly visible web not having programs go in and not not selecting lots of
+different things and seeing what you get that's just kind of raw what's on the web page maybe there's 10 maybe 100
+times as much as that um if you were able to make selections to drill down to go into internal web
+pages things like this but so you've got something like um some you know some
+number of billions of human written pages and uh there's a convenient
+collection called common crawl that's got where but where one goes where where uh it's um
+you know start from one web page you follow all the links you collect all those pages you keep going just
+following links following links until you've until you've visited all the connected parts of the web but um the
+result of this is there's a trillion words of text that you can readily get from uh from a web
+um they're also they're probably 100 million books that have been published maybe 100 I think the best estimate
+maybe 130 million books that have been published of which five or ten million exist in digitized form and you can use
+those as a training data as well and that's another 100 billion or so uh
+words of of of of text so you've got trillion-ish words of text and that's
+what um uh and there's probably much more than that in if you have the um uh
+the transcriptions of videos and things like this you know for me personally I've kind of been um uh you know as a
+kind of a a personal estimate of these things I I really realized that um
+the things I've written over my lifetime constituted about three million words the um the emails I've sent over the
+last 30 years are another 15 million words and the total uh number of uh
+words I've typed is around 50 million um interestingly in the live streams
+I've done just in the last couple of years I have spoken another 10 million words so it
+gives a sense of what you know human output is what but the main point is there's a trillion words available on on
+that you can use to train a neural net to be able to do this task of of
+continuing from from things um
+it's uh let's see
+in um
+right so so the actual process of um uh one thing to understand about training a
+neural net that's sort of a question okay there's a there's a question when
+we looked at those functions before and we said how many neurons do we have to have to represent this function well how
+many training examples do we have to give to get the the neural net trained to represent that function in those
+cases we didn't need very big neural Nets we needed a lot of training examples there's all kinds of effort to
+understand how many training examples do you actually need how big a neural net do you actually need to to uh do
+something like do this text translation uh uh thing well well it's not really
+known but uh you know with 175 billion weights the sort of the surprise is that
+chat gbt does pretty well now you can ask the question um what um
+what's the uh uh how much training does it need
+um and uh how many times does it have to be shown those trillion words what's the relationship between the trillion words
+and the number of Weights in the in the um in the network and it seems to be the
+case that for text um that sort of the number of Weights in the network is sort of comparable to the
+number of training examples you sort of show it the training examples about once if you show it too many times it
+actually gets worse in its performance it's very different from what happens when you're training for mathematical
+functions and things like this um but uh one of the things that's that's an issue is that if you're every
+time then I should say every every time I should explain by the way that the the
+the every time the neural net runs what's happening is you're giving it
+in the case of chat GPT you're giving it this collection of numbers that represents the text it's gotten so far
+and then that collection numbers is the input to the neural net then you sort of Ripple
+through the neural net layer after layer after layer it's got about 400 layers um sort of core layers
+um it ripples through all those layers and then at the end you get some array of numbers that array of numbers
+actually are probabilities for each of the 50 000 possible words in English
+um and that uh based on that it then picks to the
+next word but so the main operation of chat GPT is a very just straight through you know
+you've got this text so far given that percolate through this network say what
+the next result should be it's very cut it just runs through one time it's actually very different from the
+way computers tend to work for other purposes most non-trivial computations
+you're taking the same piece of of of of sort of computational material the same
+piece of data and you compute on it over and over and over again in sort of simple models of computation like Turing
+machines that's what's happening all the time that's what's happening that's what makes computers able to do the
+non-trivial things computers do or that is that they are taking uh sort of maybe
+a small number of pieces of data and they're just re reprocessing things over and over again what's happening in
+something like chat GPT is you've got this big Network you just percolate through it once for every token the only
+sense in which there's any feedback is that once you get an output you add that
+token to the input that you feed it on the next step so it's kind of an outer loop where you're giving feedback by
+adding tokens to the text then that percolates through then you get another token that percolates through so it's a
+very it's a very big Outer Loop it's probably the case certainly in computers in in lots of non-trivial computations
+that we do there are lots of inside Loops that are happening quite possibly in the brain there are inside Loops that
+are happening as well but the model that we have in chat GPT is this kind of just percolate through once kind of model
+with a very complicated network but it's just percolating through once so that's that's how it works but but
+one of the things that's tricky is that um every time it percolates through it
+has to it has to use every single one of those weights so every token the chat is producing it's essentially doing 175
+billion mathematical operations to to see how to use each of those weights to
+compute the results most likely that's not necessary actually but we don't know
+how to how to get do any better than that right now but that's what it's doing so every time if it has it's
+percolating through doing that well the when you train chat GPT and you are
+sort of uh you're working out you know how do you deal with oh making the weights change based on the loss that's
+another you're kind of every time you you make a training step you're having
+to kind of do a reverse version of that um of that forward so-called inference
+process it turns out that reverse process isn't that much more expensive than the forward process but you have to
+do it a whole lot of times in the training so typically if you have a model of size n roughly for text it
+seems like you need about N squared amount of computational effort to do the training and N is pretty big for the
+case when you're dealing with uh sort of language and things of the size of chat gbt and so the training process that
+that just a little bit mathematical square is a is a really big deal and it means that you're you know to spend
+hundreds of Millions of dollars potentially on doing the training with current gpus and things like this is is
+what you have to think about doing based on the current model of how neural Nets work now I mean I have to say that that
+there's a lot of aspects of the current model that probably aren't the final model um and you know we can plainly see that
+there are big differences between for example things the brain manages to do for example one big difference is most
+of the time when you're training a neural net most of the uh the the memory
+and the the the you're doing that by having you have a bunch of of of things
+in memory and you have some computation that's going on but the things that are in memory are mostly idle most of the
+time and there's just a little bit of computation that's going on in brains every one of our neurons is both a place
+that stores memory and a place that computes it's a different kind of setup and we don't know how to do neural Nets
+training there are various things that have been looked at from the distant past actually about how to do this even from the 1940s people were starting to
+think about sort of distributed ways to to do learning and neural Nets but that's not something that's that's
+landed yet as a thing we can do okay case of chat GPT
+um an important thing was and this was something you
+know six months ago a year ago there were kind of uh early versions of of the
+GPT family uh text completion systems and so on and they were kind of the text
+they produced was only so so um and um then something was done by openai uh
+with that GPT which was that there was an additional step a reinforcement
+learning training step that was was done where essentially what was done was
+humans told Chachi PT go and make an essay go and be be a chat bot you know have a
+conversation with me and the humans rated what came out and said but that's
+terrible that's better that's terrible Etc et cetera et cetera and the thing that was done
+was then that that little bit of poking turns out to have had it seems to have had a very big effect that little bit of
+kind of human guidance of yes you got the thing from the statistics of the web now when you look at what you got this
+direction you're going in is a bad direction to go and it's going to lead to a really boring essay or whatever else
+um and so that kind of and by the way there's a place where where a lot of kind of complication about well what do
+the humans really think the the network should be that the system should be producing if the humans say we really
+don't want you to talk about this we really don't want you to talk about that that's the place that gets injected is
+in this is in this reinforcement learning step uh at the end
+um and but what you do is for example is uh given that sort of the way the humans
+poked at those essays you can watch what they did when they poked at those essays and rated what happened and so on and
+you you can try and machine learn that set of things that the humans did then
+you can use that to provide much more training data to then retrain a piece of
+of this do retraining of the network to
+based on the sort of the tweaking that the humans did you can do sort of fine-tuning of this network based on the
+the particular poking that the humans did turned into another Network that can
+then be used to do the training to produce the examples to do the training of of the of the main Network
+so that's a thing that seems to have had a big effect on the actual sort of human
+perception of what happens in in um in in church of PT and I think um uh the
+other thing that is a um um sort of a surprise is that you can
+give it these long prompts in which you tell it all kinds of things and it will
+then sort of make use of that in a rather human kind of way in generating the text that comes later
+okay big question is how come this works why
+is it that a thing with only you know 100 billion or so weights or something can reproduce this sort of amazing thing
+that seems to require all of the sort of depth of human thinking and and brains
+and things like that human language how does that manage to work and I think the um
+uh the key thing to realize is what it's really telling us is a science fact it's
+telling us there's more regularity in human language than they thought than we thought there was it's telling us that
+this this thing that's that is human language has a lot of structure in it
+and what it's done is it's learned a bunch of that structure and it's learned structure that we never even really noticed was there and that's what's
+allowing it to generate these kind of plausible pieces of text that are you
+know that are making use of the structure we know so we know certain kinds of structure that exists in language we know the um so for example
+um um here's an example so one one piece of structure that we know
+um share this again um
+one piece of structure we know is grammatical syntax um the the uh syntactic grammar we know
+that that sentences aren't random jumbles of words sentences are made up
+with nouns in particular places verbs in particular places and we can represent that by a parse Tree in which we say you
+know here's the whole sentence there's a noun phrase a verb phrase another noun phrase these are broken down in certain
+ways this is the parse tree and there are certain the in order for this to be
+a grammatically correct sentence this has there are only certain possible
+forms of parse tree that correspond to a grammatically correct sentence so this is a regularity of language that we've
+known for a couple of thousand years it's only really been codified uh it was a big effort to codified in 1956
+um but it was sort of knowing this general idea was was known for a long time
+um but uh then this um um that that we can kind of represent
+the sort of uh syntactic grammar of language by these kinds of rules that
+say you can put nouns only together with verbs in this way and that way and to any set of rules and this has been a big
+source of controversy and Linguistics that any set of rules you can Define there'll always be some weird exception
+where people typically say this rather than that but if you you know it's at
+the much like happens in typical machine learning you know if you're interested in the 95 result then there are just
+rigid rules and there are a few exceptions here and there okay so that's one form of regularity that we know
+exists in language is is this some uh syntactic um regularity now what one thing we can
+do we can ask for sort of um uh chat GPT has effectively implicitly learned
+this um syntactic grammar nobody ever told it verbs and nouns go this way and that way
+it implicitly learned it by virtue of seeing a trillion words of text on the
+web which all have these properties and when it's saying well what are the typical words that follow well it's
+going to be words that followed in the in the examples it had and those will follow mostly correct grammar now we can
+we can take a simpler version of this we can just understand what's going on we can take a very very trivial grammar we
+can take a grammar that's just a parenthesis just open and close parentheses and something is grammatically correct if we open
+parentheses and they always eventually close and this is a parse tree for a um
+uh for a parenthesis uh you know open open open close open close Etc et cetera
+Etc this is the parse tree that sort of shows how you can
+it's a representation of of of uh of the sort of the the um the parsing of this
+sequence of of open and closed parentheses okay so we might say well can we train a neural net to what would
+it take to train a neural net to know even this particular kind of syntactic grammar
+so we looked at a simple how big was it it was um pretty small uh okay we made it a
+Transformer net with eight heads and length 128 so um uh but but our thing was a was a
+lot simpler than than um uh than chat GPT but you can you can use one of these
+Transformers and if you look at the the um uh the post I made that there's the
+actual Transformer is there and you can you can play with an important language um but anyways if you if you give that
+Transformer this sequence here and you say what comes next it says okay uh well
+54 probability that there's a closed paren there based on oh it's training
+data was a randomly selected collection of correct open close open close
+parenthesis um uh sequences it has a little bit of a goof here
+because it says with .0838 probability this is the end of the sequence which
+would of course be grammatically incorrect because there's no close for this there's for the for the open
+parentheses here if um uh if we give something which is correctly uh closing then it says okay
+great there's a 34 probability this is the end of the sequence there were no further opens here it has a little bit
+of a goof here because it says 15 probability there's a closed parenthesis that should occur here which can't
+possibly be right because if we put a closed parenthesis here it doesn't have a corresponding open parenthesis it's not grammatically correct but anyways
+this gives a sense of what it takes for one of these Transformer Nets we can look inside this Transformer net we can
+see sort of what it took to learn this very simple grammar chat GPT is learning
+the much more complicated grammar of English it's actually easier probably to learn the grammar of English because there's so many clues in the actual
+words that are used to how they're grammatically put together and there's so many things that we humans wouldn't even notice as wrong
+in some sense of wrong because they're they're kind of just what we do but in this more austere case of just this sort
+of mathematically defined parenthesis language we do notice so if we just give it a bunch of open paren open brand Etc
+and we ask it what's the highest probability continuation you'll see it does pretty good up to this point and
+then it starts losing it and it's kind of a little bit like what would happen with humans you know we can tell at some
+point here that by just by eye that these are correctly closed it becomes more difficult to tell that when we get
+out here and it becomes more difficult for the for the network to tell that too and this is a typical feature of these
+neural Nets that with these sort of shallow questions of oh you just have you know you can just see this block of
+things you see another block of things it does fine when it has to go to to much greater depth it's it doesn't work
+so well for a sort of regular computer that can do loops and things inside it's very easy to to figure out what's
+happening here because you effectively just count up the number of open Brands count down the number of close Brands and so on on by the way if you try this
+in actual chat GPT it also it will confidently assert that it's it's matched parentheses but it will often be
+wrong the larger parenthesis sequences it has the exact same problem it's it's a it fails at a slightly larger size but
+it's still going to fail and that's just a feature of of this kind of thing so
+uh well okay so one type of regularity in language that chat GPD has learned is
+syntactic grammar um another type of regularity there's there's one more that that you can readily identify and that's logic
+and what is logic well originally when logic was in was invented you know by
+Aristotle so far as we know you know what Aristotle did was effectively a bit
+like a machine Learning System he looked at lots of examples of rhetoric lots of example speeches people gave he said
+what are some forms of argument that appear repeatedly if somebody says you know uh something like people might have
+said you know all men Immortals Socrates is a man therefore Socrates is Mortal
+um all all X's are y um uh
+Z is a is a is an X therefore Z is a y
+um the uh uh that that logic is taking
+sort of forms of of of of language and saying these are patterns that are
+repeated possible patterns in these in these uh pieces of language that are meaningful sequences and originally in
+so logistic logic which is what Aristotle originally invented it really was very language based and people would
+memorize you know Middle Ages people would memorize these forms of syllogism Barbara syllogism the celerant syllogism
+and so on which were just these these patterns of of word usage where you could substitute in a different word for
+Socrates but it was still that same pattern that same structure so that was
+that was that's kind of another form of regularity and when chat GPT is says it's oh it's it's figuring things out
+well part of what's figuring out is it knows so logistic logic because it's seen a zillion examples just like
+Aristotle the presumably seen a bunch of examples when he invented logic he'd seen a bunch of examples of this
+sentence follows this sentence in this way and so it can it's going to do that too and it says what's the statistical
+thing that's going to happen based on based on the web um and so so that's um
+uh so by the way when logic developed by the 1800s when people like Bool were
+getting into the picture and making formal logic um it was no longer just these patterns
+boom it's a pattern that looks like this it was more this thing you could build up many many layers of structure and you
+could build you know very complicated logical Expressions where the whole thing was deeply nested and of course
+our computers today are based on those deeply nested logical Expressions chat GPT doesn't stand a chance of of
+decoding what's going on with one of those deeply nested kind of mathematical computational style Boolean Expressions
+but it does well at this kind of Aristotle level kind of um uh you know
+structure of of sort of templated structure of logic
+okay well I wanted to talk just for a little bit and then we should wrap up here and I can try and answer some
+questions um the uh uh about kind of so what are
+the regularities that Chachi PT has discovered in this thing that we do which is language and all the thinking
+that goes on around around language and I don't know the answer to this I have some ideas about what's going on
+I'll just you know give it a little bit of a tour we talked about kind of meaning space the sort of space of of
+how words arrange in in some how you can arrange words in some kind of meaning space and we can we can kind of see how
+words arrange these are different parts of speech for a given word there may be different places in meaning space where
+different instances of that word occur this is the word Crane and this is different sentences there are two
+obvious meanings of crane you know the bird and the the and the Machine and
+they sort of break up in meaning the space where they are we can look at the sort of structure of meaning space
+another thing we can ask is is meaning space like physical space is it the case
+that there are parallel lines in meaning space are there things where we can go from place a to place B and we and then
+in parallel we transport to new places well so we can ask you know if we have
+analogies is it the case that we can go you know from woman to man from Queen to
+King that those are sort of parallel parts and meaning space the answer is well maybe a bit not very convincingly
+that's really the question in in space in physical space this is the question whether this is like flat space it's
+like if we have things moving in flat space you know um Newton's first law says if the thing is
+not acted on by a force it'll just keep going in a straight line well then we have gravity and we can represent
+Gravity by talking about the curvature of space here this question is when we go from uh you know ear to here I to C
+those are sort of uh we're we're moving in a certain direction in meaning space and in a sense the question of whether
+these things correspond to whether we can do this kind of parallel transport idea is something like how flat is
+meaning space how much effective gravity is there in meaning space or something like that meaning space is probably not
+something that's represented in terms of the kinds of things that physical spaces represented in terms of but that's a
+question so now when it comes to the operation of tractor BT we can think about how is it
+moving around in meaning space it's got its prompt you know the best thing about AI is is it's is its ability to okay
+um and uh that's the prompt moving around in
+meaning space effectively and then what chat apt does is it it continues that by
+continuing to move in meaning space and so the question is is there something like a semantic law of motion an analog
+of of kind of the laws of motion that we have in physical space in the meaning space of of Concepts words something
+where we can say okay if it's gone if it's moved around this way it's like
+it's got momentum in this direction and meaning space it's going to keep going in that mean space it's nothing like that simple but the question is what are
+how do we think about how do we represent kind of um the the the sort of
+the the process of going through meaning space well we can start looking at that we can
+say for example the different possible continuations that we get the best thing
+about ai's ability to and then what's the next word well we can look at this kind of fan of different directions that
+it could go in meaning space at that point and we can kind of see there's some there's some direction in meaning
+space it tends to go in that direction it's not going all the way over here at least not with high probability
+okay well if we keep going we can kind of just see sort of how that fan develops as we go further out as as we
+continue that sentence and we can kind of this is kind of like our motion and meaning space kind of question
+and you know I don't know what this exactly means yet but this is kind of what it
+looks like what the trajectory and meaning space as chat GPT tries to
+continue a sentence looks like the green is the is the actual thing it shows I think this is a zero temperature case
+and the the gray things are the other things that were lower probability cases so that's that's some
+that's kind of what um uh that's some of you if we want to look at we don't want
+to want to do natural science on chat gbt and say what did it discover what did it discover about how language is
+put together one possibility is that there are these sort of semantic laws of motion that describe sort of how meaning
+how you move through the space of meanings as you add words into it into a piece of text
+I think a slightly different way to think about this is in terms of what one could cause semantic grammar so
+syntactic grammar is just about you know nouns verbs things like that parts of speech things of that kind but we can
+also ask is there a generalization of that that is sort of more semantic that
+doesn't just look at that has finer gradations and just saying it's a noun it's a verb and says oh well that verb
+means motion and when we put this noun together with this noun that's a thing
+you can move together with this motion word it does this we we kind of have buckets of meaning that are finer
+gradations than just parts of speech but not necessarily individual words is
+there a kind of a semantic grammar that we can identify that is kind of this
+construction kit for how we put together not just sentences that are grammatically correct that are
+syntactically grammatically correct but sentences which are somehow semantically correct
+now that that um I I strongly think this is possible and it's sort of what
+Aristotle was going for he even talks about categories of of um uh sort of
+semantic categories and things like this he talks about a variety of things he does it in a in a way that's based on
+the fact that it was two thousand years ago and we didn't know about computers and we didn't know about a lot of kinds of formal things that we know about now
+uh strangely enough the amount of work that's been done trying to make kind of a semantic grammar in the last 2000
+years has been rather small it's there was a bit of an effort in the 1600s with people like leibniz with his
+characteristica universalis and various other people trying to make what they call philosophical languages uh sort of
+language word independent ways of of describing meaning and then their more
+recent efforts but they've tended to be fairly specific fairly based on Linguistics
+um and uh fairly based on the details of structure of human language and so on um and I think this the this uh this
+idea that you can kind of have a semantic grammar is is a
+and that that's what's sort of being discovered is that there are these rules that go beyond that are just rules for
+how you put together a a meaningful sentence now you know you can get a
+meaningful sentence could be something like the elephant flew to the moon
+does that sentence mean something sure it means something it has a perfectly we can conjure up an image of what that
+means has it happened in the world no it hasn't happened so far as we know
+um and uh so there's a but you know could it be in a story could it be in a fictional World absolutely
+so this thing about this sort of semantic grammar will allow you to allows you to put together things which
+are somehow which are sort of um uh meaningful things to describe about
+the world um the question of whether they are realized in the world or have been realized in the world is a separate
+question but in any case the um the thing that um uh
+that is to me interesting about this is it's
+it's something I've long thought about because I've spent a large part of my life building a computational language
+uh well from language um system that is an effort to represent
+the world computationally so to speak to take the things that we know about about
+chemicals or lines or or images or whatever else and have a computational
+representation for all those things and have a computational language which knows how all those things work it knows
+how to compute the distance between two cities it knows all of those kinds of things and in in um and so this is I've
+been spending the last four decades or so trying to find a way to represent
+things in the world in this computational fashion so that you can then compute uh uh you can then compute
+things about those things uh in an explicit computational way
+it's something where uh and we've been very successful at being able to do that in a sense the story of modern science
+is a story of being able to formalize lots of kinds of things in the world and we're kind of leveraging that in our
+computational language to be able to formalize things in the world to compute things about how they'll work
+now the um uh one feature of that Computing about how things work is that
+inevitably some of those computations are deep computations they're computations that something like a chat
+GPT can't possibly do and in a sense there's sort of a a
+difference between the things that are the kind of the the um
+the sort of shallow computations that you can learn from examples in something like a chat GPT that you can say this
+piece of language that I saw on the web here is you know statistically uh I can
+sort of fit that in in this place just fitting together these sort of puzzle pieces of language is a very different
+thing from taking the world and actually representing it in some truly sort of
+formal way computationally so that you can compute things about how the world works it's kind of like well back before
+people had kind of thought of this idea of formal formalism maybe 400 years ago
+or more um you know everything that anybody figured out was just you think about it in terms of language in terms of words
+in terms of sort of immediate human thinking um what what then sort of came in with
+with mathematical science at first and then computation was this idea of formalizing things and getting these
+much deeper uh sort of ways to deduce what happens and and thing I've figured out about 30 40 years ago now was was
+this phenomenon of computational irreducibility this idea that there really are things in the world where to
+compute what's going to happen you have no choice but to follow all those computational steps you can't just jump
+to the end and say I know what's going to happen it's a shallow kind of thing and so you know when we look at
+something like chat GPT there are certain kinds of things it can do by sort of matching together matching these
+pieces of language there are other kinds of things it's not going to be able to do it's not going to be able to do sort
+of the mathematical computation the the kind of the the thing which requires an actual computational representation of
+the world for those things like us humans it's kind of a used tools type type situation
+and very conveniently our Wolfram Alpha system that uh um used in a bunch of
+intelligent assistance and so on is uh has this picture that it's using a wolf
+and language computational language underneath but it actually takes natural language input so it's actually able to
+take the natural language that is produced by a chat GPT for example take
+that and then turn that into computational language do a computation work out the results get the right
+answer feed that back to chat GPT and then it can talk sense so to speak
+rather than just following sort of the statistics of words on the web so it's a way of you know by by allowing but you
+can get sort of The Best of Both Worlds by having something where you have this sort of flow of of language
+um as well as as something where you have the sort of depth of computation by having chat gbt use wolf from Alpha as a
+tool and I wrote a bunch of stuff about that and all kinds of things are happening with that um but uh
+the thing that um you know talking about what did chat GPT
+discover I think the thing it discovered is there is a semantic grammar to a lot of things
+there is a way to represent uh using sort of computational Primitives lots of
+things that we talk about in in text and in our computational language we've got
+representations of lots of kinds of things whether it's Foods or chemicals or or stars or whatever else
+but when it comes to something like I'm going to eat a piece of chocolate we have a great representation of the
+piece of chocolate we know all its nutrition properties we know everything about it um but we don't have a good
+representation yet of I'm going to eat the I'm going to eat part well I think
+chat GPT has shown us is that it's very plausible to get sort of this semantic
+grammar of how one has these pieces of of representing these sort of lumps of
+meaning in language and I think what's going to happen and I've been interested in doing this for a long time I think
+this is now finally the impetus to really uh really roll up on sleeves and do it
+um it's a it's a it's a somewhat complicated project for a variety of reasons not least but you have to make
+these kind of uh uh well you you have it has to be you have to make sort of this
+process of Designing a language is something I happen to have been doing for 40 years designing our computational
+language this is a language design problem and those are to my mind those are actually the the single most
+concentrated intellectually difficult thing that I know is this problem of language design so this is sort of a
+generalization of that but I think chat GPT has kind of shown us what you know I didn't know how hard it was going to be
+I'm now convinced it's doable also to speak so what what does this um uh
+you know you might ask the question you know people might have said okay look you know we we've seen neural Nets that
+do speech to text we've seen neural let's do image identification now we've seen neural Nets that can write essays
+surely if we have a big enough neural net it can do everything well not the neural Nets are the kind we
+have so far that have the training structure that they have so far not on their own they will not be able to do
+these irreducible computations now these irreducible computations are not easy for us humans either you know when it
+comes to doing piece of math or worse if somebody says here's a program run this program in your head good luck you know
+very few people can do that um it um it's something where there is a a
+difference between what is sort of immediate and easy for us humans and what is sort of computationally possible
+now another question is maybe we don't care about the things that aren't easy for humans it's turned out that we built
+an awful lot of good technology over the last few centuries based on what amounts to a much deeper level we haven't really
+in our technology we're not actually going even that far into irreducible computation but going far enough that
+it's beyond what we humans can readily do but what we can do with kind of the neural Nets that exist today
+um so I think the uh that that's the kind of the the thing to understand that there's a there's a certain set of
+things what's what's happening in chat GPT is it's kind of taking the average of the web plus books and so on and it's
+saying you know I'm going to fit things together based on that and that's how it's writing its essays and it's and
+when it is deducing things when it's doing logic things like that what it's doing is it's doing logic like the way
+Aristotle discovered logic it's figuring out oh there's a pattern of words that
+looks like this and it tends to follow it like that because that's what I've seen in in a hundred thousand examples
+on the web um so that that's that's kind of what it's doing and it it kind of that gives
+us some sense of what what it's going to be able to do and I think the most important thing it's able to do is it's
+a form of user interface you know we can get I might get something where I know
+oh what really matters is three bullet points but if I'm going to communicate that to
+somebody else they're really not going to understand my three bullet points they need wrapping around that they need
+something which is a whole essay describing you know that that's the human interface so to speak it's just
+like you could have you know the raw bits or something and that wouldn't be useful to us humans we have to wrap it
+in a human like in a sort of human compatible way and language is sort of our richest human compatible medium and
+what what chat gbt is doing is it's able to I think what the the way to think
+about it is it's providing this interface that is well it is just it's generating pieces of language that are
+consistent but if you feed it specific things that it will talk about so to speak then it's kind of wrapping the the
+specifics with this interface that corresponds to kind of flowing human language all right I went on much longer
+than I intended um and uh uh I see there are a bunch of
+questions here and I'm going to go from um and to try and address some of these as a question from antipasts or
+constructed languages like Esperanto more amenable to semantic grammar AI approach very good very interesting
+question so I think the one that I was experimenting with was the smallest of
+the constructed languages a language called tokipona that has only 130 words in it
+um it is not a language that allows one to express you know everything one might
+want to express but it's a good kind of uh uh Small Talk type language a small
+language for doing small talk so to speak but it expresses a bunch of decent ideas and so I was I was I was going to
+look at yes that it's a good clue again to semantic grammar that there are these
+small constructed languages it also helps um I think well I also think that
+probably the largest the constructed language is ethical is another uh interesting uh Source it's a language
+which is trying to pull in all of the kind of language structures from all the all-known languages in some first
+approximation um the that's some
+um uh yeah that that's that yes so I think the answer is that yes I think
+they're a good uh stimulus or um for thinking about semantic grammar in a
+sense when people were trying to do this back in the 1600s they're very confused about many things but you know
+I one gives them a lot of they've gone a long way given that it was the 1600s they were confused about things like
+whether the actual letters that were written as you wrote The Language mattered and how that was you know uh
+more so than the than the structure of things but but uh there was the beginning of that um uh that kind of
+idea um okay I'm going to take these from the
+envelope I want to go back to some of these others um okay Tori is asking how come on study
+what's the best way of prompting chat GPT could a semantic Lord motion be helpful undoubtedly yes I don't know the answer
+to that I think it's a good question and I don't really know um the uh
+um you know I think um
+yeah I don't know uh Albert is asking is the 4000 token
+limit analogous to working memory but accessing larger memory be increasing the token limits or increasing such
+capabilities reinforcement learning well I think that the the token limits
+that exist right now uh are you know if you want to have a coherent essay and
+you want it to know what it was talking about back in that early part of the essay you better have enough tokens in
+that are being fed into the neural net every time it it gets a new token if it
+just doesn't know what it was talking about if it forgot what it was talking about 5000 tokens ago it may be saying
+totally silly things now because it didn't know what was there before so in some sense it's like it's I don't think
+it's I don't think it's like our short working memory but I think
+um you know it's kind of like you Ramble On I ramble on a lot you know talking about things and like I might have
+forgotten half an hour later that I talked about that already I might be telling the same story again I hope I
+don't do that I don't think I do that too badly um but but you know that that's a question of what that that's the kind of
+thing that happens with this token limit um let's see let me go back to some of the
+questions that were asked earlier here um
+okay uh Aaron was asking talking more about the tension between super intelligence and computational
+irreducibility how far can llm intelligence go I think I talked a little bit about that I think this
+question oh boy this is this is kind of complicated I mean so
+this question about okay
+the the universe the world is full of computational irreducibility that's it's
+full of situations where we know the underlying rules but we run them as a computation and you can't shortcut the
+steps what what we've discovered from our physics project is it looks like the
+very lowest level of space-time works just that way in fact just earlier today saw a lovely
+um uh work um about uh um doing practical simulation of space
+times and things using using those ideas and very much supporting again this it's
+really computationally irreducible at the lowest level just like in a in something like a gas the molecules are
+bouncing around in this computationally irreducible way what we humans do is we sample sort of aspects of the universe
+that have enough reducibility that we can predict enough that we can kind of go about our lives like we don't pay
+attention to all those individual gas molecules bouncing around we only pay attention to the aggregate of the
+pressure of the gas or whatever else we don't pay attention to all the atoms of space we only pay attention to the fact
+that there's this thing that we can think of as more or less continuous space so our story has been a story of
+finding slices of reducibility slices places where we can predict things about
+the universe there's a lot about the universe we cannot predict we don't know and if our existence depended on those
+things if we had not found kind of these these slices of reducibility uh we
+wouldn't we wouldn't be able to have a coherent existence of the kind that we do so if you ask sort of where do you go
+with that well there are they're an infinite collection there's an infinite kind of web of pieces of computational
+reducibility there's sort of an infinite set of things to discover about that we have discovered some of them as we
+advance in our science and with our technology for for things we get to
+explore more of that kind of web of reducibility but that's that's really the issue now the problem is that the
+way that we humans kind of react to that is we have ways to describe what what we
+can describe we have it we have words that describe things that are common in our world we have a word for a camera we
+have a word for a chair those kinds of things we don't have words for things
+which have not yet been common in our world and you know when we look at the innards of Chachi PT it's got all kinds
+of stuff going on in it maybe some of those things happen quite quite often but we don't have words for those we
+don't have a way we haven't yet found a way to describe them when we look at the natural world we've there are things
+that we've seen repeatedly in the actual world we have words to describe them we've built up this kind of descriptive
+layer for for talking about things but one of the things that happens is
+the if we kind of jump out to somewhere else in the son of Universe of possible computations
+there may be pieces of reducibility there but we don't have words to describe those things we only have we
+know about the things that are near us so to speak and so and gradually a science advances
+um we get to expand the domain that we can talk about so to speak our everything advances we get to have more
+words we get to be able to talk about more things um but in a sense to have something
+which operates it's this gradual process of us sort of societally in a sense learning more
+Concepts we kind of can exchange Concepts we can build on those Concepts and so on but if you throw us out into
+some other place in what I call the rouliad the uh the space of all possible
+computational processes if you throw us out into an arbitrary place there we
+will be completely confused because there will be things we can tell there are actual computations going on here
+there are things happening there's even pieces of reducibility but we don't we don't relate to those things
+um so it's kind of like imagine that you were um you know you're here now
+um and you're you know chronically Frozen for 500 years and you wake up again and there's all these other things
+in the world and it's hard to reorient um for all those other things without
+having seen the intermediate steps um and I think that that when you talk about kind of what where can you go from
+what we have now how can you sort of add more you're basically intelligence is all about these kind of uh pieces of
+reducibility these ways to jump ahead and not just say it's uh what we what we
+think of as sort of human-like intelligence is about those kinds of things and I think the um
+um uh you know so what's the vision of what will happen you know when when the world is full of AIS sort of interesting
+because actually we've seen it before I mean when the world is full of AIS and they're doing all these things and
+there's all this computational irreducibility they're all these pockets of reducibility that we don't have access to because we haven't sort of uh
+you know incrementally got to that point what what's going to be happening is there's all this stuff happening among
+the AIS and it's happening in this layer that we don't understand it's already happening and plenty of places on the
+web and you know bidding for ads or showing you content on the web whatever there's a layer of AI that's happening
+that we don't understand particularly well we have a very clear model for that which is nature nature is full of things
+going on that are often computationally reducible but we don't understand what
+we've been able to do is to carve out an existence so to speak that is coherent
+for us even though there's all this computational reducibility going on we've got these little niches with
+respect to nature which which are convenient for us as as humans so to
+speak and I think it's sort of the same thing with the the AI world as it becomes like the natural world and it
+becomes sort of not immediately comprehensible to us that's um we are we are kind of um
+um we're you know our view of it has to be oh that that's just you know the operation of nature that's just
+something I'm not going to understand oh that's just the operation of the AI is not going to understand that there's this piece that we've actually managed
+to humanize that we can understand so that's that's a little bit of the the thought about um about how that develops
+uh in other words you know you can say I'm going to throw you out to some random place in the rouliad there's
+incredible computations happening it's like great that's nice I've spent a bunch of my life studying those kinds of
+things but pulling them back reeling them back into something which has sort of direct human understandability is is
+a difficult thing uh
+Aaron is asking more of a business question about about um Google and the Transformer architecture
+um and why you know it's been a very interesting thing that
+the sort of neural Nets with this
+small field very fragmented for many many years and then suddenly things
+started to work in 2012 and a lot of what worked and what was really worked
+on was done in a small number of large tech companies and some not so large
+tech companies um and uh uh it's sort of a different picture of where Innovation is happening
+than has existed in other fields and it's it's kind of interesting it's kind of potentially a model of what will
+happen in other places but but you know it's always complicated what um what causes one group to do this another
+group to do that and they're the entrepreneurial folk who are smaller and more agile and and they're
+but the folks who have more the more resources and so on it's always complicated
+um okay Nicola was asking do you think the
+pre-training a large biological inspired language model might be feasible in the future I don't know um I think that the the figuring out how
+to train something that is you know we don't know what parts of the
+biology are important one of the one of the incredibly important things we just learned is that probably there's not
+much more to brains that really matters for their information processing than the the neurons and their connections
+and so on it could have been the case that every molecule has you know some Quantum process that's going on and
+that's where thinking really happens but it doesn't seem to be the case because this this Pinnacle of kind of our sort
+of thinking powers of being able to write the long essays and so on it's it seems like that can be done with just a
+bunch of neurons with weights now which other parts of biology are important like uh uh you know uh actually Terrace
+just wrote this paper talking about how there are more backwards going uh uh
+neural Connections in brains than forwards going ones so in that sense it looks like maybe maybe we missed the
+point with these feed forward networks that something like chat GPT basically is and that the feedback is is uh you
+know is really important but we don't yet we haven't yet really got the right idealized model of that I do think that
+the uh you know the sort of the the the what's the next McCulloch pets type
+thing what's the next sort of simple meta model of of this is important I also think that there's probably a bunch
+of essential mathematical structure to learn about General mathematical structure to learn
+um no that's you know I was interested in your own that's back around 1980 um and I kind of was trying to simplify
+simplify simplify models of things and neural Nets I went I went past them
+because they weren't simple enough for me they had all these different weights and all these different network architectures and so on and I ended up
+studying cellular automata um and and generalizations of that where
+where you know you have something where the everything is much simpler there are no real numbers there are no no
+arbitrary connections there are no this that and the other things but what what matters and what doesn't um we just
+don't know that yeah uh
+uh Paul is asking what about a five senses multimodal model to actually ground the system in the real world with
+real human-like experience I think that will be important and that will no doubt happen and you know you'll be more
+human-like look this chat gbt is pretty human-like when it comes to text because
+by golly it just read a large fraction of the text that we humans at least publicly wrote
+um and but it didn't no it hasn't had the experience of walking upstairs and
+doing you know doing this or that thing and so it's not going to be very human-like when it comes to those sorts
+of things if it has those experiences then then I think we get to um uh you
+know then that that will be interesting um
+okay someone's commenting on the fact that I should do the same kind of description for image generation uh generated AI for images
+um the uh the thing that I like to think about there is I think that's that's one
+of our first moments of communication with an alien intelligence in other
+words we in some sense we're talking to the
+generative AI in English words or whatever and it's going into its alien mind so to speak and plucking out the
+stuff that is these images and so on it's it's less so you know with chat GPT what the output is something that is
+already intended to be very human it's human language with with um
+a an image generation system it's more uh it's really it's producing something
+which has to be somewhat recognizable to us it's not a random bunch of pixels it's something that resonates with things we know but in a sense it can be
+it can be more completely creative in what it's showing us and in a sense as
+one tries to sort of uh you know navigate around its space of what it's
+going to show us it feels a lot like kind of you're communicating with an alien intelligence and it's kind of uh
+it's kind of showing you things about how it thinks about things by saying oh you said those words I'm going to do
+this and so on I mean I I have to say that I'm I'm if if we can't you know the
+other examples of alien intelligence is that we have all around that planet are lots of lots of Critters from the
+citations on so to speak um that uh and I have to believe that if
+we could correlate kind of the experiences of those Critters cats dogs you know
+cockatoos whatever else um and the vocalizations that they have and so on and we could you know that
+that it's it's talk to the animals time so to speak I think that's a that feels like uh that that's you know the the
+kinds of things we've learned from chat gbt about the structure of human language I am quite certain that if
+there's any linguistic structure for other for other animals it'll be similar because it's one of the lessons of
+biology is you know there are fewer ideas than you think the you know these things that we have have precursors in
+biology long on ago we may have made Innovations in language it's kind of the key innovation of our species but
+whatever is there had precursors in in other organisms and and that's what um
+and and the fact that we now have this much better way of kind of teasing out a model for for language in in humans
+means we should be able to do that elsewhere as well uh
+okay David is saying chat gpt's developers seem committed to injecting uh sort of political
+curtailments into the code um because uh to avoid it talking about controversial topics how's that done
+it's done through this reinforcement learning um uh stage I think maybe there's also
+some actual you know if it's starting to use these words just just stop it type
+things I think maybe that's being done a little bit more with maybe with Bing than it is with with chat GPT at this
+point um I think that the um uh I have to say the one thing that I consider a you know
+so far as I know chat GPT is a G-rated you know thing
+and that's achievement in its own right that it doesn't um maybe I shouldn't say that because probably maybe they're a
+horrible counter examples to that but I think that was a um you know in terms of one of the
+things that happens is well you have a bunch of humans and they are giving it this training and those humans have
+opinions and they will have you know there'll be this kind of politics or that kind of politics or they'll believe in this or that or the other and they
+are uh you know whether purposefully or not they're you know they're going to
+impose those opinions because there is no you know the opinionist what you're doing when you tell chat GPT that essay
+is good that essay isn't good you know at some level that's an opinion now that opinion may or may not be colored into
+something that is uh about you know politics or something like that but it's it's sort of inevitable that you have
+that I mean I have to say you know something I've thought about a little bit in connection with with General sort
+of uh AI injection into sort of the things we see in the world like social
+media content and so on I tend to think that the right way to solve this is to say okay let's have multiple you know
+chat Bots or whatever and they are in effect trained with different criteria
+by different groups under different banners so to speak and you know you get to pick the banner of chat bot that you
+want to be using and and then then you're happy because you're not seeing things that horrify you and so on and
+and you can discuss you know whether you want to pick the chat bot that that accepts the most diverse views or
+whether you want to you know that that's a that's that sort of throws one back into um
+into kind of standard issues of political philosophy and things like this I mean I think the thing to realize
+is that there is a there's sort of an ethics you know one wants to put ethics somehow
+into what's going on but when one says let's have the AIS you know do the
+ethics it's like that's hopeless ethics is a there is no sort of mathematically definable perfect ethics ethics is a the
+way humans want things to be and then you have to choose you know well is it the average ethics is it the you know
+the ethics which makes only five percent of the people unhappy is it this that and the other these are old questions of
+political philosophy that don't really have so far as we know good answers and but once thrown into those questions
+there's no you know oh we'll get a machine to do it and it'll be perfect it won't happen because these are questions
+that that aren't solvable for a machine because they're questions that in a sense come right from us these are I
+mean the thing to realize about chat GPT in general chat GPT is a mirror on us it's taken what we wrote on the web so
+to speak in a in in Aggregate and it's reflecting that back to us so insofar as
+it does goofy things and says goofy things you know some that's really on us I mean that's you know it's our sort of
+it's It's the average um kind of uh uh the the the the sort of the average
+web that we're we're seeing here um
+tenacious is asking about a particular paper which I sounds interesting but I I don't know about it
+uh let's see up up soon here
+um okay tragath is was wondering how neural
+net AI compares to other living multicellular intelligence uh plant roots
+um nerve Nets and things like jellyfish and so on biofilms yeah well okay so
+one of the big things that's come out of a bunch of science that I've done is this thing I call the principle of computational equivalence which
+essentially says that as soon as you have a system that is not computationally trivial it will ultimately be equivalent in its
+computational capabilities and that's an important thing when you talk about computational irreducibility because
+computational irreducibility arises because that you've got a system doing
+its computation there's no system you can't expect there to be all other
+systems will just be equivalent in their computational sophistication you can't expect a super system that's going to
+jump ahead and just say oh you went through all these computational steps but I can jump ahead and just get to the
+answer now a question that is a really good question is when we look at okay
+one of the things that is characteristic of our Consciousness for example relative to all the computational
+irreducibility in the universe is the fact that we have coherent
+Consciousness is a consequence of the fact that we are two things it seems to
+me we are computationally bounded we're not capable of looking at all those molecules bouncing around we only see
+various aggregate effects point one and point two that we are uh we believe that
+we are persistent in time we believe we have a persistent thread of of existence Through Time turns out big fact of of
+our last few years for me is that the big facts of physics uh general
+relativity theory of gravity quantum mechanics and statistical mechanics the second world thermodynamics law of Entry
+increase all three of those big theories of physics that arose in the 20th
+century all three of those can be derived from knowing that we human
+observers are noticing those laws and we human observers have those two characteristics I just mentioned I I
+consider this a a very important beautiful sort of profound result about
+kind of the fact that we observe the physics we observe because we are observers of the kind that we are now
+interesting question I suppose is when we so we are limited we are
+computationally limited things and the Very fact that we observe physics the way we observe physics is a consequence of those computational limitations so
+the question is how similar are the computational limitations in these other kinds of systems in a sense the fungus
+as Observer so to speak how similar is that kind of Observer to a human Observer and in terms of sort of what
+computational capabilities it has and so on my guess is it's pretty similar and in fact one of my next projects is a
+thing I'm calling Observer Theory which is kind of a general theory of uh of
+kinds of observers that you can have of things and so maybe we'll learn something from that but it's a it's a
+very interesting question uh Dugan is commenting
+um uh chat GPT can be improved using an automated fact checking system like an
+adversarial Network for instance um
+could one basically could one train chat gbt with Wolfram Alpha and have it get
+better the answer is surely up to a point but then it will it will lose it just like it does with parentheses I
+mean there's a certain with a network of that architecture there's a certain set of things one can learn but one cannot
+learn what is computationally irreducible I mean it's in other words you can learn the common cases but
+there'll always be surprises they'll always be unexpected things that you can only get to by just explicitly doing
+those computations Bob is asking can track GPT play a
+text-based adventure game I bet it can I don't know I haven't seen anybody try that but I bet it can't
+um okay there's a question here from
+software uh aside from being trained on a huge Corpus what is it about gpt3 that
+makes it so good at language I think I tried to talk about that a bit about the fact that we it's it's um uh that
+there's you know there's regularity in language I think the the particulars of the Transformer architecture of this
+kind of looking back on sequences and things that's been helpful in refining the way that you can train it
+um and that that seems to be important uh
+let's see um
+Victoria's asking could future impact scores help us understand GPT better
+well so what that what that's about is when you run a neural net you can kind
+of uh you can say uh sort of how much
+what was the how much did some particular feature affect the output that the neural net
+gave trappy GPT is just a really pretty complicated thing I mean I started digging around trying to understand sort
+of what as a natural scientist you know I'm like I couldn't do sort of
+Neuroscience with actual brains because I'm a hundred times thousand times too squeamish for that but you know I can
+dig around inside an artificial brain and I started trying to do that and it's it's it's difficult I mean I I I I
+didn't look at feature impact scores I I think one could um
+the uh Okay so
+um but by the way I mean I'm I'm amused by these questions because because I I can kind of you know I can still tell
+you guys are not Bots I think and um uh
+let's see um Ron is asking about implications like
+I have to work late tonight what does that mean um yeah absolutely chat GPT is learning
+stuff like that because because it's seen you know a bunch of text that says
+I have to work work late tonight um so I can't do this it's seen examples
+of that it's kind of doing the Aristotle again it's just seeing this uh you know
+these patterns of language and that's what it's learning from so to speak um so yes these things we might say how
+do we think about that formally oh it seems kind of complicated to us but that pattern of language has has occurred
+before all right last last thing perhaps um
+uh okay Albert is asking do you think humans learn efficiently because they're born with the right networks to learn
+language more easily or is there some difference I think it is important the architecture
+of the brain undoubtedly is important I mean uh you know my impression is that
+there are uh you know it's it's a matchup for the neuroscientists to go and find out now that we know that
+certain things can be made to work with artificial neural Nets did the actual brain discover those things too and the
+answer will be often yes I mean just like there are things we probably have learned from you know the
+flight of drones or the flight of planes that we can go back and say oh did we did biology actually already have that
+idea um I think that the um uh there are undoubtedly features of human language
+which depend on aspects of the brain I mean like for example one you know talking to Terry zanovski you know we're
+talking about the um the loop between the basal ganglia and the cortex
+and the possibility that you know the outer loop of track GPT is a little bit like that Loop and it's kind of like I'm
+turning things over in my mind one might say maybe that's actually a loop of data
+going around this literal loop from one part of the brain to another maybe maybe
+not but sometimes those those sayings have a habit of of being more true than you think and maybe the reason that when
+we think about things we have these certain time frames when you think about things the certain times between when
+words come out and so on maybe those times are literally associated with the
+amount of time it takes for signals to propagate through some number of layers in our in our uh in in our brains and I
+think that in that sense if that's the case there will be features of language which are yes we've got this brain
+architecture we're going to have this these features of language and insofar as language evolves as so far as it's
+it's adaptively worthwhile to have a different form of language that is optimized by having some different form
+of brain structure that's what will have been driven by by natural selection and so on
+um I mean I think you know there are aspects of language like we know if you you know we tend to remember five chunks
+you know chunks of five so to speak things at a time and we know that if we try and give a sentence which has more
+and more and more deeper deeper deeper sub Clauses we lose it after some point and that's presumably a hardware
+limitation of our brains uh okay Dave is asking this is a good
+last question how difficult will it be for individuals to train something like a personal chat GPT that learns to
+behave more and more like a clone of the user I think it I don't know um I'm gonna try it
+I have a lot of training data as I mentioned you know 50 million typed words a type yeah typed words for
+example uh from me um and uh um my guess is I mean I know somebody
+tried to train a um an earlier gpt3 on on stuff of mine wasn't I didn't think
+it was terribly good when I read once trained for other people I thought they were pretty decent when I looked at one
+train for myself because I kind of know myself better than I know anybody else I think um the uh uh you know it didn't ring
+true so to speak um and uh but I I do think that that will be a uh
+you know being able to write emails like I write emails it'll do a decent job of that I suspect uh you know I would like
+to believe that uh you know one still as an as a human one still has an edge
+because in a sense one knows what the goals are the the you know know this
+system its goal is to complete English text and you know the bigger picture of
+what's going on is not going to be part of what it has except insofar as it learns the aggregate bigger picture from
+just reading lots of text so uh you know but but I I do think it'll be an interesting I I I expect that you know
+I as a person who gets a lot of email some of which is fairly easy to answer
+in principle that you know maybe my botch will be able to answer the easiest stuff for me all right that's probably a
+good place to to wrap this up um thanks for joining me and uh uh
+I would like to say that for those interested in more technical details uh some of the folks in our machine
+learning group are going to be doing some more detailed technical webinars about uh about this material and uh
+really going into how you would um you know how you build these things from scratch and so on
+um and uh what some of the more more detail about what's happening uh actually is but I should wrap up here
+for now and um thanks for joining me and uh bye for now
