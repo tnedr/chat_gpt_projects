@@ -31,6 +31,7 @@ class User:
             if time.time() - self.last_activity_time > self.inactivity_threshold:
                 logging.info("User became inactive for the threshold duration")
                 self.inactivity_logged = True
+                self.activity_logged = False
 
     def is_inactive(self):
         current_time = time.time()
@@ -94,4 +95,4 @@ def get_current_position():
         time.sleep(1)
 
 click_automate(x_coord=1988, y_coord=365, click_interval=10, inactivity_threshold=2)
-# get_current_position()
+# get_current_position
