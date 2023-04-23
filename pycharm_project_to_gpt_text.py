@@ -12,7 +12,12 @@ def generate_project_structure_and_jumbo_file(root_dir, max_token_length, output
                     if len(content.split()) > max_token_length:
                         raise ValueError("Module '{}' has too many tokens ({}) to fit in one text file.".format(path, len(content.split())))
                     prefix = "ok this is the content of {} module located at {}:\n".format(file, os.path.abspath(path))
-                    module_files.append((path, prefix + content))
+                    # prefix = "ok this is the content of {} module:\n".format(file)
+                    with open(path, 'r') as f:
+                        content = f.read()
+                    content = [prefix + line if i == 0 else line for i, line in enumerate(content)]
+                    module_files.append((path, content))
+                    # module_files.append((path, prefix + content))
 
     basename = os.path.basename(os.path.normpath(root_dir))
 
@@ -38,8 +43,10 @@ def generate_project_structure_and_jumbo_file(root_dir, max_token_length, output
     jumbo_file_path = os.path.join(output_dir, '{}_codes.txt'.format(basename))
     with open(jumbo_file_path, 'w') as f:
         for path, content in module_files:
-            if len(content.split()) <= max_tokens_per_file:
-                f.write(content)
+            if sum(len(line.split()) for line in content) <= max_tokens_per_file:
+            # if len(content.split()) <= max_tokens_per_file:
+                f.write(''.join(content))
+                # f.write(content)
                 f.write('\n') # Add a newline between modules
             else:
                 for i in range(0, len(content), max_tokens_per_file):
@@ -60,11 +67,15 @@ def split_jumbo_file(jumbo_file_path, basename, output_dir, max_tokens_per_file)
             if current_file_tokens + line_tokens <= max_tokens_per_file:
                 print("Splitting modules into files. Current file size: {} tokens.".format(current_file_tokens + line_tokens))
                 current_file_tokens += line_tokens
-                current_file_modules.append(line.strip())
+                current_file_modules.append(line.rstrip('\n'))
+
+                # current_file_modules.append(line.strip())
             else:
                 write_split_file(current_file_modules, basename, output_dir, current_file_num)
                 current_file_tokens = line_tokens
-                current_file_modules = [line.strip()]
+                # current_file_modules = [line.strip()]
+                current_file_modules = [line]
+
                 current_file_num += 1
 
         # Write the last file
@@ -74,9 +85,17 @@ def write_split_file(modules, basename, output_dir, file_num):
     file_path = os.path.join(output_dir, '{}_{}.txt'.format(basename, file_num))
     with open(file_path, 'w') as f:
         for module in modules:
-            f.write(module)
-            f.write('\n')
-
+            lines = module.split('\n')
+            for i, line in enumerate(lines):
+                if i == 0:
+                    f.write(line + '\n')
+                else:
+                    indent_level = len(line) - len(line.lstrip())
+                    indent = ' ' * indent_level
+                    if line.strip():
+                        f.write(indent + line.lstrip() + '\n')
+                    else:
+                        f.write('\n')
 
 root_dir = 'C:/Users/Tamas/PycharmProjects/anylog_solution/'
 max_token_length = 4096
