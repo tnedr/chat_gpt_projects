@@ -1,7 +1,30 @@
 
 import os
 
-def generate_project_structure_and_jumbo_file(root_dir, max_token_length, output_dir, max_tokens_per_file=10**6):
+
+def generate_project_structure(root_dir, output_dir):
+    basename = os.path.basename(os.path.normpath(root_dir))
+
+    # Generate a text file containing the directory structure
+    structure_file_path = os.path.join(output_dir, '{}_structure.txt'.format(basename))
+    with open(structure_file_path, 'w') as f:
+        f.write('I have a project called ' + basename + '\n')
+        f.write('This is the project structure' + '\n')
+        for root, dirs, files in os.walk(root_dir):
+            if '.git' in dirs:
+                dirs.remove('.git')
+            if '.idea' in dirs:
+                dirs.remove('.idea')
+            level = root.replace(root_dir, '').count(os.sep)
+            indent = ' ' * 4 * (level)
+            f.write('{}{}/\n'.format(indent, os.path.basename(root)))
+            subindent = ' ' * 4 * (level + 1)
+            for file in files:
+                if file.endswith('.py'):
+                    f.write('{}{}\n'.format(subindent, file))
+
+
+def generate_module_files(root_dir, max_token_length):
     module_files = []
     for root, dirs, files in os.walk(root_dir):
         for file in files:
@@ -18,27 +41,11 @@ def generate_project_structure_and_jumbo_file(root_dir, max_token_length, output
                     content = [prefix + line if i == 0 else line for i, line in enumerate(content)]
                     module_files.append((path, content))
                     # module_files.append((path, prefix + content))
+    return module_files
 
+
+def generate_jumbo_file(module_files, output_dir, max_tokens_per_file=10**6):
     basename = os.path.basename(os.path.normpath(root_dir))
-
-    # Generate a text file containing the directory structure
-    structure_file_path = os.path.join(output_dir, '{}_structure.txt'.format(basename))
-    with open(structure_file_path, 'w') as f:
-        f.write("Project structure:\n")
-        for root, dirs, files in os.walk(root_dir):
-            if '.git' in dirs:
-                dirs.remove('.git')
-            if '.idea' in dirs:
-                dirs.remove('.idea')
-            level = root.replace(root_dir, '').count(os.sep)
-            indent = ' ' * 4 * (level)
-            f.write('{}{}/\n'.format(indent, os.path.basename(root)))
-            subindent = ' ' * 4 * (level + 1)
-            for file in files:
-                if file.endswith('.py'):
-                    f.write('{}{}\n'.format(subindent, file))
-
-    # Generate a jumbo file containing all module content
 
     jumbo_file_path = os.path.join(output_dir, '{}_codes.txt'.format(basename))
     with open(jumbo_file_path, 'w') as f:
@@ -52,11 +59,10 @@ def generate_project_structure_and_jumbo_file(root_dir, max_token_length, output
                 for i in range(0, len(content), max_tokens_per_file):
                     f.write(content[i:i+max_tokens_per_file])
                     f.write('\n')
-
     return jumbo_file_path
 
-
-def split_jumbo_file(jumbo_file_path, basename, output_dir, max_tokens_per_file):
+def create_gpt_input_files(jumbo_file_path, output_dir, max_tokens_per_file):
+    basename = os.path.basename(os.path.normpath(root_dir))
     current_file_tokens = 0
     current_file_modules = []
     current_file_num = 1
@@ -69,13 +75,10 @@ def split_jumbo_file(jumbo_file_path, basename, output_dir, max_tokens_per_file)
                 current_file_tokens += line_tokens
                 current_file_modules.append(line.rstrip('\n'))
 
-                # current_file_modules.append(line.strip())
             else:
                 write_split_file(current_file_modules, basename, output_dir, current_file_num)
                 current_file_tokens = line_tokens
-                # current_file_modules = [line.strip()]
                 current_file_modules = [line]
-
                 current_file_num += 1
 
         # Write the last file
@@ -97,18 +100,17 @@ def write_split_file(modules, basename, output_dir, file_num):
                     else:
                         f.write('\n')
 
+
+
+def process_project(root_dir, output_dir, max_token_length, max_tokens_per_file):
+    generate_project_structure(root_dir, output_dir)
+    module_files = generate_module_files(root_dir, max_token_length)
+    jumbo_file_path = generate_jumbo_file(module_files, output_dir, max_tokens_per_file=max_tokens_per_file)
+    create_gpt_input_files(jumbo_file_path, output_dir, max_tokens_per_file=max_tokens_per_file)
+
 root_dir = 'C:/Users/Tamas/PycharmProjects/anylog_solution/'
 max_token_length = 4096
 output_dir = './output/project_to_text'
-
 print("Generating text files...")
-max_tokens_per_file = 4096
-
-# Generate jumbo file
-jumbo_file_path = generate_project_structure_and_jumbo_file(root_dir, max_token_length, output_dir, max_tokens_per_file)
-
-# Split jumbo file into smaller files
-basename = os.path.basename(os.path.normpath(root_dir))
-split_jumbo_file(jumbo_file_path, basename, output_dir, max_tokens_per_file)
-
+process_project(root_dir, output_dir, max_token_length, max_token_length)
 print("Done.")
