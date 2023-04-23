@@ -6,6 +6,7 @@ def write_structure_file(root_dir, output_dir):
 
     with open(structure_file_path, 'w') as f:
         f.write(f'I have a project called {basename}\n')
+        f.write(f'It is located at {os.path.abspath(root_dir)}\n')
         f.write('This is the project structure\n')
         for root, dirs, files in os.walk(root_dir):
             dirs[:] = [d for d in dirs if d not in ['.git', '.idea']]
@@ -16,6 +17,7 @@ def write_structure_file(root_dir, output_dir):
             for file in files:
                 if file.endswith('.py'):
                     f.write(f'{subindent}{file}\n')
+    return structure_file_path
 
 
 def create_module_file_list(root_dir, max_token_length):
@@ -45,7 +47,7 @@ def write_code_jumbo_file(module_files, output_dir):
     return jumbo_file_path
 
 
-def write_splitted_files(code_file_path, output_dir, max_tokens_per_file):
+def write_splitted_files(code_file_path, output_dir, structure_file_path, max_tokens_per_file):
     current_file_tokens = 0
     current_file_modules = []
     current_file_num = 1
@@ -58,19 +60,23 @@ def write_splitted_files(code_file_path, output_dir, max_tokens_per_file):
                 current_file_tokens += line_tokens
                 current_file_modules.append(line.rstrip('\n'))
             else:
-                write_split_file(current_file_modules, output_dir, current_file_num)
+                write_split_file(current_file_modules, output_dir, structure_file_path, current_file_num)
                 current_file_tokens = line_tokens
                 current_file_modules = [line.rstrip('\n')]
                 current_file_num += 1
 
-        write_split_file(current_file_modules, output_dir, current_file_num)
+        write_split_file(current_file_modules, output_dir, structure_file_path, current_file_num)
 
-
-def write_split_file(modules, output_dir, file_num):
+def write_split_file(modules, output_dir, structure_file_path, file_num):
     basename = os.path.basename(os.path.normpath(root_dir))
     file_path = os.path.join(output_dir, f'{basename}_{file_num}.txt')
 
     with open(file_path, 'w') as f:
+        if file_num == 1:
+            with open(structure_file_path, 'r') as structure_file:
+                f.write(structure_file.read())
+                f.write("And in the following, I give the modules of the project:\n")
+
         for module in modules:
             lines = module.split('\n')
             for i, line in enumerate(lines):
@@ -83,13 +89,11 @@ def write_split_file(modules, output_dir, file_num):
                         f.write(indent + line.lstrip() + '\n')
                     else:
                         f.write('\n')
-
-
 def write_all_files(root_dir, output_dir, max_token_length, max_tokens_per_file):
-    write_structure_file(root_dir, output_dir)
+    structure_file_path = write_structure_file(root_dir, output_dir)
     module_files = create_module_file_list(root_dir, max_token_length)
     jumbo_file_path = write_code_jumbo_file(module_files, output_dir)
-    write_splitted_files(jumbo_file_path, output_dir, max_tokens_per_file=max_tokens_per_file)
+    write_splitted_files(jumbo_file_path, output_dir, structure_file_path, max_tokens_per_file)
 
 
 root_dir = 'C:/Users/Tamas/PycharmProjects/anylog_solution/'
@@ -97,4 +101,9 @@ max_token_length = 4096
 output_dir = './output/project_to_text'
 print("Generating text files...")
 write_all_files(root_dir, output_dir, max_token_length, max_token_length)
+# structure_file_path = write_structure_file(root_dir, output_dir)
+# module_files = create_module_file_list(root_dir, max_token_length)
+# jumbo_file_path = write_code_jumbo_file(module_files, output_dir)
+# write_splitted_files(jumbo_file_path, output_dir, structure_file_path, max_token_length)
+
 print("Done.")
