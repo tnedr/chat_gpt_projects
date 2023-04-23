@@ -28,14 +28,14 @@ def create_module_file_list(root_dir, max_token_length):
                 path = os.path.join(root, file)
                 with open(path, 'r') as f:
                     content = f.read()
+                if not content.strip():
+                    content = "This Python file is blank."
                 if (token_count := len(content.split())) > max_token_length:
                     raise ValueError(f"Module '{path}' has too many tokens ({token_count}) to fit in one text file.")
                 prefix = f"ok this is the content of {file} module located at {os.path.abspath(path)}:\n"
                 content = [prefix + line if i == 0 else line for i, line in enumerate(content)]
                 module_files.append((path, content))
     return module_files
-
-
 def write_code_jumbo_file(module_files, output_dir):
     basename = os.path.basename(os.path.normpath(root_dir))
     jumbo_file_path = os.path.join(output_dir, f'{basename}_codes.txt')
