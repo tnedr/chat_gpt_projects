@@ -2,7 +2,7 @@
 import os
 
 
-def generate_project_structure(root_dir, output_dir):
+def generate_project_structure_file(root_dir, output_dir):
     basename = os.path.basename(os.path.normpath(root_dir))
 
     # Generate a text file containing the directory structure
@@ -44,7 +44,7 @@ def generate_module_files(root_dir, max_token_length):
     return module_files
 
 
-def generate_jumbo_file(module_files, output_dir, max_tokens_per_file=10**6):
+def generate_code_file(module_files, output_dir, max_tokens_per_file=10 ** 6):
     basename = os.path.basename(os.path.normpath(root_dir))
 
     jumbo_file_path = os.path.join(output_dir, '{}_codes.txt'.format(basename))
@@ -61,13 +61,14 @@ def generate_jumbo_file(module_files, output_dir, max_tokens_per_file=10**6):
                     f.write('\n')
     return jumbo_file_path
 
-def create_gpt_input_files(jumbo_file_path, output_dir, max_tokens_per_file):
+
+def create_gpt_input_files(code_file_path, output_dir, max_tokens_per_file):
     basename = os.path.basename(os.path.normpath(root_dir))
     current_file_tokens = 0
     current_file_modules = []
     current_file_num = 1
 
-    with open(jumbo_file_path, 'r') as jumbo_file:
+    with open(code_file_path, 'r') as jumbo_file:
         for line in jumbo_file:
             line_tokens = len(line.split())
             if current_file_tokens + line_tokens <= max_tokens_per_file:
@@ -103,9 +104,9 @@ def write_split_file(modules, basename, output_dir, file_num):
 
 
 def process_project(root_dir, output_dir, max_token_length, max_tokens_per_file):
-    generate_project_structure(root_dir, output_dir)
+    generate_project_structure_file(root_dir, output_dir)
     module_files = generate_module_files(root_dir, max_token_length)
-    jumbo_file_path = generate_jumbo_file(module_files, output_dir, max_tokens_per_file=max_tokens_per_file)
+    jumbo_file_path = generate_code_file(module_files, output_dir, max_tokens_per_file=max_tokens_per_file)
     create_gpt_input_files(jumbo_file_path, output_dir, max_tokens_per_file=max_tokens_per_file)
 
 root_dir = 'C:/Users/Tamas/PycharmProjects/anylog_solution/'
