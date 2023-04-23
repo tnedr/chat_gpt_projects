@@ -1,7 +1,7 @@
 
 import os
 
-def generate_project_structure(root_dir, max_token_length, output_dir, max_tokens_per_file=10**6):
+def generate_project_structure_and_jumbo_file(root_dir, max_token_length, output_dir, max_tokens_per_file=10**6):
     module_files = []
     for root, dirs, files in os.walk(root_dir):
         for file in files:
@@ -11,7 +11,7 @@ def generate_project_structure(root_dir, max_token_length, output_dir, max_token
                     content = f.read()
                     if len(content.split()) > max_token_length:
                         raise ValueError("Module '{}' has too many tokens ({}) to fit in one text file.".format(path, len(content.split())))
-                    prefix = "ok this is the content of {} module:\n".format(file)
+                    prefix = "ok this is the content of {} module located at {}:\n".format(file, os.path.abspath(path))
                     module_files.append((path, prefix + content))
 
     basename = os.path.basename(os.path.normpath(root_dir))
@@ -58,7 +58,7 @@ def split_jumbo_file(jumbo_file_path, basename, output_dir, max_tokens_per_file)
         for line in jumbo_file:
             line_tokens = len(line.split())
             if current_file_tokens + line_tokens <= max_tokens_per_file:
-                print(current_file_tokens + line_tokens)
+                print("Splitting modules into files. Current file size: {} tokens.".format(current_file_tokens + line_tokens))
                 current_file_tokens += line_tokens
                 current_file_modules.append(line.strip())
             else:
@@ -86,7 +86,7 @@ print("Generating text files...")
 max_tokens_per_file = 4096
 
 # Generate jumbo file
-jumbo_file_path = generate_project_structure(root_dir, max_token_length, output_dir, max_tokens_per_file)
+jumbo_file_path = generate_project_structure_and_jumbo_file(root_dir, max_token_length, output_dir, max_tokens_per_file)
 
 # Split jumbo file into smaller files
 basename = os.path.basename(os.path.normpath(root_dir))
