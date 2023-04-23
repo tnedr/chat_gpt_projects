@@ -2,7 +2,7 @@
 import os
 
 
-def generate_project_structure_file(root_dir, output_dir):
+def write_structure_file(root_dir, output_dir):
     basename = os.path.basename(os.path.normpath(root_dir))
 
     # Generate a text file containing the directory structure
@@ -24,7 +24,7 @@ def generate_project_structure_file(root_dir, output_dir):
                     f.write('{}{}\n'.format(subindent, file))
 
 
-def generate_module_files(root_dir, max_token_length):
+def create_module_file_list(root_dir, max_token_length):
     module_files = []
     for root, dirs, files in os.walk(root_dir):
         for file in files:
@@ -44,7 +44,7 @@ def generate_module_files(root_dir, max_token_length):
     return module_files
 
 
-def generate_code_file(module_files, output_dir, max_tokens_per_file=10 ** 6):
+def write_code_jumbo_file(module_files, output_dir, max_tokens_per_file=10 ** 6):
     basename = os.path.basename(os.path.normpath(root_dir))
 
     jumbo_file_path = os.path.join(output_dir, '{}_codes.txt'.format(basename))
@@ -62,7 +62,7 @@ def generate_code_file(module_files, output_dir, max_tokens_per_file=10 ** 6):
     return jumbo_file_path
 
 
-def create_gpt_input_files(code_file_path, output_dir, max_tokens_per_file):
+def write_splitted_files(code_file_path, output_dir, max_tokens_per_file):
     basename = os.path.basename(os.path.normpath(root_dir))
     current_file_tokens = 0
     current_file_modules = []
@@ -85,6 +85,7 @@ def create_gpt_input_files(code_file_path, output_dir, max_tokens_per_file):
         # Write the last file
         write_split_file(current_file_modules, basename, output_dir, current_file_num)
 
+
 def write_split_file(modules, basename, output_dir, file_num):
     file_path = os.path.join(output_dir, '{}_{}.txt'.format(basename, file_num))
     with open(file_path, 'w') as f:
@@ -102,16 +103,16 @@ def write_split_file(modules, basename, output_dir, file_num):
                         f.write('\n')
 
 
+def write_all_files(root_dir, output_dir, max_token_length, max_tokens_per_file):
+    write_structure_file(root_dir, output_dir)
+    module_files = create_module_file_list(root_dir, max_token_length)
+    jumbo_file_path = write_code_jumbo_file(module_files, output_dir, max_tokens_per_file=max_tokens_per_file)
+    write_splitted_files(jumbo_file_path, output_dir, max_tokens_per_file=max_tokens_per_file)
 
-def process_project(root_dir, output_dir, max_token_length, max_tokens_per_file):
-    generate_project_structure_file(root_dir, output_dir)
-    module_files = generate_module_files(root_dir, max_token_length)
-    jumbo_file_path = generate_code_file(module_files, output_dir, max_tokens_per_file=max_tokens_per_file)
-    create_gpt_input_files(jumbo_file_path, output_dir, max_tokens_per_file=max_tokens_per_file)
 
 root_dir = 'C:/Users/Tamas/PycharmProjects/anylog_solution/'
 max_token_length = 4096
 output_dir = './output/project_to_text'
 print("Generating text files...")
-process_project(root_dir, output_dir, max_token_length, max_token_length)
+write_all_files(root_dir, output_dir, max_token_length, max_token_length)
 print("Done.")
