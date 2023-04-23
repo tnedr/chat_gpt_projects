@@ -47,27 +47,8 @@ def write_code_jumbo_file(module_files, output_dir):
     return jumbo_file_path
 
 
-def write_splitted_files(code_file_path, output_dir, structure_file_path, max_tokens_per_file):
-    current_file_tokens = 0
-    current_file_modules = []
-    current_file_num = 1
 
-    with open(code_file_path, 'r') as jumbo_file:
-        for line in jumbo_file:
-            line_tokens = len(line.split())
-            if current_file_tokens + line_tokens <= max_tokens_per_file:
-                print(f"Splitting modules into files. Current file size: {current_file_tokens + line_tokens} tokens.")
-                current_file_tokens += line_tokens
-                current_file_modules.append(line.rstrip('\n'))
-            else:
-                write_split_file(current_file_modules, output_dir, structure_file_path, current_file_num)
-                current_file_tokens = line_tokens
-                current_file_modules = [line.rstrip('\n')]
-                current_file_num += 1
-
-        write_split_file(current_file_modules, output_dir, structure_file_path, current_file_num)
-
-def write_split_file(modules, output_dir, structure_file_path, file_num):
+def write_split_file(modules, output_dir, structure_file_path, file_num, is_last_file):
     basename = os.path.basename(os.path.normpath(root_dir))
     file_path = os.path.join(output_dir, f'{basename}_{file_num}.txt')
 
@@ -89,6 +70,54 @@ def write_split_file(modules, output_dir, structure_file_path, file_num):
                         f.write(indent + line.lstrip() + '\n')
                     else:
                         f.write('\n')
+
+        # Add the message at the end of the split file only if it's not the last file
+        if not is_last_file:
+            f.write("I will provide more information about the project in the next message. Do not say anything now, just OK\n")
+
+
+def write_splitted_files(code_file_path, output_dir, structure_file_path, max_tokens_per_file):
+    current_file_tokens = 0
+    current_file_modules = []
+    current_module_lines = []
+    current_file_num = 1
+
+    total_modules = 0
+    with open(code_file_path, 'r') as jumbo_file:
+        for line in jumbo_file:
+            if line.startswith('ok this is the content of'):
+                total_modules += 1
+
+    processed_modules = 0
+    with open(code_file_path, 'r') as jumbo_file:
+        for line in jumbo_file:
+            line_tokens = len(line.split())
+            current_module_lines.append(line.rstrip('\n'))
+
+            # Check if the current line marks the end of a module
+            if line.startswith('ok this is the content of') and current_module_lines[:-1]:
+                module_tokens = sum(len(line.split()) for line in current_module_lines[:-1])
+                processed_modules += 1
+                is_last_module = processed_modules == total_modules
+
+                # Check if adding the current module to the file would exceed max_tokens_per_file
+                if current_file_tokens + module_tokens > max_tokens_per_file or is_last_module:
+                    is_last_file = is_last_module
+                    write_split_file(current_file_modules, output_dir, structure_file_path, current_file_num, is_last_file)
+                    current_file_tokens = 0
+                    current_file_modules = []
+                    current_file_num += 1
+
+                current_file_tokens += module_tokens
+                current_file_modules.extend(current_module_lines[:-1])
+                current_module_lines = [current_module_lines[-1]]
+
+    # Write the last file with the remaining content
+    if current_file_modules:
+        is_last_file = True
+        write_split_file(current_file_modules, output_dir, structure_file_path, current_file_num, is_last_file)
+
+
 def write_all_files(root_dir, output_dir, max_token_length, max_tokens_per_file):
     structure_file_path = write_structure_file(root_dir, output_dir)
     module_files = create_module_file_list(root_dir, max_token_length)
@@ -97,7 +126,7 @@ def write_all_files(root_dir, output_dir, max_token_length, max_tokens_per_file)
 
 
 root_dir = 'C:/Users/Tamas/PycharmProjects/anylog_solution/'
-max_token_length = 4096
+max_token_length = 1000
 output_dir = './output/project_to_text'
 print("Generating text files...")
 write_all_files(root_dir, output_dir, max_token_length, max_token_length)
