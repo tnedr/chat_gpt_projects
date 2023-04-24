@@ -34,7 +34,7 @@ class User:
 
         if not self.active and not self.inactivity_logged:
             if time.time() - self.last_activity_time > self.inactivity_threshold:
-                logging.info("User became inactive for the threshold duration")
+                logging.info("User became inactive")
                 self.inactivity_logged = True
                 self.activity_logged = False
 
@@ -51,6 +51,7 @@ def is_mouse_moving():
 def click_automate(x_coord, y_coord, click_interval=60, inactivity_threshold=5):
     user = User(inactivity_threshold)
     last_click_time = time.time()
+    time_to_click = last_click_time + click_interval
     time_to_click_logged = False
 
     while True:
@@ -58,13 +59,13 @@ def click_automate(x_coord, y_coord, click_interval=60, inactivity_threshold=5):
 
         current_time = time.time()
 
-        if current_time - last_click_time > click_interval:
+        if current_time > time_to_click:
             if not time_to_click_logged:
-                logging.info("It is time to click, waiting for inactivity")
+                logging.info("It's time to click")
                 time_to_click_logged = True
 
             if user.is_inactive():
-                logging.info("Inactivity detected. Clicking")
+                logging.info("Clicking")
 
                 # Get the title of the active window
                 original_window = gw.getActiveWindow()
@@ -87,11 +88,13 @@ def click_automate(x_coord, y_coord, click_interval=60, inactivity_threshold=5):
                 # Activate the original window
                 original_window.activate()
 
-                # Reset the last_click_time
+                # Reset the last_click_time, time_to_click, and time_to_click_logged
                 last_click_time = time.time()
+                time_to_click = last_click_time + click_interval
                 time_to_click_logged = False
 
         time.sleep(0.1)  # Use a short sleep time to continuously check for activity
+
 
 def get_current_position():
     while True:
@@ -99,5 +102,5 @@ def get_current_position():
         logging.info("Current position: %s, %s", current_x, current_y)
         time.sleep(1)
 
-click_automate(x_coord=2343, y_coord=370, click_interval=10, inactivity_threshold=3)
+click_automate(x_coord=2343, y_coord=370, click_interval=10, inactivity_threshold=5)
 # get_current_position()
