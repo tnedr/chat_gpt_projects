@@ -10,6 +10,7 @@ class User:
     def __init__(self, inactivity_threshold):
         self.inactivity_threshold = inactivity_threshold
         self.last_activity_time = time.time()
+        self.last_activity_logged_time = None
         self.active = True
         self.inactivity_logged = False
         self.activity_logged = False
@@ -19,10 +20,14 @@ class User:
         if current_active != self.active:
             self.active = current_active
             if current_active:
-                if not self.activity_logged:
+                # Check if a certain amount of time has passed since the last "user became active" message
+                if (not self.activity_logged or
+                    (
+                            self.last_activity_logged_time and time.time() - self.last_activity_logged_time > self.inactivity_threshold)) and self.inactivity_logged:
                     logging.info("User became active")
                     self.activity_logged = True
                     self.inactivity_logged = False
+                    self.last_activity_logged_time = time.time()
             else:
                 self.activity_logged = False
             self.last_activity_time = time.time()
@@ -94,5 +99,5 @@ def get_current_position():
         logging.info("Current position: %s, %s", current_x, current_y)
         time.sleep(1)
 
-click_automate(x_coord=1988, y_coord=365, click_interval=120, inactivity_threshold=10)
-# get_current_position
+click_automate(x_coord=2343, y_coord=370, click_interval=10, inactivity_threshold=3)
+# get_current_position()

@@ -124,8 +124,12 @@ def write_all_files(root_dir, output_dir, max_token_length, max_tokens_per_file)
     jumbo_file_path = write_code_jumbo_file(module_files, output_dir)
     write_splitted_files(jumbo_file_path, output_dir, structure_file_path, max_tokens_per_file)
 
+# project = 'anylog_solution'
+project = 'ppt_generator'
+root_dir = 'C:/Users/Tamas/PycharmProjects/'
+root_dir = root_dir + project + '/'
 
-root_dir = 'C:/Users/Tamas/PycharmProjects/anylog_solution/'
+
 max_token_length = 1000
 output_dir = './output/project_to_text'
 print("Generating text files...")
