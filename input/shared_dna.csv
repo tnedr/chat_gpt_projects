@@ -1,7 +1,6 @@
-DisplayName,ChromosomeNumber,ChromosomeStart,ChromosomeEnd
+Display Name,Chromosome Number,Chromosome Start Point,Chromosome End Point
 PersonA,1,100,200
-PersonA,1,500,600
+PersonA,2,500,600
 PersonB,1,100,200
-PersonB,1,300,400
-PersonC,1,100,200
-PersonC,1,500,600
+PersonB,3,550,600
+PersonD,3,500,600

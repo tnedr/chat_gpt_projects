@@ -1,79 +1,165 @@
 import pandas as pd
-from scipy.spatial.distance import pdist, squareform
-from sklearn.cluster import AgglomerativeClustering
 import numpy as np
-from scipy.cluster.hierarchy import dendrogram, linkage
+import networkx as nx
 import matplotlib.pyplot as plt
+import plotly.graph_objects as go
+import pickle
+import json
+
+
+def get_data_from_row(row):
+    name, chromosome, start, end, length =\
+        row['Display Name'], row['Chromosome Number'],\
+        row['Chromosome Start Point'], row['Chromosome End Point'],\
+        row['Chromosome End Point'] - row['Chromosome Start Point']
+    return name, chromosome, start, end, length
+
+def create_nodes_and_connections(filename, graph_filename):
+
+    df = pd.read_csv(filename)
+
+    persons = df['Display Name'].unique()
+    persons = np.insert(persons, 0, 'User')
+    G = nx.Graph()
+
+    # add all persons as nodes to graph
+    for person in persons:
+        G.add_node(person, name=person)
+
+    # add edges
+    for _, row1 in df.iterrows():
+        p1, chromosome1, start1, end1, length1 =\
+            get_data_from_row(row1)
+
+        p1 = row1['Display Name']
+        print(p1)
+        # add edge with the user
+        # G.add_edge(p1, 'User', segments='11,2')
+        G.add_edge(p1, 'User', segments=str([{
+            'chromosome': chromosome1,
+            'start': start1,
+            'end': end1,
+            'length': length1
+        }]))
+        for _, row2 in df[df.index > row1.name].iterrows():
+            if row1['Chromosome Number'] == row2['Chromosome Number']:
+                p2, chromosome2, start2, end2, length2 = \
+                    get_data_from_row(row2)
+
+                shared_start = max(start1, start2)
+                shared_end = min(end1, end2)
+                shared_length = max(0, shared_end - shared_start)
+
+                if shared_length > 0:
+                    new_segment = str({'chromosome': chromosome1,
+                                       'start': shared_start,
+                                       'end': shared_end,
+                                       'length': shared_length})
+                    if G.has_edge(p1, p2):
+                        G.edges[p1, p2]['segments'] = G.edges[p1, p2]['segments'] + new_segment
+                    else:
+                        G.add_edge(p1, p2, segments=new_segment)
+
+
+    nx.write_graphml(G, graph_filename + '.graphml')
+    nx.write_gexf(G, graph_filename + '.gexf')
+    with open(graph_filename + '.pkl', 'wb') as f:
+         pickle.dump(G, f)
+    return G
 
 
 
-'''
-our relevance is the number of shared dna with the user
-shared dna as connection
-sharing dna means have connections
-if we have a, b, ab, bc, c then we have 4 connections: a-ab, b-ab, b-bc, c-bc
-in our case the connection mean, to share genetic material
-In this way we can separate branches of the family tree
-
-'''
-
-def euclidean_distance(v1, v2):
-    return ((v1 - v2) ** 2).sum() ** 0.5
+def visualize_graph(graph):
+    pos = nx.spring_layout(graph, seed=42)
+    plt.figure(figsize=(10, 10))
+    nx.draw(graph, pos, node_color='lightblue', with_labels=True, node_size=3000, font_size=10)
+    plt.title('Shared DNA Network')
+    plt.show()
 
 
-def calculate_genetic_similarity(segment_lengths):
-    return 1 / (1 + segment_lengths)
+def visualize_graph2(G=None, graph_filename=None):
+
+    if G is None:
+        with open(graph_filename + '.pkl', 'rb') as f:
+            G = pickle.load(f)
+
+        data = nx.node_link_data(G)
+        # write the dictionary as a JSON file
+        with open('graph222.json', 'w') as f:
+            json.dump(data, f, indent=4)
 
 
-df = pd.read_csv('input/shared_dna.csv')
 
-persons = df['DisplayName'].unique()
-user = 'User'
-persons = np.append(persons, user)
-segments_lengths = []
+    # convert the graph to a Plotly graph object
+    pos = nx.spring_layout(G)
+    edge_x = []
+    edge_y = []
+    for edge in G.edges():
+        x0, y0 = pos[edge[0]]
+        x1, y1 = pos[edge[1]]
+        edge_x.extend([x0, x1, None])
+        edge_y.extend([y0, y1, None])
+    edge_trace = go.Scatter(
+        x=edge_x, y=edge_y,
+        line=dict(width=0.5, color='#888'),
+        hoverinfo='none',
+        mode='lines')
 
-for p1 in persons:
-    p1_segments = df[df['DisplayName'] == p1] if p1 != user else pd.DataFrame()
-    p1_lengths = []
+    node_x = []
+    node_y = []
+    for node in G.nodes():
+        x, y = pos[node]
+        node_x.append(x)
+        node_y.append(y)
+    node_trace = go.Scatter(
+        x=node_x, y=node_y,
+        mode='markers',
+        hoverinfo='text',
+        marker=dict(
+            showscale=True,
+            colorscale='YlGnBu',
+            reversescale=True,
+            color=[],
+            size=10,
+            colorbar=dict(
+                thickness=15,
+                title='Node Connections',
+                xanchor='left',
+                titleside='right'
+            ),
+            line_width=2))
 
-    for p2 in persons:
-        if p1 == p2:
-            p1_lengths.append(0)
-        else:
-            p2_segments = df[df['DisplayName'] == p2] if p2 != user else pd.DataFrame()
-            shared_lengths = 0
+    # set the node color based on the degree of the node
+    node_adjacencies = []
+    node_text = []
+    for node, adjacencies in enumerate(G.adjacency()):
+        node_adjacencies.append(len(adjacencies[1]))
+        node_text.append(f'{node}<br># of connections: {len(adjacencies[1])}')
+    node_trace.marker.color = node_adjacencies
+    node_trace.text = node_text
 
-            for _, row1 in p1_segments.iterrows():
-                for _, row2 in p2_segments.iterrows():
-                    if row1['ChromosomeNumber'] == row2['ChromosomeNumber']:
-                        shared_start = max(row1['ChromosomeStart'], row2['ChromosomeStart'])
-                        shared_end = min(row1['ChromosomeEnd'], row2['ChromosomeEnd'])
-                        shared_length = max(0, shared_end - shared_start)
-                        shared_lengths += shared_length
+    # create the Plotly figure and add the traces
+    fig = go.Figure(data=[edge_trace, node_trace],
+                    layout=go.Layout(
+                        title='My Network Graph',
+                        titlefont_size=16,
+                        showlegend=False,
+                        hovermode='closest',
+                        margin=dict(b=20, l=5, r=5, t=40),
+                        annotations=[dict(
+                            text="",
+                            showarrow=False,
+                            xref="paper", yref="paper",
+                            x=0.005, y=-0.002)],
+                        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False)))
 
-            p1_lengths.append(shared_lengths)
+    # show the Plotly figure
+    fig.show()
 
-    segments_lengths.append(p1_lengths)
 
-genetic_similarity_matrix = calculate_genetic_similarity(np.array(segments_lengths))
-print(genetic_similarity_matrix)
-
-clustering = AgglomerativeClustering(distance_threshold=0, n_clusters=None, linkage='average',
-                                     affinity='precomputed').fit(genetic_similarity_matrix)
-
-print(clustering.children_)
-distance_matrix = 1 - genetic_similarity_matrix
-print(distance_matrix)
-
-Z = linkage(distance_matrix, method='average', metric='euclidean')
-# Perform hierarchical clustering
-# Z = linkage(genetic_similarity_matrix, method='average', metric='precomputed')
-# Z = linkage(genetic_similarity_matrix, method='average', metric='precomputed')
-
-# Plot dendrogram
-plt.figure(figsize=(10, 5))
-plt.title('Hierarchical Clustering Dendrogram')
-plt.xlabel('Sample Index')
-plt.ylabel('Distance')
-dendrogram(Z, leaf_rotation=90., leaf_font_size=8.)
-plt.show()
+# filename = 'input/shared_dna.csv'
+filename = 'input/Tamas_Nagy_relatives_download.csv'
+graph_filename = '23andme_relative_graph'
+G = create_nodes_and_connections(filename, graph_filename)
+visualize_graph2(None, graph_filename)
