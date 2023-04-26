@@ -6,6 +6,17 @@ from scipy.cluster.hierarchy import dendrogram, linkage
 import matplotlib.pyplot as plt
 
 
+
+'''
+our relevance is the number of shared dna with the user
+shared dna as connection
+sharing dna means have connections
+if we have a, b, ab, bc, c then we have 4 connections: a-ab, b-ab, b-bc, c-bc
+in our case the connection mean, to share genetic material
+In this way we can separate branches of the family tree
+
+'''
+
 def euclidean_distance(v1, v2):
     return ((v1 - v2) ** 2).sum() ** 0.5
 
