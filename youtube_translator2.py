@@ -9,6 +9,19 @@ import json
 import openai
 import time
 
+#todo
+'''
+the cadence is not so important.
+
+translate sentence by sentence
+
+reformat cadence
+Give timestamp for every sentence if it is not one word long
+translate by sentences (check the number of sentences)
+write it back
+'''
+
+
 # Set up OpenAI API key
 openai.api_key = "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"
 
