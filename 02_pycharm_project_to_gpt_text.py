@@ -124,21 +124,20 @@ def write_all_files(root_dir, output_dir, max_token_length, max_tokens_per_file)
     jumbo_file_path = write_code_jumbo_file(module_files, output_dir)
     write_splitted_files(jumbo_file_path, output_dir, structure_file_path, max_tokens_per_file)
 
-root_dir = 'C:/Users/Tamas/PycharmProjects/'
-# project = 'anylog_solution'
-# project = 'ppt_generator'
-project = 'youtube_translator'
+if __name__ == "__main__":
 
-root_dir = root_dir + project + '/'
+    # Get the project name from the command line argument
+    import sys
+    project = sys.argv[1]
 
+    # project = 'anylog_solution'
+    # project = 'ppt_generator'
+    # project = 'youtube_translator'
+    root_dir = 'C:/Users/Tamas/PycharmProjects/'
+    root_dir = root_dir + project + '/'
 
-max_token_length = 1000
-output_dir = './output/project_to_text'
-print("Generating text files...")
-write_all_files(root_dir, output_dir, max_token_length, max_token_length)
-# structure_file_path = write_structure_file(root_dir, output_dir)
-# module_files = create_module_file_list(root_dir, max_token_length)
-# jumbo_file_path = write_code_jumbo_file(module_files, output_dir)
-# write_splitted_files(jumbo_file_path, output_dir, structure_file_path, max_token_length)
-
-print("Done.")
+    max_token_length = 1000
+    output_dir = './output/project_to_text'
+    print("Generating text files...")
+    write_all_files(root_dir, output_dir, max_token_length, max_token_length)
+    print("Done.")
