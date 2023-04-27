@@ -1,8 +1,14 @@
 import os
+import re
+import pyperclip
+
 
 def write_structure_file(root_dir, output_dir):
     basename = os.path.basename(os.path.normpath(root_dir))
     structure_file_path = os.path.join(output_dir, f'{basename}_structure.txt')
+
+    # Create the output directory if it doesn't exist
+    os.makedirs(output_dir, exist_ok=True)
 
     with open(structure_file_path, 'w') as f:
         f.write(f'I have a project called {basename}\n')
@@ -124,11 +130,31 @@ def write_all_files(root_dir, output_dir, max_token_length, max_tokens_per_file)
     jumbo_file_path = write_code_jumbo_file(module_files, output_dir)
     write_splitted_files(jumbo_file_path, output_dir, structure_file_path, max_tokens_per_file)
 
+def iterate_over_result_file_to_the_clipboard(directory):
+
+    # Set the directory path and suffix pattern to search for
+    suffix_pattern = r"_\d+\.txt$"
+
+    # Compile the suffix pattern into a regular expression object
+    suffix_regex = re.compile(suffix_pattern)
+    # Get a list of all .txt files in the directory that match the suffix pattern
+    txt_files = [file for file in os.listdir(directory) if suffix_regex.search(file)]
+
+
+    # Iterate over each file and copy its contents to the clipboard
+    for file in txt_files:
+        with open(os.path.join(directory, file), 'r') as f:
+            file_contents = f.read()
+            pyperclip.copy(file_contents)
+        print(f"I have copied {file} into the clipboard.")
+        continue_input = input("Press 'y' to continue to the next file or any other key to stop: ")
+        if continue_input.lower() != 'y':
+            break
+
+
 if __name__ == "__main__":
 
-    # Get the project name from the command line argument
-    import sys
-    project = sys.argv[1]
+    project = input("What is the project name? ")
 
     # project = 'anylog_solution'
     # project = 'ppt_generator'
@@ -136,8 +162,9 @@ if __name__ == "__main__":
     root_dir = 'C:/Users/Tamas/PycharmProjects/'
     root_dir = root_dir + project + '/'
 
-    max_token_length = 1000
-    output_dir = './output/project_to_text'
+    max_token_length = 1500
+    output_dir = './output/project_to_text/' + project
     print("Generating text files...")
     write_all_files(root_dir, output_dir, max_token_length, max_token_length)
     print("Done.")
+    iterate_over_result_file_to_the_clipboard(output_dir)
