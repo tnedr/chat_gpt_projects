@@ -102,6 +102,15 @@ def get_current_position():
         logging.info("Current position: %s, %s", current_x, current_y)
         time.sleep(1)
 
-# click_automate(x_coord=2343, y_coord=370, click_interval=60, inactivity_threshold=7)
-click_automate(x_coord=-1856, y_coord=97, click_interval=60, inactivity_threshold=7)
+d_place = {
+    'left full': [-74, 54],
+    'right full': [2370, 70]}
+
+type='left full'
+x_coord = d_place[type][0]
+y_coord = d_place[type][1]
+click_automate(x_coord=x_coord, y_coord=y_coord, click_interval=60, inactivity_threshold=10)
+# click_automate(x_coord=-1637, y_coord=136, click_interval=60, inactivity_threshold=7)
+# click_automate(x_coord=-505, y_coord=131, click_interval=60, inactivity_threshold=7)
+# click_automate(x_coord=-1358, y_coord=92, click_interval=60, inactivity_threshold=7)
 # get_current_position()
