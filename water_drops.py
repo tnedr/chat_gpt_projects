@@ -43,7 +43,7 @@ def move_drop(x, y, erosion_factor):
 
     return new_x, new_y
 
-num_drops = 10000
+num_drops = 2000
 start_x = width // 2
 
 erosion_factor = 20  # Adjust this value to control the erosion effect
