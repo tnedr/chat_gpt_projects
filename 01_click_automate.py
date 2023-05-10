@@ -106,7 +106,9 @@ d_place = {
     'left full': [-74, 54],
     'right full': [2370, 70]}
 
-type='left full'
+type = 'left full'
+# type = 'right full'
+
 x_coord = d_place[type][0]
 y_coord = d_place[type][1]
 click_automate(x_coord=x_coord, y_coord=y_coord, click_interval=60, inactivity_threshold=10)
