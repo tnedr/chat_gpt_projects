@@ -2,7 +2,9 @@ import os
 import re
 import pyperclip
 
-EXTENSIONS = ('.py', '.csv', '.md')
+EXTENSIONS_FOR_STRUCTURE = ('.py', '.md', '.csv')
+EXTENSIONS_FOR_CODES = ('.py', '.md')
+
 def write_structure_file(root_dir, output_dir):
     basename = os.path.basename(os.path.normpath(root_dir))
     structure_file_path = os.path.join(output_dir, f'{basename}_structure.txt')
@@ -21,7 +23,7 @@ def write_structure_file(root_dir, output_dir):
             f.write(f'{indent}{os.path.basename(root)}/\n')
             subindent = ' ' * 4 * (level + 1)
             for file in files:
-                if file.endswith(('.py', '.csv', '.md')):
+                if file.endswith(EXTENSIONS_FOR_STRUCTURE):
                     f.write(f'{subindent}{file}\n')
     return structure_file_path
 
@@ -30,7 +32,7 @@ def create_module_file_list(root_dir, max_token_length):
     module_files = []
     for root, dirs, files in os.walk(root_dir):
         for file in files:
-            if file.endswith('.py'):
+            if file.endswith(EXTENSIONS_FOR_CODES):
                 path = os.path.join(root, file)
                 with open(path, 'r') as f:
                     content = f.read()
