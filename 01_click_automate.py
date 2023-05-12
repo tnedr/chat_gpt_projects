@@ -108,12 +108,13 @@ d_place = {
     'left small right up part': [-82, 663]}
 
 # get_current_position()
-
+click_interval=60
+inactivity_threshold=1
 type='right full'
-type='left small right up part'
+# type='left small right up part'
 x_coord = d_place[type][0]
 y_coord = d_place[type][1]
-click_automate(x_coord=x_coord, y_coord=y_coord, click_interval=60, inactivity_threshold=10)
+click_automate(x_coord=x_coord, y_coord=y_coord, click_interval=click_interval, inactivity_threshold=inactivity_threshold)
 
 # click_automate(x_coord=-1637, y_coord=136, click_interval=60, inactivity_threshold=7)
 # click_automate(x_coord=-505, y_coord=131, click_interval=60, inactivity_threshold=7)
