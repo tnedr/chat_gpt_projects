@@ -2,7 +2,7 @@ import os
 import re
 import pyperclip
 
-
+EXTENSIONS = ('.py', '.csv', '.md')
 def write_structure_file(root_dir, output_dir):
     basename = os.path.basename(os.path.normpath(root_dir))
     structure_file_path = os.path.join(output_dir, f'{basename}_structure.txt')
@@ -21,7 +21,7 @@ def write_structure_file(root_dir, output_dir):
             f.write(f'{indent}{os.path.basename(root)}/\n')
             subindent = ' ' * 4 * (level + 1)
             for file in files:
-                if file.endswith('.py'):
+                if file.endswith(('.py', '.csv', '.md')):
                     f.write(f'{subindent}{file}\n')
     return structure_file_path
 
