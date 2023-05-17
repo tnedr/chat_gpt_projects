@@ -108,9 +108,10 @@ d_place = {
     'left small right up part': [-82, 663]}
 
 # get_current_position()
-click_interval=60
-inactivity_threshold=1
-type='right full'
+click_interval = 60
+inactivity_threshold = 10
+type = 'right full'
+type = 'left full'
 # type='left small right up part'
 x_coord = d_place[type][0]
 y_coord = d_place[type][1]

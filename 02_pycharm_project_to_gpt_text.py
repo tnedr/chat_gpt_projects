@@ -164,7 +164,7 @@ if __name__ == "__main__":
     root_dir = 'C:/Users/Tamas/PycharmProjects/'
     root_dir = root_dir + project + '/'
 
-    max_token_length = 1500
+    max_token_length = 1000
     output_dir = './output/project_to_text/' + project
     print("Generating text files...")
     write_all_files(root_dir, output_dir, max_token_length, max_token_length)
