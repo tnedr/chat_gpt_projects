@@ -103,13 +103,13 @@ def get_current_position():
         time.sleep(1)
 
 d_place = {
-    'left full': [-74, 54],
+    'left full': [-186, 120],
     'right full': [2354, 158],
     'left small right up part': [-82, 663]}
 
 # get_current_position()
 click_interval = 60
-inactivity_threshold = 10
+inactivity_threshold = 3
 # type = 'right full'
 type = 'left full'
 # type='left small right up part'
