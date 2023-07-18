@@ -1,0 +1,258 @@
+﻿Statement,Header,Field Name,Field Value
+Statement,Data,BrokerName,Interactive Brokers Central Europe Zrt.
+Statement,Data,BrokerAddress,"Madach Imre ut 13-14, Floor 5, Budapest, 1075, Hungary"
+Statement,Data,Title,Activity Statement
+Statement,Data,Period,"November 1, 2022 - November 30, 2022"
+Statement,Data,WhenGenerated,"2023-07-18, 10:57:21 EDT"
+Account Information,Header,Field Name,Field Value
+Account Information,Data,Name,Quantinuum Kft.
+Account Information,Data,Account,U10557509
+Account Information,Data,Account Type,Institution Master
+Account Information,Data,Customer Type,Limited Liability Company
+Account Information,Data,Account Capabilities,Cash
+Account Information,Data,Base Currency,GBP
+Account Information,Data,MNB Password,001-ghvP4bvKMrD9
+Net Asset Value,Header,Asset Class,Prior Total,Current Long,Current Short,Current Total,Change
+Net Asset Value,Data,Cash ,0,8009.136480386,0,8009.136480386,8009.136480386
+Net Asset Value,Data,Stock,0,7912.890617,0,7912.890617,7912.890617
+Net Asset Value,Data,Interest Accruals,0,0,-0.005571456,-0.005571456,-0.005571456
+Net Asset Value,Data,Total,0,15922.027097386,-0.005571456,15922.02152593,15922.02152593
+Net Asset Value,Header,Time Weighted Rate of Return
+Net Asset Value,Data,-1.524006218%
+Change in NAV,Header,Field Name,Field Value
+Change in NAV,Data,Starting Value,0
+Change in NAV,Data,Mark-to-Market,67.34595557
+Change in NAV,Data,Deposits & Withdrawals,16000
+Change in NAV,Data,Change in Interest Accruals,-0.005616072
+Change in NAV,Data,Other Fees,-136.0866
+Change in NAV,Data,Commissions,-9.23225813
+Change in NAV,Data,Other FX Translations,0.000044616
+Change in NAV,Data,Ending Value,15922.02152593
+Mark-to-Market Performance Summary,Header,Asset Category,Symbol,Prior Quantity,Current Quantity,Prior Price,Current Price,Mark-to-Market P/L Position,Mark-to-Market P/L Transaction,Mark-to-Market P/L Commissions,Mark-to-Market P/L Other,Mark-to-Market P/L Total,Code
+Mark-to-Market Performance Summary,Data,Stocks,BRK B,0,5,--,318.6000,126.7243405,-5.9427675,-0.88041,0,119.901163,
+Mark-to-Market Performance Summary,Data,Stocks,BRYN,0,10,--,301.8500,103.8891,-7.49258,-2.64444,0,93.75208,
+Mark-to-Market Performance Summary,Data,Stocks,CSPX,0,10,--,408.9100,-70.475433,-1.65092,-3.30184,0,-75.428193,
+Mark-to-Market Performance Summary,Data,Stocks,MOL,0,100,--,"2,820.0000",12.2889,9.14364,-2.25931032,0,19.17322968,
+Mark-to-Market Performance Summary,Data,Total,,,,,,172.4269075,-5.9426275,-9.08600032,0,157.39827968,
+Mark-to-Market Performance Summary,Data,Forex,EUR,0,1.802822074,--,0.86317,-54.45438004,-0.000695,0,0,-54.45507504,
+Mark-to-Market Performance Summary,Data,Forex,GBP,0,8007.574745488,1.0000,1.0000,0,5.534872,-0.051754678,0,5.483117322,
+Mark-to-Market Performance Summary,Data,Forex,HUF,0,2.64,--,0.0021104,8.88856782,1.759841,0,0,10.64840882,
+Mark-to-Market Performance Summary,Data,Forex,USD,0,0.00002594,--,0.82932,-59.60880821,-1.257722,-0.094503126,0,-60.961033336,
+Mark-to-Market Performance Summary,Data,Total,,,,,,-105.17462043,6.036296,-0.146257805,0,-99.284582235,
+Mark-to-Market Performance Summary,Data,Total (All Assets),,,,,,67.25228707,0.0936685,-9.232258125,0,58.113697445,
+Mark-to-Market Performance Summary,Data,Other Fees,,,,,,,,,,-136.0866,
+Total P/L for Statement Period,,,,,,,,,,,,-77.972902555,
+Realized & Unrealized Performance Summary,Header,Asset Category,Symbol,Cost Adj.,Realized S/T Profit,Realized S/T Loss,Realized L/T Profit,Realized L/T Loss,Realized Total,Unrealized S/T Profit,Unrealized S/T Loss,Unrealized L/T Profit,Unrealized L/T Loss,Unrealized Total,Total,Code
+Realized & Unrealized Performance Summary,Data,Stocks,BRK B,0,0,0,0,0,0,117.76344,0,0,0,117.76344,117.76344,
+Realized & Unrealized Performance Summary,Data,Stocks,BRYN,0,0,0,0,0,0,92.790775,0,0,0,92.790775,92.790775,
+Realized & Unrealized Performance Summary,Data,Stocks,CSPX,0,0,0,0,0,0,0,-74.887596,0,0,-74.887596,-74.887596,
+Realized & Unrealized Performance Summary,Data,Stocks,MOL,0,0,0,0,0,0,19.23165312,0,0,0,19.23165312,19.23165312,
+Realized & Unrealized Performance Summary,Data,Total,,0,0,0,0,0,0,229.78586812,-74.887596,0,0,154.89827212,154.89827212,
+Realized & Unrealized Performance Summary,Data,Forex,EUR,0,5.472881,-0.133859,0,0,5.339022,0.003897,-0.001255,0,0,0.002642,5.341664,
+Realized & Unrealized Performance Summary,Data,Forex,HUF,0,1.774932,0,0,0,1.774932,0.000102,0,0,0,0.000102,1.775034,
+Realized & Unrealized Performance Summary,Data,Forex,USD,0,0.867525,-2.137281,0,0,-1.269756,0,0,0,0,0,-1.269756,
+Realized & Unrealized Performance Summary,Data,Total,,0,8.115338,-2.27114,0,0,5.844198,0.003999,-0.001255,0,0,0.002744,5.846942,
+Realized & Unrealized Performance Summary,Data,Total (All Assets),,0,8.115338,-2.27114,0,0,5.844198,229.78986712,-74.888851,0,0,154.90101612,160.74521412,
+Cash Report,Header,Currency Summary,Currency,Total,
+Cash Report,Data,Starting Cash,Base Currency Summary,0,
+Cash Report,Data,Commissions,Base Currency Summary,-9.23225813,
+Cash Report,Data,Deposits,Base Currency Summary,16000,
+Cash Report,Data,Trades (Sales),Base Currency Summary,8001.08913529,
+Cash Report,Data,Trades (Purchase),Base Currency Summary,-15846.44444335,
+Cash Report,Data,Other Fees,Base Currency Summary,-136.0866,
+Cash Report,Data,Cash FX Translation Gain/Loss,Base Currency Summary,-0.18935343,
+Cash Report,Data,Ending Cash,Base Currency Summary,8009.136480386,
+Cash Report,Data,Ending Settled Cash,Base Currency Summary,8009.135954574,
+Cash Report,Data,Starting Cash,EUR,0,
+Cash Report,Data,Commissions,EUR,-3.16793803,
+Cash Report,Data,Trades (Sales),EUR,3069.32372979,
+Cash Report,Data,Trades (Purchase),EUR,-2908.35296969,
+Cash Report,Data,Other Fees,EUR,-156,
+Cash Report,Data,Ending Cash,EUR,1.802822074,
+Cash Report,Data,Ending Settled Cash,EUR,1.709122074,
+Cash Report,Data,Starting Cash,GBP,0,
+Cash Report,Data,Deposits,GBP,16000,
+Cash Report,Data,Trades (Sales),GBP,0.30819549,
+Cash Report,Data,Trades (Purchase),GBP,-7992.73345,
+Cash Report,Data,Ending Cash,GBP,8007.574745488,
+Cash Report,Data,Ending Settled Cash,GBP,8007.574745488,
+Cash Report,Data,Starting Cash,HUF,0,
+Cash Report,Data,Commissions,HUF,-1087.2,
+Cash Report,Data,Trades (Sales),HUF,273211.03,
+Cash Report,Data,Trades (Purchase),HUF,-272121.19,
+Cash Report,Data,Ending Cash,HUF,2.64,
+Cash Report,Data,Ending Settled Cash,HUF,2.64,
+Cash Report,Data,Starting Cash,USD,0,
+Cash Report,Data,Commissions,USD,-5,
+Cash Report,Data,Trades (Sales),USD,5631.99345,
+Cash Report,Data,Trades (Purchase),USD,-5626.99342406,
+Cash Report,Data,Ending Cash,USD,0.00002594,
+Cash Report,Data,Ending Settled Cash,USD,0.096916425,
+Open Positions,Header,DataDiscriminator,Asset Category,Currency,Symbol,Quantity,Mult,Cost Price,Cost Basis,Close Price,Value,Unrealized P/L,Code
+Open Positions,Data,Summary,Stocks,EUR,BRYN,10,1,291.1,2911,301.85,3018.5,107.5,
+Open Positions,Total,,Stocks,EUR,,,,,2911,,3018.5,107.5,
+Open Positions,Total,,Stocks,GBP,,,,,2512.68787,,2605.478645,92.790775,
+Open Positions,Data,Summary,Stocks,HUF,MOL,100,1,2728.872,272887.2,2820,282000,9112.8,
+Open Positions,Total,,Stocks,HUF,,,,,272887.2,,282000,9112.8,
+Open Positions,Total,,Stocks,GBP,,,,,575.90114688,,595.1328,19.23165312,
+Open Positions,Data,Summary,Stocks,USD,BRK B,5,1,290.2,1451,318.6,1593,142,
+Open Positions,Data,Summary,Stocks,USD,CSPX,10,1,417.94,4179.4,408.91,4089.1,-90.3,
+Open Positions,Total,,Stocks,USD,,,,,5630.4,,5682.1,51.7,
+Open Positions,Total,,Stocks,GBP,,,,,4669.403328,,4712.279172,42.875844,
+Open Positions,Total,,Stocks,GBP,,,,,7757.99234488,,7912.890617,154.89827212,
+Forex Balances,Header,Asset Category,Currency,Description,Quantity,Cost Price,Cost Basis in GBP,Close Price,Value in GBP,Unrealized P/L in GBP,Code
+Forex Balances,Data,Forex,GBP,EUR,1.802822,0.861704594,-1.5535,0.86317,1.556142,0.002642,
+Forex Balances,Data,Forex,GBP,GBP,8007.574745488,1,-8007.574745488,1,8007.574745488,0,
+Forex Balances,Data,Forex,GBP,HUF,2.64,0.002071591,-0.005469,0.0021104,0.005571,0.000102,
+Forex Balances,Data,Total,,,,,-8009.133735488,,8009.136480488,0.002744,
+Trades,Header,DataDiscriminator,Asset Category,Currency,Symbol,Date/Time,Quantity,T. Price,C. Price,Proceeds,Comm/Fee,Basis,Realized P/L,MTM P/L,Code
+Trades,Data,Order,Stocks,EUR,BRYN,"2022-11-09, 09:50:01",10,290.8,289.95,-2908,-3,2911,0,-8.5,O
+Trades,SubTotal,,Stocks,EUR,BRYN,,10,,,-2908,-3,2911,0,-8.5,
+Trades,Total,,Stocks,EUR,,,,,,-2908,-3,2911,0,-8.5, 
+Trades,Total,,Stocks,GBP,,,,,,-2563.34384,-2.64444,2565.98828,0,-7.49258, 
+Trades,Data,Order,Stocks,HUF,MOL,"2022-11-24, 05:42:17",100,2718,2762,-271800,-1087.2,272887.2,0,4400,O;P
+Trades,SubTotal,,Stocks,HUF,MOL,,100,,,-271800,-1087.2,272887.2,0,4400,
+Trades,Total,,Stocks,HUF,,,,,,-271800,-1087.2,272887.2,0,4400, 
+Trades,Total,,Stocks,GBP,,,,,,-564.82758,-2.25931032,567.08689032,0,9.14364, 
+Trades,Data,Order,Stocks,USD,BRK B,"2022-11-09, 14:34:56",5,290,288.65,-1450,-1,1451,0,-6.75,O
+Trades,SubTotal,,Stocks,USD,BRK B,,5,,,-1450,-1,1451,0,-6.75,
+Trades,Data,Order,Stocks,USD,CSPX,"2022-11-24, 05:43:41",10,417.54,417.34,-4175.4,-4,4179.4,0,-2,O
+Trades,SubTotal,,Stocks,USD,CSPX,,10,,,-4175.4,-4,4179.4,0,-2,
+Trades,Total,,Stocks,USD,,,,,,-5625.4,-5,5630.4,0,-8.75, 
+Trades,Total,,Stocks,GBP,,,,,,-4723.220184,-4.18225,4727.402434,0,-7.5936875, 
+Trades,Header,DataDiscriminator,Asset Category,Currency,Symbol,Date/Time,Quantity,T. Price,,Proceeds,Comm in GBP,,,MTM in GBP,Code
+Trades,Data,Order,Forex,EUR,HUF.EUR,"2022-11-28, 19:44:08",-321.19,0.002458139,,0.789529794,0,,,-0.000695,
+Trades,SubTotal,,Forex,EUR,HUF.EUR,,-321.19,,,0.789529794,0,,,-0.000695,
+Trades,Total,,Forex,EUR,,,,,,0.789529794,0,,,-0.000695, 
+Trades,Total,,Forex,GBP,,,,,,0.682572193,0,,,-0.000695, 
+Trades,Data,Order,Forex,GBP,EUR.GBP,"2022-11-09, 09:52:02","2,912",0.8796,,-2561.3952,-0.051754678,,,5.47456,L
+Trades,Data,Order,Forex,GBP,EUR.GBP,"2022-11-16, 22:10:37",155,0.87315,,-135.33825,0,,,0.06045,L
+Trades,Data,Order,Forex,GBP,EUR.GBP,"2022-11-16, 22:10:37",-0.35296969,0.87315,,0.308195488,0,,,-0.000138,
+Trades,SubTotal,,Forex,GBP,EUR.GBP,,3066.64703031,,,-2696.425254512,-0.051754678,,,5.534872,
+Trades,Total,,Forex,GBP,,,,,,-2696.425254512,-0.051754678,,,5.534872, 
+Trades,Data,Order,Forex,HUF,GBP.HUF,"2022-11-24, 05:45:42",-566,482.705,,273211.03,0,,,1.759841,L
+Trades,SubTotal,,Forex,HUF,GBP.HUF,,-566,,,273211.03,0,,,1.759841,
+Trades,Total,,Forex,HUF,,,,,,273211.03,0,,,1.759841, 
+Trades,Total,,Forex,GBP,,,,,,567.759841443,0,,,1.759841, 
+Trades,Data,Order,Forex,USD,EUR.USD,"2022-11-11, 19:48:32",0.4405,1.03515,,-0.455983575,0,,,-0.000909,
+Trades,Data,Order,Forex,USD,EUR.USD,"2022-11-24, 05:45:43",1,1.04055,,-1.04055,0,,,0.000458,L
+Trades,Data,Order,Forex,USD,EUR.USD,"2022-11-28, 19:44:08",0.0937,1.03405,,-0.096890485,0,,,-0.000092,
+Trades,SubTotal,,Forex,USD,EUR.USD,,1.5342,,,-1.59342406,0,,,-0.000543,
+Trades,Data,Order,Forex,USD,GBP.USD,"2022-11-09, 14:35:56","-1,280",1.13395,,1451.456,-0.025401536,,,-2.123623,L
+Trades,Data,Order,Forex,USD,GBP.USD,"2022-11-24, 05:45:41","-3,449",1.21175,,4179.32575,-0.06910159,,,0.866234,L
+Trades,Data,Order,Forex,USD,GBP.USD,"2022-11-24, 05:45:43",-1,1.2117,,1.2117,0,,,0.00021,L
+Trades,SubTotal,,Forex,USD,GBP.USD,,-4730,,,5631.99345,-0.094503126,,,-1.257179,
+Trades,Total,,Forex,USD,,,,,,5630.40002594,-0.094503126,,,-1.257722, 
+Trades,Total,,Forex,GBP,,,,,,4727.415031725,-0.094503126,,,-1.257722, 
+Deposits & Withdrawals,Header,Currency,Settle Date,Description,Amount
+Deposits & Withdrawals,Data,GBP,2022-11-02,Electronic Fund Transfer,6000
+Deposits & Withdrawals,Data,GBP,2022-11-17,Electronic Fund Transfer,10000
+Deposits & Withdrawals,Data,Total,,,16000
+Fees,Header,Subtitle,Currency,Date,Description,Amount
+Fees,Data,Other Fees,EUR,2022-11-16,ANNUAL LEI REGISTRATION FEE FOR NOV 2022,-156
+Fees,Data,Total,,,,-156
+Fees,Data,Total in GBP,,,,-136.0866
+Interest Accruals,Header,Currency,Field Name,Field Value
+Interest Accruals,Data,Base Currency Summary,Starting Accrual Balance,0
+Interest Accruals,Data,Base Currency Summary,Interest Accrued,-0.005616072
+Interest Accruals,Data,Base Currency Summary,Accrual Reversal,0
+Interest Accruals,Data,Base Currency Summary,FX Translation,0.000044616
+Interest Accruals,Data,Base Currency Summary,Ending Accrual Balance,-0.005571456
+Interest Accruals,Data,HUF,Starting Accrual Balance,0
+Interest Accruals,Data,HUF,Interest Accrued,-2.64
+Interest Accruals,Data,HUF,Accrual Reversal,0
+Interest Accruals,Data,HUF,Ending Accrual Balance,-2.64
+Interest Accruals,Data,HUF,Ending Accrual Balance in GBP,-0.005571456
+Financial Instrument Information,Header,Asset Category,Symbol,Description,Conid,Security ID,Listing Exch,Multiplier,Type,Code
+Financial Instrument Information,Data,Stocks,BRK B,BERKSHIRE HATHAWAY INC-CL B,72063691,US0846707026,NYSE,1,COMMON,
+Financial Instrument Information,Data,Stocks,BRYN,BERKSHIRE HATHAWAY INC-CL B,74964638,US0846707026,IBIS,1,COMMON,
+Financial Instrument Information,Data,Stocks,CSPX,ISHARES CORE S&P 500,76023663,IE00B5BMR087,LSEETF,1,ETF,
+Financial Instrument Information,Data,Stocks,MOL,MOL HUNGARIAN OIL AND GAS PL,288307437,HU0000153937,BUX,1,COMMON,
+Codes,Header,Code,Meaning,Code (Cont.),Meaning (Cont.)
+Codes,Data,A,Assignment
+Codes,Data,ADR,ADR Fee Accrual
+Codes,Data,AEx,Automatic exercise for dividend-related recommendation.
+Codes,Data,AFx,AutoFX conversion resulting from trading
+Codes,Data,Adj,Adjustment
+Codes,Data,Al,Allocation
+Codes,Data,Aw,Away Trade
+Codes,Data,B,Automatic Buy-in
+Codes,Data,Bo,Direct Borrow
+Codes,Data,C,Closing Trade
+Codes,Data,CD,Cash Delivery
+Codes,Data,CP,Complex Position
+Codes,Data,Ca,Cancelled
+Codes,Data,Co,Corrected Trade
+Codes,Data,Cx,Part or all of this transaction was a Crossing executed as dual agent by IB for two IB customers
+Codes,Data,ETF,ETF Creation/Redemption
+Codes,Data,Ep,Resulted from an Expired Position
+Codes,Data,Ex,Exercise
+Codes,Data,FP,The fractional portion of this trade was executed against IB or an affiliate.
+Codes,Data,FPA,The fractional portion of this trade was executed against IB or an affiliate. IB acted as agent for the whole share portion of this trade.
+Codes,Data,G,Trade in Guaranteed Account Segment
+Codes,Data,GEA,Exercise or Assignment resulting from offsetting positions
+Codes,Data,HC,Highest Cost tax basis election
+Codes,Data,HFI,Investment Transferred to Hedge Fund
+Codes,Data,HFR,Redemption from Hedge Fund
+Codes,Data,I,Internal Transfer
+Codes,Data,IA,The transaction was executed against IB or an affiliate
+Codes,Data,IM,A portion of the order was executed against IB or an affiliate; IB acted as agent on a portion.
+Codes,Data,INV,Investment Transfer from Investor
+Codes,Data,IPO,This transaction was executed as part of an IPO in which IB was a member of the selling group and is classified as a Principal trade.
+Codes,Data,L,Ordered by IB (Margin Violation)
+Codes,Data,LD,Adjusted by Loss Disallowed from Wash Sale
+Codes,Data,LI,"Last In, First Out (LIFO) tax basis election"
+Codes,Data,LT,Long Term P/L
+Codes,Data,Lo,Direct Loan
+Codes,Data,M,Entered manually by IB
+Codes,Data,MEx,Manual exercise for dividend-related recommendation.
+Codes,Data,ML,Maximize Losses tax basis election
+Codes,Data,MLG,Maximize Long Term Gain tax basis election
+Codes,Data,MLL,Maximize Long Term Loss tax basis election
+Codes,Data,MSG,Maximize Short Term Gain tax basis election
+Codes,Data,MSL,Maximize Short Term Loss tax basis election
+Codes,Data,O,Opening Trade
+Codes,Data,P,Partial Execution
+Codes,Data,PI,Price Improvement
+Codes,Data,Po,Interest or Dividend Accrual Posting
+Codes,Data,Pr,Part or all of this transaction was executed by the Exchange as a Crossing by IB against an IB affiliate and is therefore classified as a Principal and not an agency trade
+Codes,Data,R,Dividend Reinvestment
+Codes,Data,RED,Redemption to Investor
+Codes,Data,RI,Recurring Investment
+Codes,Data,RP,"IB acted as agent for the fractional share portion of this trade, which was executed by an IB affiliate as riskless principal."
+Codes,Data,RPA,IB acted as agent for both the fractional share portion and the whole share portion of this trade; the fractional share portion was executed by an IB Affiliate as riskless principal.
+Codes,Data,Rb,Rebill
+Codes,Data,Re,Interest or Dividend Accrual Reversal
+Codes,Data,Ri,Reimbursement
+Codes,Data,SI,This order was solicited by Interactive Brokers
+Codes,Data,SL,Specific Lot tax basis election
+Codes,Data,SO,This order was marked as solicited by your Introducing Broker
+Codes,Data,SS,Customer designated this trade for shortened settlement and so is subject to execution at prices above the prevailing market
+Codes,Data,ST,Short Term P/L
+Codes,Data,T,Transfer
+Codes,Data,Un,Unvested shares from stock grant
+Notes/Legal Notes,Header,Type,Note
+Notes/Legal Notes,Data,Notes,"Most stock exchange transactions settle on the trade date plus two business days. Options, futures and US open-end mutual fund transactions settle on trade date plus one business day. (Some exchanges and other transaction types may have longer or shorter settlement periods.) Ending settled cash reflects the cash that has actually settled.  "
+Notes/Legal Notes,Data,Notes,Initial and maintenance margin requirements are available within the Account Window of the Trader Workstation.
+Notes/Legal Notes,Data,Notes,Quantities preceded by a "-" sign indicate sell transactions. Other transactions are purchases. 
+Notes/Legal Notes,Data,Notes,"IB acts as agent in executing the fractional share portion of your order. In certain circumstances, IB routes the fractional portion of your order to an affiliate, which may execute the fractional portion of the order as principal. In such circumstances, this is indicated by the codes associated with the trade. If an IB affiliate acts as principal in executing any fractional share portion of your order, the order will be executed at the price displayed for the opposite side of the NBBO from your order (the offer if you are buying and the bid if you are selling) at the time of execution. If an IB affiliate is acting as riskless principal in connection with filling the fractional share portion of your order, the affiliate will execute the fractional share portion of your order at the price it receives for the execution of the whole share."
+Notes/Legal Notes,Data,Notes,"In case of partial executions, commissions are charged on the total quantity executed on the original order. The commission is displayed on the first partial execution only."
+Notes/Legal Notes,Data,Notes,Each closed lot indicated above with a reference to note (6) was chosen by the end of the trading day to be sold versus the specific opening purchase identified in that row.
+Notes/Legal Notes,Data,Notes,Trade execution times are displayed in Eastern Time.
+Notes/Legal Notes,Data,Notes,Applicable regulatory fees for your transactions are available on the IB website at www.interactivebrokers.com/en/accounts/fees/exchangeAndRegulatoryFees.php.
+Notes/Legal Notes,Data,Notes,"Borrow Fee Rate represents the cost to borrow stock expressed in percent per annum. It is applied to the collateral value on the stock borrow contract and is separate from any interest earned on credit cash balances. Similarly, Loan Fee Rate represents the benefit to lend stock. A positive rate indicates a cost to the borrower/benefit to the lender and a negative rate indicates a benefit to the borrower/cost to the lender. In general, the fee rates for hard-to-borrow stocks are higher than for normal availability stocks."
+Notes/Legal Notes,Data,Notes,Interest Rate on Customer Collateral represents the interest paid on the collateral posted to the customer's account and received from lending stock.  A positive rate indicates a benefit to the lender.
+Notes/Legal Notes,Data,Notes,"The closing prices on this Activity Statement are indicative and may come from third-party sources. Interactive Brokers does not warrant the accuracy of the prices provided by third-party sources. Due to time zone differences, certain non-US mutual funds may deliver closing prices after the Activity Statement has been produced and the closing prices for such funds will reflect the previous day's price."
+Notes/Legal Notes,Data,Notes,All Market Data and Research services are provided through Global Financial Information Services (GmbH).
+Notes/Legal Notes,Data,Notes,"Market data is provided by Global Financial Information Services (GmbH). Your local broker collects amounts owed for fees and tax for such data on behalf of Global Financial Information Services (GmbH). Note, you are responsible for any applicable taxes relating to the provision of these services."
+Notes/Legal Notes,Data,Notes,"Directive 2014/65/EU and its implementing measures (MiFID II) applies to all client funds and client financial instruments (Client Assets) on this statement except those Client Assets that are not classified as segregated assets, namely securities lent under the Stock Yield Enhancement Programme as identified in the IBKR Managed Securities Lent section of this statement and Client Assets noted as Not Segregated in the Collateral for Customer Borrowing section of this statement.  IBCE applies the MiFID II Client Asset protection requirements to funds and instruments that are not subject to MiFID II in the same way as it applies those requirements to Client Assets."
+Notes/Legal Notes,Data,Fixed Income Notes,"Call features for bonds or preferred stocks may affect the yield. For zero coupon, compound interest and multiplier securities, there are no periodic payments and securities may be callable below maturity value without notice to holder unless registered. For asset-backed securities, the actual yield may vary depending on the speed at which the underlying note is pre-paid. For additional information regarding bond yield, please contact the IB Help Desk at: help@interactivebrokers.com. If this debt security is unrated by a nationally recognized statistical rating organization, it may pose a high risk of default. You should consult a financial advisor to determine whether unrated bonds are appropriate for your portfolio in light of your goals and your financial circumstances. Fees charged by bond trading centers are included in the cost of bond transactions."
+Notes/Legal Notes,Data,Legal Notes,"Please promptly report any inaccuracy or discrepancy in this statement, or in your account, to Interactive Brokers Central Europe Zrt. (""IBCE""). You can contact the IBCE Customer Service Department using the online form available on the IBCE website, interactivebrokers.hu. You may also contact IBCE by telephone +36 80 088 400, but if you report an error by telephone, you should re-confirm such oral communication in writing in order to protect your rights, including your rights under Tpt. (a tökepiacról szóló 2001. évi CXX. törvény, Act CXX of 2001 on the Capital Market)."
+Notes/Legal Notes,Data,Legal Notes,"Unless otherwise noted, IBCE acted as agent in the execution of the above transactions. IBCE may execute your trades through affiliates or third-party brokers who are members of the relevant exchange or market center. IBCE uses its affiliates Interactive Brokers LLC and Interactive Brokers (U.K.) Limited to custody financial instruments."
+Notes/Legal Notes,Data,Legal Notes,"IBCE acts as agent or riskless principal in foreign currency exchange transactions and CFDs. Such transactions are executed against an IBCE affiliate, which acts as principal in such transactions and may have a long or short position and may have profited or lost in connection with the transaction."
+Notes/Legal Notes,Data,Legal Notes,"IBCE routes orders in US products through its US affiliate, Interactive Brokers LLC (""IBLLC""). IBLLC accepts liquidity rebates or other order flow payments from Alternative Trading Systems, market makers and exchanges for certain orders in US stocks. IBLLC receives payment for some US option orders pursuant to exchange-mandated marketing fee programs or other arrangements."
+Notes/Legal Notes,Data,Legal Notes,Please promptly notify IB-CE of any material change in your investment objectives or financial situation or circumstances.
+Notes/Legal Notes,Data,Legal Notes,"An up-to-date financial statement of IBCE is available for your personal inspection at interactivebrokers.hu or at its offices, or a copy of the financial statement will be mailed to you upon your written request."
+Notes/Legal Notes,Data,Legal Notes,"IBCE is a member of BEVA. As with all securities firms, BEVA coverage provides protection against failure of a broker-dealer. BEVA coverage is limited to a maximum payment of EUR 100,000 per investor."
+Notes/Legal Notes,Data,Legal Notes,The General Business Rules and client disclosures of IBCE may be found at interactivebrokers.hu
+Notes/Legal Notes,Data,Legal Notes,Interactive Brokers Central Europe Zrt. is regulated by the MNB.
