@@ -1,4 +1,9 @@
+
+# source
 # https://maoviola.medium.com/a-complete-guide-to-web-scraping-linkedin-job-postings-ad290fcaa97f
+
+# needed a chromedriver
+# https://googlechromelabs.github.io/chrome-for-testing/#stable
 
 import time
 import pandas as pd
@@ -30,6 +35,25 @@ no_of_jobs = extract_number(inner_text)
 
 # no_of_jobs = int(wd.find_element_by_css_selector(‘h1>span’).get_attribute(‘innerText’))
 print(no_of_jobs)
+
+# browse all the jobs
+i = 2
+while i <= int(no_of_jobs/25)+1:
+    wd.execute_script('window.scrollTo(0, document.body.scrollHeight);')
+    i = i + 1
+
+    try:
+        button_xpath = "/html/body/div/div/main/section/button"
+        wd.find_element(By.XPATH, button_xpath).click()
+        # wd.find_element_by_xpath('/html/body/main/div/section/button').click()
+        time.sleep(5)
+    except:
+        pass
+        time.sleep(5)
+
+
+
+
 
 sys.exit()
 
