@@ -1,0 +1,1672 @@
+SZAKDOLGOZAT
+Kar´ adi D´ avid
+2023BUDAPESTI CORVINUS EGYETEM
+Portf´ oli´ ooptimaliz´ al´ as a gyakorlatban
+Kar´ adi D´ avid
+Gazdas´ ag- ´ es p´ enz¨ ugy-matematikai elemz´ es
+P´ enz¨ ugy-matematika specializ´ aci´ o
+Konzulens: Dr. K¨ urthy G´ abor
+2023Tartalomjegyz´ ek
+1. Absztrakt 2
+2. Portf´ oli´ ooptimaliz´ al´ as t¨ ort´ enelmi ´ attekint´ ese 2
+3. Markowitz-f´ ele modern portf´ oli´ oelm´ elet 7
+3.1. Markowitz modell ´ altal´ anos ´ attekint´ ese . . . . . . . . . . . . . . . . . . . . . 7
+3.2. Markowitz modell matematikai megfogalmaz´ asa . . . . . . . . . . . . . . . . 8
+4. Portf´ oli´ ooptimaliz´ al´ as CVaR-kel 14
+4.1. VaR ´ es CVaR ¨ osszehasonl´ ıt´ asa . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+4.2. CVaR c´ elf¨ uggv´ eny matematikai modellje . . . . . . . . . . . . . . . . . . . . 16
+4.3. CVaR alkalmaz´ asa portf´ oli´ ooptimaliz´ al´ asra . . . . . . . . . . . . . . . . . . . 20
+5. Piaci ´ es egys´ eges s´ ulyoz´ as´ u portf´ oli´ ok ¨ osszehasonl´ ıt´ asa 23
+6. Adatok 27
+7. Portf´ oli´ ooptimaliz´ al´ asi ´ es kiv´ alaszt´ asi m´ odszerek vizsg´ alata 29
+7.1. Keresked´ esi napok kiv´ alaszt´ asa kock´ azatos eszk¨ oz¨ okkel . . . . . . . . . . . . 29
+7.2. Optimaliz´ al´ asi m´ odszerek ¨ osszehasonl´ ıt´ asa csak kock´ azatos eszk¨ oz¨ okkel . . . 39
+7.3. Keresked´ esi napok kiv´ alaszt´ asa kock´ azatos ´ es ”kock´ azatmentes” eszk¨ oz¨ okkel 43
+7.4. Optimaliz´ al´ asi m´ odszerek ¨ osszehasonl´ ıt´ asa kock´ azatmentes eszk¨ ozzel . . . . . 48
+8. Portf´ oli´ ok teljes´ ıtm´ enye a COVID-19 ´ es a Silicon Valley Bank cs˝ od idej´ en 51
+8.1. COVID-19 visszaes´ es . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 52
+8.2. Silicon Valley Bank cs˝ od . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 56
+9. Konkl´ uzi´ o 59
+Hivatkoz´ asok 621. Absztrakt
+A dolgozat f˝ o c´ elja, hogy bemutassa 1/N, S&P500, Markowitz ´ es a CVaR (Conditional-
+Value-at-Risk) portf´ oli´ ok egyedi tulajdons´ agait, ´ es ut´ obbi kett˝ on´ el nagyobb hangs´ ulyt kap
+a m´ odszertani le´ ır´ as is, itt k¨ ul¨ on¨ os tekintettel a CVaR portf´ oli´ ooptimaliz´ al´ asra, ami fel-
+hagy a hagyom´ anyos keretek k¨ oz¨ ott t´ argyalt Markowitz modellben haszn´ alatos sz´ or´ assal
+mint kock´ azati m´ er˝ osz´ am. Enn´ el az optimaliz´ al´ asn´ al a hozamok farokkock´ azata j´ atssza a f˝ o
+szerepet, ami jobb m´ erc´ eje lehet a lefel´ e ir´ anyul´ o kock´ azatoknak, mint a sz´ or´ as vagy vari-
+ancia. A portf´ oli´ ok kialak´ ıt´ as´ an´ al elrugaszkodunk att´ ol a konvenci´ ot´ ol is, hogy egybef¨ ugg˝ o
+historikus adatokat haszn´ aljunk az optimaliz´ al´ as sor´ an, ´ es egy v´ eletlenszer˝ uen kiv´ alasztott
+minta alapj´ an v´ egezz¨ uk az optimaliz´ al´ ast. Enn´ el a r´ eszn´ el kit¨ untetett figyelmet szentel¨ unk
+annak, hogy a minta nagys´ aga hogyan befoly´ asolja az eredm´ enyek stabilit´ as´ at, illetve azzal,
+hogy milyen egy´ eb el˝ ony¨ os tulajdons´ agokat rejt mag´ aban ez a m´ odszer. Az elemz´ es t´ argy´ at
+k´ epez˝ o portf´ oli´ oknak k´ et t´ ıpus´ at fogjuk szerepeltetni. Az egyik t´ ıpus lesz az, amikor csak
+kock´ azatos eszk¨ oz¨ oket, az S&P500 r´ eszv´ enyeit, fogjuk haszn´ alni. A m´ asik esetben ezeket
+a kock´ azatos eszk¨ oz¨ oket kieg´ esz´ ıtj¨ uk egy ”kock´ azatmentes” eszk¨ ozzel is, ami n´ alunk a p´ enz
+szerep´ et hivatott majd bet¨ olteni. Ez az eszk¨ oz az 1 ´ eves lej´ arat´ u amerikai kincst´ arjegy na-
+pi kamatait haszn´ alja. Az ´ ıgy kialak´ ıtott portf´ oli´ okat k´ et tesztid˝ oszakon hasonl´ ıtjuk ¨ ossze
+a teljes´ ıtm´ eny¨ uk alapj´ an, hogy azt´ an egy ´ atfog´ obb k´ epet kapjunk az egyes optimaliz´ al´ asi
+m´ odszerek saj´ atoss´ agair´ ol. Ezek az id˝ oszakok stresszes piaci k¨ or¨ ulm´ enyeket fognak jelenteni,
+hogy megfelel˝ oen ¨ ossze tudjuk hasonl´ ıtani a sz´ or´ as ´ es a CVaR ´ altal kialak´ ıtott portf´ oli´ okat,
+´ ıgy ezen kock´ azati mutat´ ok hat´ ekonys´ ag´ ara is k¨ ovetkeztetni tudunk. Ezek a stresszid˝ oszakok
+a COVID-19 v´ als´ ag elej´ et ´ es a Sillicon Valley Bank cs˝ odj´ et foglalj´ ak magukban. Az el˝ obbi
+ink´ abb egy glob´ alis v´ als´ ag, ami a legt¨ obb szektort ´ erinti a portf´ oli´ onkban, m´ ıg az ut´ obbi
+ink´ abb egy p´ enz¨ ugyi szektort ´ erint˝ o sokk, ´ ıgy alkalmas lehet a vizsg´ alat az ´ altal´ anos ´ es
+specifikus sokkok hat´ asainak elemz´ es´ ere is.
+2. Portf´ oli´ ooptimaliz´ al´ as t¨ ort´ enelmi ´ attekint´ ese
+A portf´ oli´ ooptimaliz´ al´ as elm´ elet´ et a 20. sz´ azad m´ asodik fel´ eben Harry Markowitz
+dolgozta ki, amikor elk´ esz´ ıtette els˝ o publik´ alt tanulm´ any´ at a t´ em´ aban. Markowitz szerint
+a befektet˝ ok sz´ am´ ara a legjobb portf´ oli´ o az a kombin´ aci´ o, amely a lehet˝ o legalacso-
+nyabb kock´ azat mellett a legmagasabb v´ arhat´ o hozamot biztos´ ıtja (H. Markowitz, 1952).
+Markowitz portf´ oli´ ooptimaliz´ al´ asi modellje az egyik legjelent˝ osebb modell a p´ enz¨ ugyek
+ter¨ ulet´ en, mivel nagy hat´ assal volt arra, ahogyan a befektet˝ ok az eszk¨ ozallok´ aci´ or´ ol ´ es
+a portf´ oli´ ooptimaliz´ al´ asr´ ol gondolkodnak. E modell kidolgoz´ asa el˝ ott a portf´ oli´ o´ ep´ ıt´ es
+nagyr´ eszt intu´ ıci´ ora ´ es tapasztalatra ´ ep¨ ult, a befektet˝ ok saj´ at bel´ at´ asuk szerint v´ alasztott´ ak
+ki azokat az ´ ert´ ekpap´ ırokat, amelyekr˝ ol ´ ugy gondolt´ ak, hogy a legjobb hozamot biztos´ ıtj´ ak.
+A Harry Markowitz ´ altal az 1950-es ´ evekben kidolgozott, a k´ es˝ obbiekben r´ ola
+elnevezett modell, a Markowitz-modell, ´ uj kvantitat´ ıv megk¨ ozel´ ıt´ est vezetett be a
+portf´ oli´ ooptimaliz´ al´ asba, amely figyelembe vette az egyes eszk¨ oz¨ ok v´ arhat´ o hozam´ at ´ es
+kock´ azat´ at, valamint a k¨ ozt¨ uk l´ ev˝ o korrel´ aci´ okat. A modell lehet˝ ov´ e tette a befektet˝ ok
+2sz´ am´ ara, hogy olyan portf´ oli´ okat ´ ep´ ıtsenek, amelyek optim´ alisak voltak arra, hogy adott
+kock´ azati szint mellett a legmagasabb v´ arhat´ o hozamot, illetve adott v´ arhat´ o hozam mellett
+a legalacsonyabb v´ arhat´ o kock´ azatot biztos´ ıtj´ ak.
+A Markowitz-modell jelent˝ os´ ege abban rejlik, hogy szigor´ u ´ es szisztematikus
+megk¨ ozel´ ıt´ est ny´ ujt a portf´ oli´ o´ ep´ ıt´ eshez, amely ink´ abb statisztikai elemz´ esen, mint in-
+tu´ ıci´ on vagy tapasztalaton alapul. Bevezette a diverzifik´ aci´ o fogalm´ at: a befektet˝ ok a
+v´ arhat´ o hozam fel´ aldoz´ asa n´ elk¨ ul cs¨ okkenthetik a kock´ azatot az´ altal, hogy t¨ obbf´ ele eszk¨ ozbe
+fektetnek be. A modell bevezette a hat´ ekony hat´ ar fogalm´ at is, amely a portf´ oli´ ok azon
+halmaz´ ara utal, amely adott kock´ azati szint mellett a legmagasabb v´ arhat´ o hozamot, illetve
+adott v´ arhat´ o hozam mellett a legalacsonyabb v´ arhat´ o kock´ azatot k´ ın´ alja.
+A Markowitz-modell hat´ asa messzemen˝ o volt, ´ es nagy hat´ assal volt a modern
+p´ enz¨ ugyelm´ elet fejl˝ od´ es´ ere. A modellt az int´ ezm´ enyi befektet˝ ok, a befektet´ esi menedzserek
+´ es az akad´ emikusok sz´ eles k¨ orben elfogadt´ ak, ´ es a modern portf´ oli´ oelm´ elet egyik alapk¨ ov´ ev´ e
+v´ alt. A modell a p´ enz¨ ugyek m´ as fontos fogalmainak kialakul´ as´ ahoz is vezetett, mint p´ eld´ aul
+a CAPM (Capital Asset Pricing Model, vagy magyarul t˝ okepiaci ´ arfolyamok modellje) ´ es az
+EMH (Efficient-Market Hypothesis vagy magyarul a hat´ ekony piacok elm´ elete).
+Markowitz elm´ elet´ enek k¨ ozz´ et´ etele ´ ota sz´ amos m´ as szerz˝ o is hozz´ aj´ arult a
+portf´ oli´ ooptimaliz´ al´ as elm´ elet´ enek tov´ abbfejleszt´ es´ ehez. Markowitz, Von Neumann ´ es
+Morgenstern nyom´ an, v´ arhat´ o hasznoss´ agi maximumon alapul´ o elemz´ est dolgozott ki, ´ es
+´ altal´ anos megold´ ast javasolt a portf´ oli´ ov´ alaszt´ asi probl´ em´ ara (H. M. Markowitz, 1959).
+Tobin kimutatta, hogy bizonyos felt´ etelek mellett Markowitz modellje azt jelenti, hogy a
+befektet´ esi v´ alaszt´ as folyamata k´ et szakaszra bonthat´ o: el˝ osz¨ or a kock´ azatos eszk¨ oz¨ ok egy
+egyedi optim´ alis kombin´ aci´ oj´ anak kiv´ alaszt´ as´ ara, m´ asodszor pedig egy k¨ ul¨ on d¨ ont´ esre, hogy
+a p´ enzeszk¨ oz¨ oket egy ilyen kombin´ aci´ o ´ es egyetlen kock´ azatmentes eszk¨ oz k¨ oz¨ ott osszuk
+el (Tobin, 1958). Hicks ezt k¨ ovet˝ oen a Tobin ´ altal javasolt elk´ epzel´ eshez hasonl´ o modellt
+haszn´ alt, hogy megfelel˝ o k¨ ovetkeztet´ eseket vonjon le az egy´ eni befektet˝ oi magatart´ asra vo-
+natkoz´ oan, ´ es valamivel kifejezettebben foglalkozott azoknak a felt´ eteleknek a term´ eszet´ evel,
+amelyek mellett a befektet´ esi d¨ ont´ es folyamata feloszthat´ o (Hicks, 1962). Ennek a folya-
+matnak m´ eg r´ eszletesebb t´ argyal´ as´ at, bele´ ertve egy szigor´ u bizony´ ıt´ ast a lott´ ov´ alaszt´ as
+¨ osszef¨ ugg´ es´ eben, Gordon mutatta be (Gordon, 1962), de hasonl´ o eredm´ enyekre jutott
+Modigliani ´ es Miller is (Modigliani ´ es Miller, 1963).
+William Sharpe a k´ es˝ obbiekben bevezette a m´ asodik gener´ aci´ os portf´ oli´ oelm´ eletet,
+amelyben a t˝ okepiaci ´ arfolyamok modellje alapj´ an portf´ oli´ okat aj´ anlanak a befektet˝ oknek
+(Sharpe, 1964). A t˝ okepiaci ´ arfolyamok modellje a befektet´ esi eszk¨ oz¨ ok hozamainak
+´ es volatilit´ asainak figyelembev´ etel´ evel mutatja meg, hogy mely eszk¨ oz¨ ok alkalmasabbak
+arra, hogy ”t˝ okev´ edelemk´ ent” szolg´ aljanak egy portf´ oli´ oban. Markowitz, Miller ´ es Sharpe
+1990-ben k¨ oz¨ osen kapt´ ak meg a k¨ ozgazdas´ agi Nobel-d´ ıjat a p´ enz¨ ugyi k¨ ozgazdas´ agtanhoz
+val´ o hozz´ aj´ arul´ asuk´ ert.
+M´ eg k´ es˝ obb a harmadik gener´ aci´ os portf´ oli´ oelm´ elet el˝ ot´ erbe helyezte a ”k¨ ovet´ esi hib´ akat”
+´ es az ”akt´ ıv ´ ert´ ekel´ esi hib´ akat”, amelyek figyelembe veszik a befektet˝ ok d¨ ont´ eseit befoly´ asol´ o
+3´ es ´ ıgy a portf´ oli´ ooptimaliz´ al´ ast befoly´ asol´ o t´ enyez˝ oket. A p´ alyak¨ ovet´ esi hib´ ak azt jelentik,
+hogy a befektet˝ ok t´ uls´ agosan k¨ ovetik a piacot, m´ ıg az akt´ ıv ´ ert´ ekel´ esi hib´ ak azt, hogy a
+befektet˝ ok vagy t´ ul optimist´ ak, vagy t´ ul pesszimist´ ak a piaci lehet˝ os´ egeket illet˝ oen. Sz´ amos
+kutat´ o jelent˝ os munk´ at v´ egzett a harmadik gener´ aci´ os portf´ oli´ ooptimaliz´ al´ as ter´ en. K¨ oz¨ ul¨ uk
+kiemelkedik Robert Litterman, aki a ”Black-Litterman” portf´ oli´ ooptimaliz´ al´ asi modellj´ er˝ ol
+ismert (Black ´ es Litterman, 1992). A Black-Litterman-modell a portf´ oli´ ooptimaliz´ al´ as
+bayesi megk¨ ozel´ ıt´ ese, amely figyelembe veszi a befektet˝ ok n´ ezeteit ´ es meggy˝ oz˝ od´ eseit, ´ es
+lehet˝ ov´ e teszi a nem-k¨ ozepes sz´ or´ as´ u preferenci´ ak be´ ep´ ıt´ es´ et az optimaliz´ al´ asi folyamatba.
+A harmadik gener´ aci´ os portf´ oli´ ooptimaliz´ al´ as ter¨ ulet´ en tov´ abbi kiemelked˝ o kutat´ ok k¨ oz´ e
+tartozik Paul Wilmott, aki sokat ´ ırt a sz´ armaztatott ¨ ugyletek portf´ oli´ ooptimaliz´ al´ asban val´ o
+felhaszn´ al´ as´ ar´ ol (Wilmott, 1998), ´ es Bruno Dupire (Dupire et al., 1994), aki helyi volati-
+lit´ asi modelljeivel jelent˝ osen hozz´ aj´ arult az opci´ ok ´ araz´ as´ ahoz ´ es a portf´ oli´ ooptimaliz´ al´ ashoz.
+A portf´ oli´ ooptimaliz´ al´ as elm´ elet´ et tov´ abbfejlesztett´ ek a portf´ oli´ oelm´ elet negyedik
+gener´ aci´ oj´ aval is, amely a ”viselked´ esi p´ enz¨ ugyek” elm´ elet´ en alapul, ´ es figyelembe veszi az
+emberi viselked´ est ´ es a d¨ ont´ esi hib´ akat a portf´ oli´ ok´ esz´ ıt´ es sor´ an. A portf´ oli´ ooptimaliz´ al´ as
+elm´ elet´ enek negyedik gener´ aci´ oja, m´ as n´ even a viselked´ esi p´ enz¨ ugyek elm´ elete azon az
+elk´ epzel´ esen alapul, hogy az emberi viselked´ es ´ es a d¨ ont´ eshozatali torz´ ıt´ asok befoly´ asolhatj´ ak
+a befektet´ esi d¨ ont´ eseket ´ es a portf´ oli´ ok teljes´ ıtm´ eny´ et. A viselked´ esi p´ enz¨ ugyek ´ es a negyedik
+gener´ aci´ os portf´ oli´ ooptimaliz´ al´ as egyik kiemelked˝ o kutat´ oja Daniel Kahneman, aki 2002-ben
+k¨ ozgazdas´ agi Nobel-d´ ıjat kapott az ´ ıt´ el˝ ok´ epess´ eg ´ es a d¨ ont´ eshozatal pszichol´ ogi´ aj´ aval kap-
+csolatos munk´ ass´ ag´ a´ ert(Kahneman ´ es Tversky, 1979). A ter¨ ulet tov´ abbi kiemelked˝ o kutat´ oi
+k¨ oz´ e tartozik Richard Thaler, aki szint´ en megkapta a 2018-as k¨ ozgazdas´ agi Nobel-eml´ ekd´ ıjat
+a viselked´ esi k¨ ozgazdas´ agtanhoz ´ es a p´ enz¨ ugyekhez val´ o hozz´ aj´ arul´ as´ a´ ert (Thaler ´ es Ganser,
+2015), valamint Hersh Shefrin, aki alapvet˝ o meg´ allap´ ıt´ asokat tett a viselked´ esi p´ enz¨ ugyek
+portf´ oli´ okezel´ esben bet¨ olt¨ ott szerep´ er˝ ol (Shefrin ´ es Statman, 2000).
+Az elm´ ult ´ evtizedekben a portf´ oli´ ooptimaliz´ al´ as elm´ elete sz´ amos m´ erf¨ oldk¨ ov¨ on ment
+kereszt¨ ul. Az egyik ilyen m´ erf¨ oldk˝ o p´ eld´ aul a kvantitat´ ıv portf´ oli´ oelm´ elet megjelen´ ese
+volt, amely matematikai eszk¨ oz¨ okkel hat´ arozza meg a legjobb portf´ oli´ okat. Emellett a
+fejlett informatikai eszk¨ oz¨ ok ´ es a big data elterjed´ ese lehet˝ ov´ e tette a befektet˝ ok sz´ am´ ara,
+hogy sokkal gyorsabban ´ es pontosabban optimaliz´ alj´ ak portf´ oli´ oikat. Napjainkban a
+portf´ oli´ ooptimaliz´ al´ as elm´ elete folyamatosan fejl˝ odik, ´ es ´ ujabb ´ es ´ ujabb m´ odszereket
+vezetnek be, hogy seg´ ıtsenek a befektet˝ oknek a legjobb portf´ oli´ ok kialak´ ıt´ as´ aban.
+B´ ar a Markowitz-f´ ele portf´ oli´ ooptimaliz´ al´ asi modell jelent˝ osen hozz´ aj´ arult a p´ enz¨ ugyek
+ter¨ ulet´ ehez, a modellnek sz´ amos gyakorlati korl´ atja van, amelyekkel a befektet˝ oknek
+tiszt´ aban kell lenni¨ uk, amikor portf´ oli´ ok ´ ep´ ıt´ es´ ehez haszn´ alj´ ak. El˝ osz¨ or is, a modell
+felt´ etelezi, hogy a befektet˝ ok racion´ alisak, ´ es hogy t¨ ok´ eletes inform´ aci´ oval rendelkeznek az
+egyes eszk¨ oz¨ ok v´ arhat´ o hozam´ ar´ ol ´ es kock´ azatair´ ol. A val´ os´ agban azonban a befektet˝ ok
+gyakran ki vannak t´ eve viselked´ esi torz´ ıt´ asoknak, ´ es t¨ ok´ eletlen inform´ aci´ okkal rendelkeznek
+az ´ ert´ ekpap´ ırok j¨ ov˝ obeli teljes´ ıtm´ eny´ er˝ ol. Ez olyan portf´ oli´ okat eredm´ enyezhet, amelyek nem
+optim´ alisak, ´ es nem ´ erik el a v´ art hozamot.
+M´ asodszor, a modell felt´ etelezi, hogy az egyes eszk¨ oz¨ ok v´ arhat´ o hozamai ´ es kock´ azatai
+stabilak ´ es pontosan el˝ ore jelezhet˝ ok. Az ´ ert´ ekpap´ ırok t´ enyleges hozamai ´ es kock´ azatai
+4azonban igen v´ altoz´ ekonyak ´ es kisz´ am´ ıthatatlanok lehetnek, k¨ ul¨ on¨ osen r¨ ovid t´ avon. Ez azt
+jelenti, hogy a Markowitz-modell alapj´ an fel´ ep´ ıtett portf´ oli´ ok a piac vagy a gazdas´ ag jelent˝ os
+v´ altoz´ asai eset´ en esetleg nem a v´ art m´ odon teljes´ ıtenek.
+Harmadszor, a modell felt´ etelezi, hogy az egyes eszk¨ oz¨ ok k¨ oz¨ otti korrel´ aci´ o az id˝ o
+m´ ul´ as´ aval ´ alland´ o. A korrel´ aci´ ok azonban id˝ ovel v´ altozhatnak, k¨ ul¨ on¨ osen a piaci stressz
+id˝ oszakaiban. Ez azt jelenti, hogy a Markowitz-modell alapj´ an ¨ ossze´ all´ ıtott portf´ oli´ ok piaci
+zavarok idej´ en nem biztos, hogy a k´ ıv´ ant szint˝ u diverzifik´ aci´ ot ny´ ujtj´ ak.
+Negyedszer, a modell felt´ etelezi, hogy a befektet˝ ok hozz´ af´ ernek az ´ ert´ ekpap´ ırok kell˝ oen
+v´ altozatos t´ ar´ ahoz, ´ es hogy k¨ olts´ egmentesen kereskedhetnek ezekkel az ´ ert´ ekpap´ ırokkal. A
+val´ os´ agban a befektet˝ ok korl´ atoz´ asokkal szembes¨ ulhetnek az ´ ert´ ekpap´ ırok el´ erhet˝ os´ eg´ et il-
+let˝ oen, ´ es az ´ ert´ ekpap´ ırok keresked´ ese tranzakci´ os k¨ olts´ egekkel j´ arhat.
+V´ eg¨ ul a modell felt´ etelezi, hogy a befektet˝ ok egyperi´ odusos befektet´ esi horizontot
+tartanak szem el˝ ott, ´ es nem veszik figyelembe az ad´ ok vagy egy´ eb k¨ olts´ egek hat´ as´ at
+portf´ oli´ ojuk hozam´ ara. A val´ os´ agban azonban a befektet˝ ok befektet´ esi horizontja hosszabb
+t´ av´ u, ´ es figyelembe kell venni¨ uk az ad´ ok ´ es egy´ eb k¨ olts´ egek hat´ as´ at portf´ oli´ ojukra.
+¨Osszefoglalva, b´ ar a Markowitz-f´ ele portf´ oli´ ooptimaliz´ al´ asi modell jelent˝ osen hozz´ aj´ arult
+a p´ enz¨ ugyek ter¨ ulet´ ehez, sz´ amos val´ os korl´ atot tartalmaz, amelyekkel a befektet˝ oknek
+tiszt´ aban kell lenni¨ uk, amikor portf´ oli´ ok ´ ep´ ıt´ es´ ehez haszn´ alj´ ak. Ezek a korl´ atok r´ avil´ ag´ ıtanak
+annak fontoss´ ag´ ara, hogy a modellt ink´ abb keretnek, mintsem v´ egleges megold´ asnak te-
+kints¨ uk a portf´ oli´ o´ ep´ ıt´ eshez, valamint arra, hogy ´ erdemes a modellt ´ ujabb ´ es gyakorlatiasabb
+m´ odszerekkel tov´ abbfejleszteni, hogy hat´ ekonyabb ´ es eredm´ enyesebb portf´ oli´ okat lehessen
+´ ep´ ıteni a k¨ ul¨ onb¨ oz˝ o ig´ enyeknek megfelel˝ oen.
+Ebben a tanulm´ anyban Markowitz portf´ oli´ oelm´ elet´ enek egy olyan tov´ abbfejleszt´ es´ et
+fogjuk t´ argyalni, amely figyelembe veszi a volatilit´ as mint kock´ azatm´ er´ esi metrika korl´ atait,
+´ es lehet˝ ov´ e teszi, hogy a gyakorlatban hat´ ekonyabb portf´ oli´ ot tervezz¨ unk egy m´ asik
+kock´ azatm´ er´ esi metrika, a CVaR haszn´ alat´ aval. A CVaR (Conditional Value-at-Risk)
+portf´ oli´ ooptimaliz´ al´ as alkalmaz´ as´ anak egyik el˝ onye az eredeti Markowitz-modellel szemben
+az, hogy a CVaR figyelembe veszi a portf´ oli´ o lefel´ e ir´ anyul´ o kock´ azat´ at, m´ ıg a Markowitz-
+modell csak a portf´ oli´ o varianci´ aj´ at vagy volatilit´ as´ at veszi figyelembe. A CVaR egy olyan
+kock´ azati m´ er˝ osz´ am, amely becsl´ est ad a portf´ oli´ o v´ arhat´ o vesztes´ eg´ ere a legrosszabb
+forgat´ ok¨ onyv eset´ en, egy bizonyos konfidencia szint felett. Ez azt jelenti, hogy a CVaR
+figyelembe veszi a portf´ oli´ o farokkock´ azat´ at, azaz a nagy vesztes´ egek kock´ azat´ at, amelyek
+ritk´ an fordulnak el˝ o, de jelent˝ os hat´ assal lehetnek a portf´ oli´ o teljes teljes´ ıtm´ eny´ ere. ezzel
+szemben a Markowitz-modell azt felt´ etelezi, hogy a portf´ oli´ o kock´ azat´ at kiz´ ar´ olag a
+portf´ oli´ o varianci´ aja vagy volatilit´ asa hat´ arozza meg, ami nem felt´ etlen¨ ul t¨ ukr¨ ozi pontosan
+a portf´ oli´ o t´ enyleges kock´ azat´ at. A Markowitz-modell olyan portf´ oli´ okat eredm´ enyezhet,
+amelyek t´ ulzottan a hozam maximaliz´ al´ as´ ara ¨ osszpontos´ ıtanak, an´ elk¨ ul, hogy figyelembe
+venn´ ek a nagy vesztes´ egek lehet˝ os´ eg´ et. Ezzel szemben a CVaR portf´ oli´ ooptimaliz´ al´ as olyan
+portf´ oli´ ok kialak´ ıt´ as´ ara t¨ orekszik, amelyek minimaliz´ alj´ ak a nagy vesztes´ egek lehet˝ os´ eg´ et,
+mik¨ ozben ´ esszer˝ u hozamszintet biztos´ ıtanak. Ez teszi a CVaR-t megfelel˝ obb modell´ e a
+kock´ azatker¨ ul˝ o befektet˝ ok sz´ am´ ara, akik a hozam maximaliz´ al´ asa helyett a vesztes´ egek
+elker¨ ul´ es´ ere t¨ orekszenek. A CVaR alkalmaz´ as´ anak m´ asik el˝ onye, hogy k´ epes kezelni a
+p´ enz¨ ugyi piacokon gyakran el˝ ofordul´ o abnorm´ alis hozameloszl´ ast. A Markowitz modell b´ ar
+5nem felt´ etelezi ezt, viszont a sz´ or´ as kock´ azatm´ er´ esk´ ent val´ o haszn´ alat´ at megk´ erd˝ ojelezheti
+esetenk´ ent.
+A CVaR haszn´ alat´ anak f˝ o el˝ onye a VaR-rel szemben az, hogy a CVaR a portf´ oli´ o
+kock´ azat´ anak teljesebb m´ er˝ osz´ am´ at adja, amely figyelembe veszi a portf´ oli´ o farokkock´ azat´ at.
+A portf´ oli´ o v´ arhat´ o vesztes´ eg´ enek a VaR-szinten t´ uli becsl´ es´ evel a CVaR megragadja a
+sz´ els˝ os´ eges piaci k¨ or¨ ulm´ enyek k¨ oz¨ ott bek¨ ovetkez˝ o potenci´ alis vesztes´ egeket. Ez´ altal a
+CVaR megfelel˝ obb kock´ azati m´ er˝ osz´ am azon befektet˝ ok sz´ am´ ara, akik sz´ am´ ara a nagy
+vesztes´ egek elker¨ ul´ ese fontosabb, mint a hozammaximaliz´ al´ as, amelyben a magas farok-
+kock´ azat´ u portf´ oli´ ok jelent˝ os szerepet j´ atszanak. ´Erdemes azonban megjegyezni, hogy a
+CVaR kisz´ am´ ıt´ asa ¨ osszetettebb ´ es sz´ am´ ıt´ asig´ enyesebb lehet, mint a VaR. Ezenk´ ıv¨ ul a CVaR
+kisz´ am´ ıt´ as´ ara k¨ ul¨ onb¨ oz˝ o m´ odszerek l´ eteznek, ´ es a m´ odszer megv´ alaszt´ asa befoly´ asolhatja
+az eredm´ enyeket. Ez´ ert fontos, hogy gondosan m´ erlegelj¨ uk, hogy egy adott portf´ oli´ ohoz
+melyik a megfelel˝ o kock´ azati m´ er˝ osz´ am, ´ es megfelel˝ o m´ odszereket haszn´ aljunk a kock´ azati
+m´ er˝ osz´ amok kisz´ am´ ıt´ as´ ahoz ´ es ´ ertelmez´ es´ ehez.
+63. Markowitz-f´ ele modern portf´ oli´ oelm´ elet
+3.1. Markowitz modell ´ altal´ anos ´ attekint´ ese
+A portf´ oli´ ooptimaliz´ al´ as az eszk¨ oz¨ ok optim´ alis allok´ aci´ oj´ anak meghat´ aroz´ asa egy
+portf´ oli´ oban a v´ arhat´ o hozam maximaliz´ al´ asa ´ es a kock´ azat minimaliz´ al´ asa ´ erdek´ eben.
+A Harry Markowitz ´ altal az 1950-es ´ evekben kidolgozott modern portf´ oli´ oelm´ elet keretet
+biztos´ ıt e probl´ ema matematikai m´ odszerekkel t¨ ort´ en˝ o megold´ as´ ahoz. Markowitz modellje
+a hozam-sz´ or´ asos optimaliz´ al´ as gondolat´ an alapul, amelynek l´ enyege, hogy kisz´ am´ ıtjuk
+a portf´ oli´ oban l´ ev˝ o eszk¨ oz¨ ok v´ arhat´ o hozam´ at ´ es kovarianci´ aj´ at, ´ es megtal´ aljuk azt az
+optim´ alis kombin´ aci´ ot, amely adott kock´ azati szint mellett a legmagasabb v´ arhat´ o hozamot
+eredm´ enyezi (H. Markowitz, 1952).
+A Markowitz-modell sz´ amos felt´ etelez´ est tesz, t¨ obbek k¨ oz¨ ott azt, hogy a befektet˝ ok ra-
+cion´ alisak, ´ es hogy minden befektet˝ o kock´ azatker¨ ul˝ o. Ezek a felt´ etelez´ esek a gyakorlatban
+nem mindig ´ erv´ enyesek, de hasznos kiindul´ opontot jelentenek a kock´ azat ´ es a hozam k¨ oz¨ otti
+kompromisszumok elemz´ es´ ehez a portf´ oli´ ooptimaliz´ al´ as´ aban. E felt´ etelez´ esek ismeret´ eben a
+modell a k¨ ovetkez˝ o l´ ep´ esekben val´ os´ ıthat´ o meg:
+1. Sz´ am´ ıtsuk ki a portf´ oli´ o egyes eszk¨ ozeinek v´ arhat´ o hozam´ at. Ez kisz´ am´ ıthat´ o m´ ultbeli
+adatok ´ es statisztikai technik´ ak, p´ eld´ aul az ´ atlagos hozam seg´ ıts´ eg´ evel. A portf´ oli´ o
+v´ arhat´ o hozama egyszer˝ uen az egyes eszk¨ oz¨ ok v´ arhat´ o hozamainak s´ ulyozott ´ atlaga,
+ahol a s´ ulyok a portf´ oli´ o allok´ aci´ oj´ at t¨ ukr¨ ozik.
+2. Sz´ am´ ıtsuk ki az eszk¨ oz¨ ok kovarianciam´ atrix´ at, amely megmutatja, hogy a k¨ ul¨ onb¨ oz˝ o
+eszk¨ oz¨ ok hozamai hogyan kapcsol´ odnak egym´ ashoz. Ezt az eszk¨ ozhozamokra vonat-
+koz´ o m´ ultbeli adatok felhaszn´ al´ as´ aval lehet elv´ egezni. A k´ et eszk¨ oz k¨ oz¨ otti kovariancia
+megmutatja, hogy a hozamok azonos vagy ellent´ etes ir´ anyba mozognak egy¨ utt, ´ es fon-
+tos bemeneti adat a hozam-sz´ or´ as optimaliz´ al´ asi folyamathoz. A k´ et eszk¨ oz k¨ oz¨ otti
+hozamok egy¨ uttmozg´ as´ anak m´ ert´ ek´ et a korrel´ aci´ os egy¨ utthat´ oval lehet megadni, ame-
+lyet a kovarianci´ ak ´ es varianci´ ak felhaszn´ al´ as´ aval kapunk.
+3. A v´ arhat´ o hozamokat ´ es a kovarianciam´ atrixot felhaszn´ alva megalkothatunk egy
+hat´ arportf´ oli´ o-g¨ orb´ et, amely megmutatja az eszk¨ oz¨ ok azon kombin´ aci´ oj´ at, amely a leg-
+magasabb v´ arhat´ o hozamot k´ ın´ alja egy adott kock´ azati szint mellett, kock´ azatmentes
+eszk¨ oz n´ elk¨ ul. A piaci portf´ oli´ ot ezut´ an a Sharpe-mutat´ o vagy m´ as analitikus eszk¨ oz¨ ok
+seg´ ıts´ eg´ evel tal´ aljuk meg. A kock´ azatmentes eszk¨ oz ´ es a piaci portf´ oli´ o k¨ oz¨ otti
+f´ elegyenest nevezz¨ uk hat´ ekony portf´ oli´ onak. A hat´ ekony ´ es a hat´ arportf´ oli´ ok grafikus
+´ abr´ azol´ asa hasznos a kock´ azat ´ es a hozam k¨ oz¨ otti kompromisszumok szeml´ eltet´ es´ ere
+a portf´ oli´ ooptimaliz´ al´ asi folyamat sor´ an, ´ es seg´ ıtheti a befektet˝ oket a lehets´ eges
+portf´ oli´ ok k¨ or´ enek megismer´ es´ eben, valamint a kock´ azatt˝ ur˝ o k´ epess´ eg¨ uknek ´ es befek-
+tet´ esi c´ eljaiknak legink´ abb megfelel˝ o portf´ oli´ o kiv´ alaszt´ as´ aban.
+4. V´ alasszuk ki a hat´ ekony hat´ aron azt az optim´ alis portf´ oli´ ot, amely a legjobban meg-
+felel a befektet˝ o kock´ azatt˝ ur´ es´ enek ´ es befektet´ esi c´ eljainak. Az optim´ alis portf´ oli´ o
+az, amely a legmagasabb v´ arhat´ o hozamot k´ ın´ alja egy adott kock´ azati szint mellett,
+7vagy a legalacsonyabb kock´ azati szintet adja meg egy adott v´ arhat´ o hozam mellett,
+a hat´ ekony hat´ aron meghat´ arozottak szerint. Fontos megjegyezni, hogy a hat´ ekony
+hat´ ar nem egyedi, ´ es a hozam-sz´ or´ as optimaliz´ al´ asi folyamat sor´ an haszn´ alt konkr´ et
+felt´ etelez´ esekt˝ ol ´ es inputokt´ ol f¨ ugg˝ oen t¨ obb portf´ oli´ o is optim´ alis lehet.
+3.2. Markowitz modell matematikai megfogalmaz´ asa
+Most tekints¨ uk ´ at matematikai megfogalmaz´ asban az el˝ oz˝ o fejezetben le´ ırt l´ ep´ eseket for-
+maliz´ alva is (Sz´ az, 2019):
+1. Legyen t ´ es (t + 1) id˝ opontban egy r´ eszv´ eny ´ ara Pt´ esPt+1. Ekkor egy r´ eszv´ eny
+hozam´ at jel¨ olj¨ uk a k¨ ovetkez˝ ok´ eppen:
+rt=Pt+1
+Pt−1 (1)
+ekkor a v´ arhat´ o hozam egy eszk¨ ozre E( rt) =µt. Ez vektorosan fel´ ırva t¨ obb eszk¨ ozre
+E(r) =µ. Jel¨ olje a portf´ oli´ o hozam´ at rx, legyen N kock´ azatos eszk¨ oz¨ unk ´ es legyen
+W a vagyonunk. Jel¨ olje teh´ at ri´ esWiaz i kock´ azatos eszk¨ oz hozam´ at, illetve hogy a
+vagyonunkb´ ol mennyit tartunk az eszk¨ ozben. Ekkor
+rx=W1(1 +r1) +. . .+WN(1 +rN)
+W−1 =NX
+i=1Wi
+Wri=NX
+i=1xiri (2)
+´ es
+1xT= 1 (3)
+2. Most sz´ amoljuk ki a kovariancia m´ atrixot, amit jel¨ olj¨ on C. Jel¨ olje az i eszk¨ oz ho-
+zam´ anak a sz´ or´ as´ at σi´ es az i ´ es j eszk¨ oz hozamai k¨ oz¨ otti korrel´ aci´ ot corr i,j. Ekkor a
+kovariancia i ´ es j eszk¨ oz k¨ oz¨ ott
+σi,j=corr i,jσiσj (4)
+´ es ´ ıgy
+C=
+σ2
+1. . . σ2
+1,N.........
+σ2
+N,1. . . σ2
+N
+ (5)
+Ekkor a portf´ oli´ o v´ arhat´ o hozama
+E(rx) =xµT(6)
+vagy m´ ask´ epp fel´ ırva
+µ(x) =xµT(7)
+´ es a portf´ oli´ o varianci´ aja
+σ2
+x=V ar(x) =xCxT(8)
+83. Most fogalmazzuk meg a portf´ oli´ ooptimaliz´ al´ as c´ elf¨ uggv´ eny´ et ´ es korl´ atait
+
+
+min
+x1
+2σ2
+x= min
+x1
+2xCxT
+xµT⩾r
+1xT= 1(9)
+Ebb˝ ol
+L=1
+2xCxT−v(xµT−r)−u(1xT−1) =0 (10)
+´ es ´ ıgy fel´ ırhatjuk a gradiens egyenleteket:
+∂L
+∂x=CxT= 0 (11)
+∂L
+∂v=−(xµT−r) = 0 (12)
+∂L
+∂u=−(1xT−1) = 0 (13)
+L´ athatjuk, hogy ezzel az utols´ o k´ et egyenlettel igaz´ ab´ ol visszajutottunk magukhoz
+a felt´ etelekhez. Ezeket az egyenleteket ´ at´ ırhatjuk m´ atrix form´ aba, hogy egyszer˝ ubb
+legyen a sz´ amol´ as, illetve a megoldhat´ os´ agot is k¨ onnyebb bel´ atni:
+
+CµT1T
+−µ0 0
+1 0 0
+
+xT
+v
+u
+=
+0
+−r
+−1
+, (14)
+´ es legyen
+M=
+CµT1T
+−µ0 0
+1 0 0
+, (15)
+´ ıgy az egyenletrendszer ´ at´ ırhat´ o a k¨ ovetkez˝ o alakokra
+M
+xT
+v
+u
+=
+0
+−r
+−1
+ (16)
+majd az Mm´ atrixot invert´ alva
+
+xT
+v
+u
+=M−1
+0
+−r
+−1
+. (17)
+9Ekkor bontsuk fel az M−1m´ atrixot az al´ abbi szerint
+M−1.=
+N−1MT
+1MT
+2
+−M1−α−β
+M2−β−γ
+. (18)
+Ezekb˝ ol bel´ athat´ o, hogy a hat´ arportf´ oli´ ok sz´ or´ asa a k¨ ovetkez˝ o k´ eplettel megadhat´ o
+σ=p
+αr2+ 2βr+γ. (19)
+Ezzel megkaphatjuk az ¨ osszes hat´ arportf´ oli´ ot ´ es ´ abr´ azolhatjuk az egyes ponto-
+kat a hozam-sz´ or´ as t´ erben. Jel¨ olje rfa kock´ azatmentes eszk¨ oz hozam´ at, aminek
+´ ertelemszer˝ uen a sz´ or´ asa 0, illetve minden egy´ eb eszk¨ ozzel vett korrel´ aci´ oja, ´ ıgy a
+kovarianci´ aja is, 0. Teh´ at a kock´ azatmentes eszk¨ oz nem mozog egy¨ utt egyik eszk¨ oz
+hozam´ aval sem. (Ez a gyakorlatban persze nem teljes¨ ul, amennyiben elfogadjuk, hogy
+az ´ allamk¨ otv´ enyek a kock´ azatmentes term´ ekek, viszont realisztikusabb azt gondolni,
+hogy ezek nem felelnek meg a kock´ azatmentes term´ ek defin´ ıci´ oj´ anak.)
+Ugyan´ ugy levezethet˝ o, de t´ ulmutat a dolgozat t´ em´ aj´ an, hogy a piaci hozam
+rM=βrf+γ
+αrf+β, (20)
+illetve a hozz´ a tartoz´ o piaci s´ ulyok
+xM=−M1rM−M2. (21)
+´Igy teh´ at megkaptuk, hogy a piaci portf´ oli´ onak mi az ¨ osszet´ etele, illetve a fenti sz´ or´ as
+k´ eplet´ ebe behelyettes´ ıtve a piaci hozamot megkaphatjuk a piaci sz´ or´ ast (kock´ azatot),
+´ ıgy minden l´ enyeges mutat´ ot kisz´ amoltunk ahhoz, hogy meg tudjuk adni a hat´ ekony
+portf´ oli´ ok halmaz´ at.
+El˝ obb azonban sz´ amoljunk ki m´ eg egy ´ erdekes portf´ oli´ ot, ami nem m´ as, mint a legala-
+csonyabb sz´ or´ as´ u portf´ oli´ o a hat´ ar portf´ oli´ ok k¨ oz¨ ul
+rmin=β
+α. (22)
+Az im´ ent bemutatott m´ odon ehhez is megkaphatjuk, hogy mekkora az ehhez tartoz´ o
+sz´ or´ as. Most n´ ezz¨ uk meg, hogy milyen portf´ oli´ ok alkotj´ ak a hat´ ekony portf´ oli´ ok hal-
+maz´ at. A hat´ ekony portf´ oli´ okat ´ ugy kapjuk meg, hogy vessz¨ uk a kock´ azatmentes
+eszk¨ oz¨ on ´ es a piaci portf´ oli´ o ´ atmen˝ o f´ elegyenest. Most n´ ezz¨ uk meg a Sharpe mutat´ o
+k´ eplet´ et
+Sa=ra−rf
+σa(23)
+10ez egy eszk¨ oz/portf´ oli´ o ´ es a kock´ azatmentes eszk¨ oz k¨ oz¨ ott h´ uzott f´ elegyenes mere-
+deks´ ege. Ez a mutat´ o min´ el nagyobb ´ ert´ eket vesz fel, ann´ al jobb portf´ oli´ ok helyezked-
+nek el ezen a f´ elegyenesen, mivel ha ´ ertelmezz¨ uk a hozam-sz´ or´ as t´ erben, akkor a min´ el
+nagyobb meredeks´ eg azt jelenti, hogy egys´ eg sz´ or´ asra nagyobb hozamot kapunk. Ez a
+mutat´ o az el˝ obb eml´ ıtett esetben veszi fel a maximum´ at, amikor a piaci portf´ oli´ o ´ es a
+kock´ azatmentes eszk¨ ozt v´ alasztjuk, ´ es az ´ ıgy kapott f´ elegyenes h´ ıvjuk Capital Market
+Line-nak (CML), magyarul t˝ okepiaci egyenesnek. Ekkor a Sharpe mutat´ o ´ ert´ eke
+SM=rM−rf
+σM. (24)
+Ebb˝ ol teh´ at megkaphatjuk, hogy az egyes portf´ oli´ ok hozama e CML-n
+rP=rf+σP
+σM(rM−rf), (25)
+ahol az ( rM−rf)-et h´ ıvjuk kock´ azati pr´ emiumnak. Levezethet˝ o ugyancsak ez a k´ eplet
+is, hogy
+rP=rf+βP(rM−rf), (26)
+ahol
+βP=σP,M
+σ2
+M(27)
+Ha az el˝ obbi egyenl˝ os´ eget ´ abr´ azoljuk a hozam-b´ eta t´ erben, akkor az ezen az egyene-
+sen elhelyezked˝ o portf´ oli´ ok halmaz´ at h´ ıvjuk Security Market Line-nak (SML), azaz
+´ ert´ ekpap´ ır piaci egyenes.
+Most l´ assuk grafikusan ´ abr´ azolva a hat´ ar-, illetve a hat´ ekony portf´ oli´ okat (CML) egy
+p´ eld´ an kereszt¨ ul:
+1. ´ abra. Hat´ ekony-, hat´ ar- ´ as piaci portf´ oli´ ok a Markowitz modellben
+114. Most n´ ezz¨ uk meg a befektet˝ ok v´ alaszt´ as´ at a hasznoss´ agi f¨ uggv´ eny¨ uk¨ on kereszt¨ ul. A
+befektet˝ ok hasznoss´ agi f¨ uggv´ enye a k¨ ovetkez˝ ok´ eppen adhat´ o meg
+U=E(r)−0,5A σ2, (28)
+ahol A a befektet˝ o kock´ azataverzi´ oj´ at fejezi ki. Mivel a v´ alaszt´ as a CML f´ elegyenesen
+t¨ ort´ enik, ´ ıgy
+E(r) =x rM+ (1−x)rf, (29)
+´ es
+σ2=x2σ2
+M. (30)
+´Igy a hasznoss´ agi f¨ uggv´ eny ´ at´ ırhat´ o a k¨ ovetkez˝ o form´ ara:
+U=x rM+ (1−x)rf−0,5A x2σ2
+M, (31)
+amit deriv´ alva ´ es 0-val egyenl˝ ov´ e t´ eve, majd x-re rendezve megkaphatjuk az optim´ alis
+s´ ulyokat
+x=rM−rf
+A σ2
+M=SM
+A σM. (32)
+´Igy teh´ at megkaptuk, hogy mi a befektet˝ o optim´ alis v´ alaszt´ asa e modell keretein bel¨ ul.
+A Markowitz-modellt sz´ eles k¨ orben haszn´ alj´ ak a gyakorlatban, ´ es sikeresen ny´ ujt keretet
+a portf´ oli´ ooptimaliz´ al´ ashoz. Ugyanakkor feltev´ esei ´ es korl´ atai miatt kritika is ´ erte. P´ eld´ aul
+a modell nem vesz figyelembe m´ as kock´ azati m´ ert´ ekeket, p´ eld´ aul a lefel´ e ir´ anyul´ o kock´ azatot
+vagy a farokkock´ azatot.
+Korl´ atai ellen´ ere a Markowitz-modell tov´ abbra is alapvet˝ o ´ es sz´ eles k¨ orben haszn´ alt
+eszk¨ oz a portf´ oli´ ooptimaliz´ al´ asban. Egyszer˝ u ´ es intuit´ ıv keretet biztos´ ıt a kock´ azat ´ es a
+hozam k¨ oz¨ otti kompromisszumok elemz´ es´ ehez a portf´ oli´ o´ ep´ ıt´ es sor´ an, ´ es sok esetben sike-
+resnek bizonyult. Mivel azonban a p´ enz¨ ugyi piacok egyre ¨ osszetettebb´ e ´ es v´ altozatosabb´ a
+v´ alnak, a portf´ oli´ ooptimaliz´ al´ as fejlettebb ´ es rugalmasabb m´ odszerei ir´ ant egyre nagyobb az
+ig´ eny.
+A Markowitz-modell kiterjeszt´ es´ enek egyik m´ odja az, hogy az optimaliz´ al´ asi folyamatba
+tov´ abbi korl´ atokat ´ es c´ elokat ´ ep´ ıtettek be. Egyes kutat´ ok p´ eld´ aul azt javasolt´ ak, hogy vegy´ ek
+figyelembe a tranzakci´ os k¨ olts´ egeket ´ es a likvidit´ asi korl´ atoz´ asokat, amelyek a gyakorlatban
+jelent˝ osen befoly´ asolhatj´ ak a portf´ oli´ o teljes´ ıtm´ eny´ et. M´ as kutat´ ok a befektet˝ oi preferenci´ ak,
+p´ eld´ aul a kock´ azatt˝ ur´ es ´ es a hozamelv´ ar´ asok be´ ep´ ıt´ es´ ere ¨ osszpontos´ ıtottak az optimaliz´ al´ asi
+folyamatban. E tov´ abbi t´ enyez˝ ok figyelembev´ etel´ evel jav´ ıthat´ o a Markowitz-modell realiszti-
+kuss´ aga ´ es relevanci´ aja, ´ es jobban megragadhat´ o a p´ enz¨ ugyi piacok ¨ osszetett dinamik´ aja. A
+12Markowitz-modell kiterjeszt´ es´ enek egy m´ asik m´ odja az alternat´ ıv kock´ azati m´ ert´ ekek, mint
+p´ eld´ aul a dolgozat t´ em´ aj´ aul szolg´ al´ o CVaR (Conditional Value at Risk) haszn´ alata, amely
+figyelembe veszi a portf´ oli´ o egy bizonyos k¨ usz¨ ob´ ert´ eket meghalad´ o potenci´ alis vesztes´ eg´ et.
+A CVaR n´ epszer˝ u kock´ azati m´ er˝ osz´ am a p´ enz¨ ugyekben, ´ es a volatilit´ asn´ al hat´ ekonyabbnak
+bizonyult a portf´ oli´ o kock´ azat´ anak megragad´ as´ aban, k¨ ul¨ on¨ osen olyan esetekben, amikor
+nagy a val´ osz´ ın˝ us´ ege a sz´ els˝ os´ eges vesztes´ egeknek. A CVaR-nek az optimaliz´ al´ asi folyamatba
+val´ o be´ ep´ ıt´ es´ evel jobban megragadhat´ o a portf´ oli´ o lefel´ e ir´ anyul´ o kock´ azata ´ es a farok-
+kock´ azata, ´ es ´ atfog´ obb ´ ert´ ekel´ est lehet adni a portf´ oli´ o hozam-kock´ azat kompromisszum´ ar´ ol.
+E b˝ ov´ ıt´ esek ´ es vari´ aci´ ok ellen´ ere a Markowitz-modell tov´ abbra is kih´ ıv´ asokkal ´ es
+korl´ atokkal szembes¨ ul. P´ eld´ aul a m´ ultbeli adatok felhaszn´ al´ asa a v´ arhat´ o hozamok ´ es a
+kovariancia becsl´ es´ ehez nem mindig pontos, ´ es szuboptim´ alis portf´ oli´ okat eredm´ enyezhet,
+ha az adatok nem reprezentat´ ıvak a m¨ og¨ ottes eszk¨ oz¨ okre vagy a j¨ ov˝ obeli piaci felt´ etelekre.
+Emellett maga az optimaliz´ al´ asi folyamat sz´ am´ ıt´ asi szempontb´ ol ¨ osszetett ´ es id˝ oig´ enyes
+lehet, k¨ ul¨ on¨ osen nagy ´ es v´ altozatos portf´ oli´ ok eset´ eben. Ennek eredm´ enyek´ eppen tov´ abbi
+kutat´ asra ´ es fejleszt´ esre van sz¨ uks´ eg a portf´ oli´ ooptimaliz´ al´ as ter¨ ulet´ en, hogy lek¨ uzdj¨ uk eze-
+ket a kih´ ıv´ asokat, ´ es jav´ ıtsuk az optimaliz´ al´ asi folyamat hat´ ekonys´ ag´ at ´ es eredm´ enyess´ eg´ et.
+¨Osszefoglalva, a Markowitz-f´ ele portf´ oli´ ooptimaliz´ al´ as a modern p´ enz¨ ugyek egyik alap-
+vet˝ o fogalma, ´ es d¨ ont˝ o szerepet j´ atszott a portf´ oli´ oelm´ elet ´ es a befektet´ esi gyakorlat
+fejl˝ od´ es´ eben. B´ ar a Markowitz-modell sok esetben sikeresnek bizonyult, nem mentes a
+korl´ atokt´ ol, ´ es tov´ abbi kutat´ asokra van sz¨ uks´ eg a modell jav´ ıt´ asa ´ es kiterjeszt´ ese ´ erdek´ eben,
+hogy jobban megragadja a p´ enz¨ ugyi piacok ¨ osszetetts´ eg´ et ´ es a befektet˝ ok elt´ er˝ o preferenci´ ait.
+Tov´ abbi korl´ atoz´ asok ´ es c´ elok be´ ep´ ıt´ es´ evel, valamint alternat´ ıv kock´ azati m´ er˝ osz´ amok alkal-
+maz´ as´ aval n¨ ovelhet˝ o a Markowitz-modell relevanci´ aja ´ es hat´ ekonys´ aga, ´ es a gyakorlatban
+´ atfog´ obb ´ es rugalmasabb keretet biztos´ ıt a portf´ oli´ ooptimaliz´ al´ ashoz.
+134. Portf´ oli´ ooptimaliz´ al´ as CVaR-kel
+4.1. VaR ´ es CVaR ¨ osszehasonl´ ıt´ asa
+A kock´ aztatott ´ ert´ ek (VaR) ´ es a felt´ eteles kock´ aztatott ´ ert´ ek (CVaR) k´ et olyan m´ odszer,
+amely seg´ ıt a portf´ oli´ ok kock´ azat´ anak m´ er´ es´ eben ´ es optimaliz´ al´ as´ aban. A VaR azt m´ eri,
+hogy egy adott portf´ oli´ o ´ ert´ eke milyen m´ ert´ ekben cs¨ okkenhet egy adott id˝ oszak (pl. egy nap)
+alatt egy adott konfidencia szint (pl. 95%) mellett. Ha p´ eld´ aul egy portf´ oli´ o VaR-´ ert´ eke egy
+napra vonatkoz´ oan 10 milli´ o doll´ ar 95%-os konfidencia szint mellett, ez azt jelenti, hogy a
+portf´ oli´ o ´ ert´ eke 95%-os konfidencia szint mellett egy nap alatt nem fog 10 milli´ o doll´ arn´ al
+nagyobb m´ ert´ ekben cs¨ okkenni. A CVaR ezzel szemben az a v´ arhat´ o vesztes´ eg, amelyet
+a portf´ oli´ o ´ ert´ eke egy adott id˝ oszak (pl. egy nap) alatt el´ erhet, ha a portf´ oli´ o ´ ert´ eke a
+VaR-n´ el nagyobb m´ ert´ ekben esik, az adott konfidencia szint (pl. 95%) mellett. Ha p´ eld´ aul
+egy portf´ oli´ o CVaR-je egy napra 12 milli´ o doll´ ar 95%-os konfidencia szint mellett, akkor ez
+azt jelenti, hogy ha a portf´ oli´ o ´ ert´ eke egy nap alatt 10 milli´ o doll´ arn´ al nagyobb m´ ert´ ekben
+esik, akkor az ´ atlagos vesztes´ eg 12 milli´ o doll´ ar lesz.
+A VaR ´ es a CVaR haszn´ alata a portf´ oli´ ooptimaliz´ al´ asban lehet˝ ov´ e teszi a
+kock´ azatcs¨ okkent´ est, ´ es seg´ ıt a befektet´ esek megfelel˝ o allok´ aci´ oj´ aban a portf´ oli´ oban. A VaR
+alkalmaz´ asakor a portf´ oli´ o ¨ osszet´ etel´ et ´ altal´ aban ´ ugy alak´ ıtj´ ak ki, hogy a kock´ azatosabb
+befektet´ esek ar´ anya cs¨ okkenjen, m´ ıg a CVaR eset´ eben a portf´ oli´ o ¨ osszet´ etel´ et ´ ugy alak´ ıtj´ ak
+ki, hogy a v´ arhat´ o vesztes´ egek minim´ alisra cs¨ okkenjenek. Fontos megjegyezni, hogy a VaR
+´ es a CVaR csak kock´ azatm´ er´ esi eszk¨ oz¨ ok, ´ es nem felt´ etlen¨ ul t¨ ukr¨ ozik a portf´ oli´ o val´ odi
+teljes´ ıtm´ eny´ et vagy hozam´ at. Emellett a VaR ´ es a CVaR csak m´ ultbeli adatokon alapul, ´ es
+nem felt´ etlen¨ ul j´ osolja meg a j¨ ov˝ obeli kock´ azatokat. Ez´ ert fontos, hogy ezeket az eszk¨ oz¨ oket
+m´ as kock´ azatm´ er´ esi m´ odszerekkel egy¨ utt haszn´ aljuk a portf´ oli´ ok optimaliz´ al´ asakor.
+A VaR ´ es a CVaR k¨ oz¨ otti tov´ abbi fontos k¨ ul¨ onbs´ eg az, hogy a VaR ´ altal´ aban alacsonyabb
+´ ert´ eket ad, mint a CVaR, mivel a VaR csak a legrosszabb eset˝ u vesztes´ eget veszi figyelembe,
+m´ ıg a CVaR az ´ atlagos legrosszabb eset˝ u vesztes´ eget sz´ am´ ıtja ki. Emiatt a CVaR ´ altal´ aban
+nagyobb biztons´ agot ad, mint a VaR. V´ eg¨ ul meg kell jegyezni, hogy a VaR ´ es a CVaR csak a
+k¨ ozepes vagy ´ altal´ anos kock´ azatok m´ er´ es´ ere alkalmas, ´ es nem m´ erik a sz´ els˝ os´ eges esem´ enyek
+(pl. piaci ¨ osszeoml´ asok) ´ altal okozott kock´ azatokat. Ez´ ert a portf´ oli´ ooptimaliz´ al´ asban
+m´ as kock´ azatm´ er´ esi m´ odszereket is alkalmaznak, p´ eld´ aul stresszteszteket vagy sz´ els˝ os´ eges
+esem´ enykock´ azat m´ er´ es´ et (pl. Value at Default).
+142. ´ abra. Sz´ or´ as, VaR ´ es CVaR
+A CVaR-nek sz´ amos el˝ ony¨ os tulajdons´ aga van nem csak kock´ azatm´ er´ esi, hanem mate-
+matikai ´ es hat´ ekonys´ agi szempontb´ ol is a sz´ or´ assal ´ es az egyszer˝ u VaR-ral szemben. Most
+tekints¨ uk ´ at formaliz´ al´ as n´ elk¨ ul ezeket a tulajdons´ agokat (Sarykalin, Serraino, ´ es Uryasev,
+2008):
+•A CVaR fels˝ obbrend˝ u matematikai tulajdons´ agait tekintve, mint a VaR. A CVaR
+egy ´ ugynevezett koherens kock´ azati m´ ert´ ek a sz´ or´ assal ´ es VaR-kel szemben (G´ all ´ es
+Pap, 2010). Az el˝ obb eml´ ıtett tulajdons´ agok k¨ oz¨ ul fontos, hogy egy portf´ oli´ o CVaR-je
+folytonos ´ es konvex f¨ uggv´ eny az eszk¨ oz¨ ok s´ uly´ ara n´ ezve, m´ ıg a VaR lehet nem folytonos
+f¨ uggv´ eny is.
+•A CVaR, ahogy a dolgozat k¨ orvonalazza is, egy figyelemre m´ elt´ o alternat´ ıv´ aja lehet a
+norm´ alis sz´ or´ asnak majdnem minden esetben. Az optimaliz´ aci´ on k´ ıv¨ ul haszn´ alhatjuk
+a sz´ or´ as helyett ak´ ar a Sharpe-mutat´ on´ al, portf´ oli´ o b´ eta sz´ amol´ asn´ al vagy ak´ ar piaci
+egyens´ uly meghat´ aroz´ as´ an´ al is.
+•A kock´ azatkezel´ es CVaR f¨ uggv´ ennyel hat´ ekony ´ es az optimaliz´ al´ asn´ al haszn´ alhat´ oak
+konvex ´ es line´ aris programoz´ asi feladatok, amik megold´ as´ ara rendelkez´ es¨ unkre ´ allnak
+k¨ ul¨ onb˝ oz˝ o m´ odszerek, amik viszonylag gyorsak ´ es hat´ ekonyak megold´ asi id˝ o tekin-
+tet´ eben , am´ ıg a VaR-kel val´ o optimaliz´ al´ as el´ eg k¨ or¨ ulm´ enyes tud lenni, f˝ oleg nagy
+adathalmaz eset´ en.
+•A VaR nem mond semmit azokr´ ol a kimenetelekr˝ ol, amik meghaladj´ ak a VaR-t, ´ ıgy
+a nagy vesztes´ egek m´ ert´ ek´ er˝ ol a CVaR sokkal t¨ obb inform´ aci´ ot hordoz mag´ aban, ´ ıgy
+15el˝ ony¨ osebb lehet olyan befektet˝ ok sz´ am´ ara, akik el akarj´ ak ker¨ ulni a nagy lefel´ e ir´ anyul´ o
+kock´ azatokat. Ez a tulajdons´ ag lehet j´ o ´ es lehet rossz is a helyzett˝ ol f¨ ugg˝ oen:
+–A VaR semleges kock´ azati mutat´ o az extr´ em ´ ert´ ekekre n´ ezve, mivel figyelmen
+k´ ıv¨ ul hagyja azokat, ez´ ert ha hib´ as az eloszl´ as konstrukci´ oja, akkor esetenk´ ent jobb
+k¨ ozel´ ıt´ est adhat, mint a CVaR. A VaR statisztikailag stabilabb ´ es ez´ ert n´ eh´ any
+alkalmaz´ asn´ al jobb v´ alaszt´ as lehet. Ilyen lehet p´ eld´ aul olyan eszk¨ oz¨ ok v´ alaszt´ asa a
+portf´ oli´ oba, amik hajlamosak az ´ atlaghoz val´ o visszah´ uz´ asra, ´ es ekkor a VaR nem
+b¨ unteti ezek az eszk¨ oz¨ ok ´ altal produk´ alt ´ atmeneti nagy vesztes´ egeket. A VaR-en
+alapul´ u becsl´ esek ez´ altal robosztusok ´ es figyelmen k´ ıv¨ ul hagyj´ ak az outlier-eket ´ es
+a nagy vesztes´ egeket, amik megzavarhatj´ ak a becsl´ est.
+–Ezzel ellent´ etesen viszont hordoz mag´ aban egy kock´ azatot is a semlegess´ eg,
+m´ egpedig azt, hogy t´ ul nagy nem kezelt kock´ azatot v´ allalhatunk.
+•Ugyan´ ugy, mint a VaR, a CVaR-nek is a tulajdons´ agai lehetnek j´ ok ´ es rosszak is a
+k´ ıv´ ant eredm´ enyt˝ ol f¨ ugg˝ oen:
+–A CVaR megfelel˝ oen bemutatja, hogy mi t¨ ort´ enik az eloszl´ as v´ eg´ en tal´ alhat´ o
+kimenetekn´ el, viszont ezt csak akkor t¨ ukr¨ ozi j´ ol, ha az eloszl´ as maga j´ ol van
+meghat´ arozva.
+–Ha nincs j´ ol modellezve az eloszl´ as, akkor egy j´ o megold´ as lehet a sima CVaR
+haszn´ alata helyett a mixed CVaR haszn´ alata.
+4.2. CVaR c´ elf¨ uggv´ eny matematikai modellje
+Az optimaliz´ al´ as m´ odszertan´ at Uryasev ´ es Rockafellar (2000) cikke alapj´ an fogom
+levezetni, ´ es a k´ es˝ obbiekben is az itt levezetett optimaliz´ al´ asi feladatot fogom haszn´ alni
+a vizsg´ alt r´ eszv´ enyekn´ el, majd az ¨ osszehasonl´ ıt´ asban is ez fog k¨ ozponti szerepet j´ atszani.
+A dolgozat ennek az optimaliz´ al´ asi m´ odszernek a hat´ ekonys´ ag´ ara f´ okusz´ al ¨ osszehasonl´ ıtva
+a Markowitz ´ es egy´ eb egyszer˝ ubb portf´ oli´ o¨ ossze´ all´ ıt´ asi megold´ asokkal, mint p´ eld´ aul az
+´ ert´ ek alap´ u ´ es az egys´ eges s´ ulyoz´ as´ u portf´ oli´ ok. Ahogy kor´ abban is l´ attuk a CVaR-nek
+vannak el˝ ony¨ os tulajdons´ agai mind a VaR mind a sz´ or´ assal szemben. Most a matematikai
+formaliz´ al´ as´ at fogjuk l´ atni ´ es azt, hogy hogyan lehet haszn´ alni a portf´ oli´ ok t´ emak¨ or´ eben
+mint alternat´ ıv kock´ azati m´ ert´ ek. El˝ osz¨ or az ´ altal´ anos matematikai levezet´ est n´ ezz¨ uk meg,
+majd ut´ ana ennek alkalmaz´ as´ at a portf´ oli´ okra.
+Legyen f(x,y) azxd¨ ont´ esi vektorhoz tartoz´ o vesztes´ egf¨ uggv´ eny. Legyen x∈X⊂Rn,
+´ es a v´ eletlen vektor y∈Rm. Az xvektor ´ ertelmezhet˝ o ´ ugy mint egy portf´ oli´ o ´ es az X
+mint a lehets´ eges portf´ oli´ ok halmaza. Az yvektor reprezent´ alja a bizonytalans´ agot, ilyen
+lehet p´ eldaul az egyes k¨ uls˝ o term´ eszeti hat´ asok vagy ak´ ar mag´ aban a rendszerben megl´ ev˝ o
+instabilit´ asok, amik kisz´ am´ ıthatatlann´ a teszik a piacokat. Az f(x,y) vesztes´ eg f¨ uggv´ eny
+term´ eszetesen felvehet negat´ ıv ´ ert´ ekeket is, ´ es ekkor nyeres´ egr˝ ol besz´ el¨ unk, viszont sz´ amunkra
+a lefel´ e ir´ anyul´ o kock´ azatok a fontosak jelen vizsg´ al´ od´ as sor´ an.
+Minden x-re az f(x,y) vesztes´ eg egy val´ osz´ ın˝ us´ egi v´ altoz´ o, aminek eloszl´ as´ at yhat´ arozza
+meg. Ez az eloszl´ as a val´ os sz´ amok halmaz´ an van ´ ertelmezve. Az ezt meghat´ aroz´ o
+16val´ osz´ ın˝ us´ egi eloszl´ as, ´ ugy mint y,Rm-en van ´ ertelmezve, ´ es az egyszer˝ us´ eg kedv´ e´ ert
+felt´ etelezz¨ uk, hogy ennek az eloszl´ asnak l´ etezik s˝ ur˝ us´ egf¨ uggv´ enye. Ez nem sz¨ uks´ egszer˝ u,
+mivel az alkalmaz´ as sor´ an alkalmazhatunk egy k´ et l´ epcs˝ os elj´ ar´ ast, amivel analitikus m´ odon
+meghat´ arozhatjuk p(y)-t, vagy Monte Carlo szimul´ aci´ oval gener´ alhatunk mint´ at p(y)-b´ ol
+(Morgan, 1995).
+A val´ osz´ ın˝ us´ ege, hogy az f(x,y) nem haladja meg az αk¨ usz¨ ob¨ ot az al´ abbi kifejez´ es adja
+meg:
+Ψ(x, α) =Z
+f(x,y)⩽αp(y)dy. (33)
+Egy adott x-re a fenti Ψ f¨ uggv´ eny αparam´ eterrel megadja az x-hez tartoz´ o vesztes´ eg
+kumulat´ ıv eloszl´ asf¨ uggv´ eny´ et. Ez a f¨ uggv´ eny teljesen meghat´ arozza a v´ eletlen v´ altoz´ o visel-
+ked´ es´ et ´ es alapvet˝ o fontoss´ ag´ u a VaR ´ es a CVaR meghat´ aroz´ as´ an´ al. A Ψ( x, α) f¨ uggv´ enynek
+van n´ eh´ any fontos tulajdons´ aga is. Az Ψ f¨ uggv´ eny monoton n¨ ovekv˝ o α-ra n´ ezve ´ es jobbr´ ol
+folytonos. A balr´ ol val´ o folytonoss´ ag nem sz¨ uks´ egszer˝ u, viszont a tov´ abbiakban feltessz¨ uk,
+hogy nincsenek ugr´ asok, ´ ıgy a Ψ( x, α) f¨ uggv´ eny a teljes ´ ertelmez´ esi tartom´ anyos folytonos
+f¨ uggv´ eny α-ra n´ ezve. Ez is csak egyszer˝ us´ ıt˝ o felt´ etel, ami megk¨ onny´ ıti a CVaR defini´ al´ as´ at
+an´ elk¨ ul, hogy tov´ abbi matematikai indokl´ ast ig´ enyelne, ami e dolgozat keretein t´ ulmutatna,
+mivel a c´ el csak a m´ odszertan alkalmaz´ asa a portf´ oli´ okra nem a m´ odszertan m´ elyebb ´ es
+r´ eszletekbe men˝ o taglal´ asa. N´ eh´ any ´ altal´ anos esetben a folytonoss´ ag az f(x,y) vesztes´ eg
+f¨ uggv´ enyb˝ ol ´ es a p(y) s˝ ur˝ us´ egf¨ uggv´ enyb˝ ol ad´ odik (Uryasev, 1995).
+Aβ-VaR ´ es a β-CVaR ´ ert´ ekeket jel¨ olje αβ(x) ´ es ϕβ(x) az x-hez tartoz´ o vesztes´ eg
+val´ osz´ ın˝ us´ egi v´ altoz´ o ´ es egy meghat´ arozott β-val jel¨ olt val´ oszin˝ us´ egi szint mellett, aminek
+´ ert´ eke 0 ´ es 1 k¨ oz¨ ott van. Ezeket az al´ abbiak szerint lehet defini´ alni:
+αβ(x) = min {α∈R: Ψ(x, α)⩾β} (34)
+´ es
+ϕβ(x) = (1 −β)−1Z
+f(x,y)⩾αβ(x)f(x,y)p(y)dy. (35)
+Az els˝ o f¨ uggv´ eny, αβ(x), baloldali v´ egpontja egy nem¨ ures intervallumnak, aminek elemei
+olyan α-k, amikre teljes¨ ul, hogy Ψ( x, α) =β. Ez a Ψ( x, α) el˝ obb eml´ ıtett tulajdons´ agaib´ ol
+sz´ armazik, hogy monoton n¨ ovekv˝ o ´ es folytonos α-ra n´ ezve. Mivel nem szigor´ uan monoton
+n¨ ovekv˝ o a Ψ f¨ uggv´ eny, ez´ ert defini´ altunk egy intervallumot, mivel ilyenkor t¨ obb ´ ert´ ekre is
+teljes¨ ulhet az egyenl˝ os´ eg, viszont ezekb˝ ol nek¨ unk csak a legkisebb ´ ert´ ek fog kelleni. Ezek
+miatt a m´ asodik f¨ uggv´ enyben annak a val´ osz´ ın˝ us´ ege, hogy f(x,y)⩾αβ(x) egyenl˝ o lesz
+(1−β)-val. Ez az´ ert van, mert a ϕβ(x) abb´ ol a felt´ eteles v´ arakoz´ asb´ ol j¨ on ki az x-hez
+tartoz´ o vesztes´ egre n´ ezve, hogy az nagyobb vagy egyenl˝ o, mint αβ(x).
+Uryasev ´ es Rockafellar megk¨ ozel´ ıt´ es´ eben az a d¨ ont˝ o l´ ep´ es, hogy ezt a ϕβ(x) ´ es a αβ(x)
+kifejez´ eseket meghat´ arozzuk az Fβf¨ uggv´ ennyel, ami az X×R-en van defin´ alva a k¨ ovetkez˝ o
+m´ odon:
+Fβ(x, α) =α+ (1−β)−1Z
+y∈Rm[f(x,y)−α]+p(y)dy, (36)
+17ahol
+[t]+=(
+t hat >0
+0 ha t⩽0.(37)
+Egy fontos tulajdons´ aga Fβ-nak a fenti felt´ etelekb˝ ol k¨ ovetkez˝ oen a konvexit´ as, ami alap-
+vet˝ o fontoss´ ag´ u az optimaliz´ al´ asn´ al, mivel ´ ıgy t¨ obbek k¨ oz¨ ott az optimaliz´ al´ as sor´ an nem
+jutunk lok´ alis megold´ ashoz, hanem az algoritmus v´ eg´ en a glob´ alis optimumot fogjuk meg-
+kapni (Tyrrell Rockafellar, 1970).
+1. T´ etel. AzFβ(x, α)f¨ uggv´ eny α-ra n´ ezve konvex ´ es folytonosan differenci´ alhat´ o. Az x-hez
+tartoz´ o vesztes´ eg β-CVaR-ja minden x∈X-re megadhalt´ o az al´ abbi kifejez´ essel:
+ϕβ(x) = min
+α∈RFβ(x, α) (38)
+Azt a halmazt, ami azokat az α-kat tartalmazza, amire ez a feladat felveszi a minimum
+´ ert´ ek´ et,
+Aβ(x) = arg min
+α∈RFβ(x, α), (39)
+egy nem¨ ures korl´ atos intervallum. Ezzel az intervallummal megadhat´ o a vesztes´ eghez tartoz´ o
+β-VaR a k¨ ovetkez˝ o m´ odon:
+αβ(x) =bal oldali v´ egpontja Aβ(x)-nek. (40)
+Ez´ ert mindig l´ etezik olyan, hogy
+αβ(x)∈arg min
+α∈RFβ(x, α)´ esϕβ(x) =Fβ(x, αβ(x)). (41)
+A most le´ ırt t´ etelt nem fogom bizony´ ıtani, viszont a bizony´ ıt´ as megtal´ alhat´ o Uryasev
+´ es Rockafellar (Rockafellar ´ es Uryasev, 2000) cikk´ enek f¨ uggel´ ek´ eben. ´Eszrevehetj¨ uk, hogy
+ugyanaz (1 −β)Fβ(x, α) ´ esFβ(x, α)-nak a minimaliz´ al´ asa a megold´ as szempontj´ ab´ ol, ´ es
+´ ıgy ha az el˝ obbit minimaliz´ aljuk, akkor nem kell t¨ or˝ odni az integr´ al (1 −β) oszt´ as´ aval, ´ es
+elker¨ ulhetj¨ uk ´ ıgy azt, hogyha a (1 −β) nagyon kicsi sz´ am, hogy a megold´ as numerikusan
+hosszas legyen, ´ es ´ ıgy a hozz´ a sz¨ uks´ eges id˝ o is megn˝ oj¨ on.
+A t´ etelben szerepl˝ o kifejez´ esek nagyon j´ o tulajdons´ ag´ uak, mivel a folytonosan diffe-
+renci´ alhat´ o konvex f¨ uggv´ enyeket viszonylag k¨ onny˝ u minimaliz´ alni numerikusan. Valamint
+l´ athatjuk azt is, hogy a β-CVaR-t a β-VaR kisz´ am´ ıt´ asa n´ elk¨ ul is megkaphatjuk, annak el-
+len´ ere, hogy a definici´ oj´ aban szerepel, ´ es ´ ıgy egy egyszer˝ ubb kisz´ am´ ıt´ asi m´ odhoz jutunk, ami
+gyorsabb az extra l´ ep´ es n´ elk¨ ul.
+18A (36)-ben szerepl˝ o kifejez´ esben l´ ev˝ o integr´ alt megkaphatjuk k¨ ozel´ ıt´ essel is. Egy ilyen
+k¨ ozel´ ıt´ es az, ha mint´ at vesz¨ unk az yval´ osz´ ın˝ us´ egi eloszl´ asb´ ol a s˝ ur˝ us´ egf¨ uggv´ eny´ enek meg-
+felel˝ oen, amit p(y)-nal jel¨ olt¨ unk. Ekkor a minta egy vektort fog alkotni, aminek az elemei
+y1, . . . ,yq, ´ es ´ ıgy a k¨ ozel´ ıt´ es a k¨ ovetkez˝ ok´ epp fog kin´ ezni:
+˜Fβ(x, α) =α+1
+q(1−β)qX
+k=1[f(x,yk)−α]+. (42)
+Az˜Fβ(x, α) f¨ uggv´ eny konvex ´ es elemenk´ ent line´ aris az α-ra n´ ezve, viszont a differen-
+ci´ alhat´ os´ ag´ ara ez nem igaz az α-ra n´ ezve. A minimaliz´ al´ ast egy elemi line´ aris programoz´ asi
+feladattal meg lehet oldani.
+Most n´ ezz¨ uk milyen m´ as el˝ onyei vannak az el˝ obb defini´ alt m´ odon a VaR, illetve a CVaR-
+nek.
+2. T´ etel. Azx-hez tartoz´ o vesztes´ eg β-CVaR-j´ at minimaliz´ alni az ¨ osszes x∈X-re ugyanaz,
+mint az Fβ(x, α)-t minimaliz´ ani az ¨ osszes (x, α)∈X×R-en, abban az ´ ertelemben, hogy
+min
+x∈Xϕβ(x) = min
+(x,α)∈X×RFβ(x, α), (43)
+ahol tov´ abb´ a egy (x∗, α∗)p´ ar kiel´ eg´ ıti a m´ asodik minimumot akkor ´ es csak akkor, ha x∗
+kiel´ eg´ ıti az els˝ o minimum felt´ etelt ´ es mellette α∗∈Aβ(x∗)is teljes¨ ul. Amikor az Aβ(x∗)
+intervallum csak egy pontb´ ol ´ all, akkor az Fβ(x, α)minimaliz´ al´ as az ¨ osszes (x, α)∈X×R-
+en egy olyan (x∗, α∗)p´ art eredm´ enyez, hogy az x∗minimaliz´ alja a β-CVaR-t ´ es α∗megadja
+a hozz´ a tartoz´ o β-VaR-t. Ez a (x∗, α∗)p´ ar nem felt´ etlen¨ ul egy´ ertelm˝ u, mivel lehet, hogy t¨ obb
+ilyen p´ ar is l´ etezik ´ es nem csak egy.
+Ugyancsak Fβ(x, α)konvex (x, α)-ra n´ ezve ´ es ϕβ(x)konvex x-re n´ ezve, amikor f(x,y)
+is konvex x-re n´ ezve, ´ es ebben az esetben, ha felt´ etelek olyanok, hogy Xis konvex halmaz,
+akkor a kapcsolt minimaliz´ al´ asi feladat egy konvex programoz´ asi feladat lesz.
+Ennek a t´ etelnek a bizony´ ıt´ as´ at is az el˝ oz˝ oh¨ oz hasonl´ oan a szerz˝ op´ aros cikk´ enek a
+f¨ uggel´ ek´ eben lehet megtal´ alni. Az im´ ent ismertetett t´ etel alapj´ an ahhoz, hogy egy meg-
+hat´ arozzunk egy x-et, amib˝ ol megkapjuk a minim´ alis β-CVaR-t nem kell a komplex
+ϕβ(x) f¨ uggv´ ennyel dolgoznunk, ´ es ´ ıgy a matematikai szempontb´ ol nehezen kezelhet˝ o β-VaR
+´ ert´ ekkel, αβ(x)-el, sem kell oper´ alnunk, hanem el´ eg a sokkal jobb tulajdons´ agokkal rendel-
+kez˝ o Fβ(x, α) f¨ uggv´ ennyel foglalkoznunk, ami konvex ( x, α)-ra n´ ezve (sim´ an csak α-ra n´ ezve
+is konvex).
+Ezt az optimaliz´ al´ asi megk¨ ozel´ ıt´ est kieg´ esz´ ıtve a (42)-es kifejez´ essel, amivel k¨ ozel´ ıtj¨ uk
+azFβ(x, α)-et hat´ ekonyan tudjuk majd megoldani a probl´ em´ at. A (42)-hez hozz´ atartozik
+m´ eg, hogy x-re n´ ezve f(x,y) konvexit´ asa az ˜Fβ(x, α) k¨ ozel´ ıt´ es konvexit´ as´ at eredm´ enyezi,
+ami el˝ ony¨ os tulajdons´ ag lesz a k´ es˝ obbiekben.
+194.3. CVaR alkalmaz´ asa portf´ oli´ ooptimaliz´ al´ asra
+Most alkalmazzuk az el˝ obb levezetett matematikai modellt a portf´ oli´ ooptimaliz´ al´ as
+ter¨ ulet´ en, ´ es adjuk meg az optimaliz´ al´ ashoz sz¨ uks´ eges minimaliz´ al´ asi feladatot, ´ es a hozz´ a
+tartoz´ o felt´ eteleket is (Rockafellar ´ es Uryasev, 2000). A felt´ etelek, mint k´ es˝ obb l´ atni
+fogjuk igencsak hasonl´ oak a Markowitz modellben l´ atottakhoz, ami m´ eg ink´ abb seg´ ıt az
+eredm´ enyek ¨ osszehasonl´ ıthat´ os´ ag´ aban, mivel l´ enyeg´ eben csak a minimaliz´ al´ as c´ elf¨ uggv´ enye
+lesz elt´ er˝ o, ahol a variancia helyett most a CVaR-t minimaliz´ aljuk egy adott hozamszint
+mellett.
+Jel¨ olje most is xa r´ eszv´ enyek s´ uly´ at a portf´ oli´ onkban. Ez az el˝ oz˝ o fejezetben l´ atott
+d¨ ont´ esi vektornak felel meg, amit szint´ en x-szel jel¨ olt¨ unk. A tov´ abbiakban is az el˝ oz˝ o feje-
+zethez hasonl´ oak lesznek a jel¨ ol´ esek csak az elnevez´ es¨ uk lesz m´ as, mivel tartalommal t¨ oltj¨ uk
+meg az egyes v´ altoz´ okat ´ es kifejez´ eseket. Teh´ at itt csak az interpret´ aci´ ojukat fogjuk l´ atni.
+Ahogy a Markowitz modellben is l´ attuk, ´ ugy itt is lesz a s´ ulyokra n´ ezve egy korl´ atunk,
+ami hasonl´ oan ahhoz a k¨ ovetkez˝ ok´ eppen n´ ez ki:
+1xT= 1 (44)
+Az egyes eszk¨ oz¨ ok hozamait jel¨ olje az yval´ osz´ ın˝ us´ egi vektor. Az yaz egyes eszk¨ oz¨ ok hozama-
+inak az egy¨ uttes eloszl´ as´ at jel¨ oli ´ es f¨ uggetlen az xvektort´ ol. Az yvektor s˝ ur˝ us´ egf¨ uggv´ eny´ et
+jel¨ olje p(y).
+Az egyes eszk¨ oz¨ ok s´ ulya a portf´ oli´ oban meghat´ arozza mag´ at a portf´ oli´ ot, ´ ıgy mondhatjuk,
+hogy az xvektor maga a portf´ oli´ o. A portf´ oli´ o hozama az egyes eszk¨ oz¨ ok hozamainak a
+portf´ oli´ on bel¨ uli s´ ulyokkal s´ ulyozott ¨ osszege
+rP=xTy. (45)
+Az el˝ oz˝ o fejezetben mi viszont a vesztes´ eggel foglalkoztunk, amit f(x,y) jel¨ olt¨ unk. Ez
+´ eppen az ellentetje az el˝ obb defini´ alt hozamnak, ´ ıgy ez
+f(x,y) =−xTy. (46)
+Am´ eg a p(y) s˝ ur˝ us´ egf¨ uggv´ eny folytonos, addig a vesztes´ eg kumulat´ ıv eloszl´ as is folytonos
+(Kibzun ´ es Kan, 1997; Uryasev, 1995).
+A Var ´ es CVaR ´ altal´ aban egy p´ enzbeli ´ ert´ ek szokott lenni, viszont ebben a k¨ ornyezetben
+ez a k´ et m´ er˝ osz´ am hozamokra vonatkozik, ´ ıgy ´ ert´ ek¨ uk sz´ azal´ ekban lesz meghat´ arozva.
+A f¨ uggv´ eny, amit mi a k¨ ovetkez˝ oekben haszn´ alni fogunk a β-VaR ´ es a β-CVaR kapcs´ an
+a
+Fβ(x, α) =α+ (1−β)−1Z
+y∈Rd[−xTy−α]+p(y)dy (47)
+L´ athatjuk, hogy most az Fβ(x, α) f¨ uggv´ eny nem csak α-ban, hanem x-ben ´ es α-ban is
+konvex. Ezenk´ ıv¨ ul ez a f¨ uggv´ eny gyakran differenci´ alhat´ o is ezekben a v´ altoz´ okban(Kibzun ´ es
+Kan, 1997; Uryasev, 1995). Ezek a tulajdons´ agok nagyon kedvez˝ oek megold´ asi szempontb´ ol
+´ es lehet˝ ov´ e teszik a konvex programoz´ asi feladatok megold´ asi m´ odszereinek az alkalmaz´ as´ at.
+20Jel¨ olje a portf´ oli´ ohoz tartoz´ o vesztes´ egnek az ´ atlag´ at µ(x) ´ es a varianci´ aj´ at σ2(x). Az
+y-hoz tartoz´ o ´ atlagot ´ es varianci´ at pedig jel¨ olje m´ esV. Ekkor
+µ(x) =−xTm´ esσ2(x) =xTVx. (48)
+Itt l´ athatjuk, hogy µ(x) line´ aris, m´ ıg σ2(x) kvadratikus f¨ uggv´ enye x-nek.
+Ahogy a Markowitz-modelln´ el, ´ ugy itt is meghat´ arozunk egy hozamra vonatkoz´ o korl´ atot
+az optimaliz´ al´ as sor´ an:
+µ(x)⩽−r. (49)
+Most tekints¨ uk az el˝ oz˝ o fejezetben l´ atott k¨ ozel´ ıt´ es´ eta Fβ(x, α) f¨ uggv´ enynek, amit a (42)-
+es egyenlet fejezett ki. A p(y)-b´ ol vett q darab minta alapj´ an a k¨ ovetkez˝ o k¨ ozel´ ıt˝ o f¨ uggv´ enyt
+kapjuk:
+˜Fβ(x, α) =α+1
+q(1−β)qX
+k=1[−xTyk−α]+. (50)
+Az im´ ent l´ atott ˜Fβk¨ ozel´ ıt´ esnek a minimaliz´ al´ asa X∈R-en lereduk´ alhat´ o egy konvex
+programoz´ asi feladatra. ukk= 1, . . . , q seg´ edv´ altoz´ ok bevezet´ es´ evel a k¨ ovetkez˝ o ekvivalens
+minimaliz´ al´ asi feladatot kapjuk:
+α+1
+q(1−β)qX
+k=1uk (51)
+figyelembe v´ eve persze a (44)-es ´ es a (49)-es line´ aris korl´ atokat, ´ es
+uk⩾0 and xTyk+α+uk⩾0 for k= 1, . . . , q . (52)
+L´ athatjuk, hogy az el˝ obb bemutatott line´ aris programoz´ asra val´ o reduk´ al´ as nem f¨ ugg y
+eloszl´ as´ at´ ol, ´ ıgy nem k¨ ovetelj¨ uk meg t˝ ole, hogy norm´ alis eloszl´ ast k¨ ovessen.
+Ezzel megmutattunk minden sz¨ uks´ eges kifejez´ est ´ es felt´ etelt, ami ahhoz kell, hogy fel´ ırjuk
+az optimaliz´ alni k´ ıv´ ant feladatot, ´ es megkapjuk a CVaR ´ altalt optimaliz´ alt portf´ oli´ okat
+k¨ ul¨ onb¨ oz˝ o hozamfelt´ etelek mellett.
+El˝ osz¨ or ´ ırjuk fel az ´ altal´ anosan megfogalmazott feladatot, amit ezut´ an ´ at´ ırunk a megol-
+dand´ o konvex line´ aris feladatra, amit az u seg´ edv´ altoz´ ok seg´ ıts´ eg´ evel fel´ ırtunk az im´ ent.
+
+
+min
+x∈Xϕβ(x) = min
+(x,α)∈X×RFβ(x, α),
+µ(x)⩽−r
+1xT= 1(53)
+Itt a lehets´ eges portf´ oli´ ok halmaz´ at, X-et, defini´ alhatjuk a felt´ etelek seg´ ıts´ eg´ evel
+X={x:xteljes´ ıti, hogy xµT⩽−r´ es1xT= 1}, (54)
+´ es ekkor azt az egyszer˝ u fel´ ır´ ast kapjuk ϕβ-val, hogy
+21min
+x∈Xϕβ(x). (55)
+Most ´ ırjuk fel az implement´ al´ asn´ al is haszn´ alt programoz´ asi feladatot, amit meg kell
+oldjunk az optim´ alis s´ ulyokhoz:
+
+
+min
+x,αα+1
+q(1−β)uT1
+u⩾0
+xTy+α+u⩾0
+µ(x)⩽−r
+1xT= 1(56)
+A szerz˝ op´ aros cikk´ eben bel´ atj´ ak azt a t´ etelt is, hogy az (55) minimaliz´ al´ asi feladat ´ es a
+min
+x∈Xσ2(x) (57)
+feladatnak ugyanaz a megold´ asa ha a k¨ ovetkez˝ o felt´ etelek teljes¨ ulnek: (1) legyen az y
+norm´ alis eloszl´ as´ u; (2) ha β⩾0,5 , ´ es teljes¨ ul, hogy µ(x) =rmindk´ et feladatn´ al.
+L´ athatjuk, hogy az (57)-ben megfogalmazott feladat a Markowitz-modellben alkalmazott
+minimaliz´ al´ asi feladattal egyezik meg, ´ ıgy ez egy meglep˝ o ´ all´ ıt´ as, amit ´ erdemes lehet a
+k´ es˝ obbi p´ eld´ akon megn´ ezni, hogy teljes¨ ul-e. Az ´ erz´ es term´ eszetesen az, hogy nem teljes¨ ul,
+mivel nem k¨ ovetnek a hozamok norm´ alis eloszl´ ast a felt´ etelnek megfelel˝ oen.
+Ha az eszk¨ oz¨ ok egy¨ uttes eloszl´ asa t¨ obbv´ altoz´ os norm´ alis eloszl´ ast k¨ ovet, akkor az ezen
+eszk¨ oz¨ ok line´ aris kombin´ aci´ oj´ ab´ ol l´ etrehozott portf´ oli´ ok is norm´ alis eloszl´ as´ uak lesznek, le-
+het˝ ov´ e t´ eve a kock´ azat m´ er´ es´ et a sz´ or´ assal vagy a sz´ or´ as sz´ or´ assal. Ha k´ et azonos v´ arhat´ o
+hozam´ u eszk¨ oznek k¨ ul¨ onb¨ oz˝ o sz´ or´ asa van, akkor a kisebb sz´ or´ as´ u eszk¨ oznek alacsonyabb a
+kock´ azata, felt´ eve, hogy mindk´ et eszk¨ oz norm´ al eloszl´ ast k¨ ovet. Ez az ´ all´ ıt´ as azonban nem
+igaz, ha az eszk¨ oz¨ ok nem Gauss-eloszl´ ast k¨ ovetnek(Karandikar ´ es Sinha, 2012).
+Mandelbrot (Mandelbrot, 1997) kimutatta, hogy a Gauss-eloszl´ as nem reprezent´ alja
+pontosan a piaci adatokat, k¨ ul¨ on¨ osen az eloszl´ as v´ egein. Az eszk¨ ozhozamok Gauss-
+eloszl´ as´ anak felt´ etelez´ ese al´ abecs¨ ulheti a kock´ azatot ´ es hamis biztons´ ag´ erzetet ny´ ujthat. En-
+nek eredm´ enyek´ eppen a kock´ azat m´ er´ es´ ere ´ es ellen˝ orz´ es´ ere alternat´ ıv m´ odszereket fejlesztet-
+tek ki, mint p´ eld´ aul a VaR, amelyeket a kock´ azatkezel´ esben ´ es a szab´ alyoz´ asban, k¨ ul¨ on¨ osen a
+B´ azel II. meg´ allapod´ asban ´ altal´ anosan haszn´ alnak. ´Igy teh´ at el˝ ozetesen az a v´ arakoz´ asunk,
+hogy az egyenl˝ os´ eg nem fog fenn´ allni a k´ et feladat k¨ oz¨ ott, ´ ıgy az optimaliz´ aci´ o sem vezet
+ugyanarra a megold´ asra.
+225. Piaci ´ es egys´ eges s´ ulyoz´ as´ u portf´ oli´ ok ¨ osszeha-
+sonl´ ıt´ asa
+Amikor portf´ oli´ okra ker¨ ul a sz´ o a legt¨ obb embernek a j´ ol ismert indexek jutnak esz¨ ukbe,
+mint az S&P500, DJIA, NASDAQ Composite, DAX vagy ´ eppen az FTSE 100. Az a
+k¨ oz¨ os ezekben az indexekben, hogy mindegyik piaci s´ ulyoz´ as´ u. Az egyszer˝ us´ eg kedv´ e´ ert a
+tov´ abbiakban nem tesz¨ unk k¨ ul¨ onbs´ eget a piaci kapitaliz´ aci´ o ´ es a r´ eszv´ eny´ ar szerinti s´ ulyoz´ as
+k¨ oz¨ ott, mivel a k´ et s´ ulyoz´ as k¨ oz¨ ott el´ eg nagy a korrel´ aci´ o, ´ ıgy ezeket egyszer˝ uen piaci
+s´ ulyoz´ asnak fogjuk nevezni (a legt¨ obb index piaci kapitaliz´ aci´ o szerinti s´ ulyoz´ as´ u, az el˝ obb
+eml´ ıtett p´ eld´ ak k¨ oz¨ ul is egyed¨ ul a DJIA az ´ arszerinti).
+Ezeknek az indexnek az a j´ o tulajdons´ aga van, hogy nem kell ˝ oket ´ alland´ oan kiigaz´ ıtani,
+mivel ahogy v´ altoznak a r´ eszv´ enyeik ´ arai, ´ ugy igaz´ ıtja ki saj´ at mag´ at. Van persze n´ eh´ any
+eset, amikor ki kell igaz´ ıtani, mint p´ eld´ aul, amikor egy bent l´ ev˝ o r´ eszv´ enyt elt´ avol´ ıtanak az
+indexb˝ ol, vagy ´ eppen egy ´ uj ker¨ ul bele, vagy k´ et v´ allalat egyes¨ ul.
+Ezzel szemben van egy nem k´ ıv´ anatos tulajdons´ aguk is, m´ egpedig az, hogy nem el´ eg
+diverzifik´ alt, mivel a nagy v´ allalatok j´ oval nagyobb s´ ulyt kapnak benne, mint a kisebbek.
+L´ athatjuk p´ eld´ aul az S&P500 ¨ osszet´ etel´ en´ el is, hogy a legnagyobb r´ eszv´ enyek, az Apple Inc.
+´ es a Microsoft Corporation, 7,1% ´ es 6,1%-ot tesznek ki a portf´ oli´ o ¨ osszet´ etel´ eben, m´ ıg a
+t¨ obbi 498 r´ eszv´ eny ennek megfelel˝ oen 86,8%-ot. De l´ athatjuk, hogy a kisebb kapitaliz´ aci´ oval
+rendelkez˝ ok m´ ar van hogy kevesebb, mint 0,01%-ot tesznek ki. Nem csak a r´ eszv´ eny,
+hanem a szektoronk´ enti koncentr´ aci´ o is jellemzi ezeket az indexeket. Maradva a p´ eld´ an´ al
+a 11 szektorb´ ol a technol´ ogiai szektor az ¨ osszet´ etel 26%-´ at teszi ki. Az ezut´ an k¨ ovetkez˝ o
+legnagyobb s´ uly´ u szektor az eg´ eszs´ eg¨ ugyi szektor, ami m´ ar csak 14%-´ at alkotja. Persze az
+egys´ eges s´ ulyoz´ as is hajlamos a szektorok ilyen fajta koncentr´ aci´ oj´ ara, amennyiben az adott
+szektorokban l´ ev˝ o v´ allalatok sz´ ama jelent˝ osen meghaladja a t¨ obbit.
+A m´ asik el´ eg intuit´ ıv s´ ulyoz´ asi m´ odszer az egys´ eges s´ ulyoz´ as, ahol minden r´ eszv´ enynek
+ugyanolyan s´ ulya van a portf´ oli´ oban. Erre egy p´ elda az S&P500 Equal Weight index. Ez
+a s´ ulyoz´ asi met´ odus nem annyira elterjedt, mint az el˝ obbi, viszont ennek is megvannak az
+okai. Az egyik, hogy a piaci jobban k´ epezi le az adott piacot, amib˝ ol a r´ eszv´ enyei ´ allnak, ´ es
+a m´ ar eml´ ıtett automatikus s´ ulyoz´ as, ami az ´ arv´ altoz´ assal j´ ar. Ezzel szemben az egys´ eges
+s´ ulyoz´ asn´ al, amint elmozdulnak az ´ arak ´ ugy kell v´ altoztatni az egyes r´ eszv´ enyek mennyis´ eg´ et
+is, hogy fenntartsuk az 1 /Ns´ ulyt a portf´ oli´ oban. ´Altal´ aban ez a kiigaz´ ıt´ as meghat´ arozott
+id˝ ok¨ oz¨ onk´ ent megy v´ egbe, pl. 1 h´ et vagy 1 h´ onap. Fontos, hogy a kiigaz´ ıt´ as gyakoris´ aga
+enn´ el nem nagyon s˝ ur˝ ubb, mivel a tranzakci´ oknak van k¨ olts´ ege. A dolgozatban viszont,
+ahogy m´ ar kor´ abban is eml´ ıtettem nem fogunk a kiigaz´ ıt´ assal foglalkozni, hanem statikusan
+kezelj¨ uk a portf´ oli´ oinkat. Ez persze egy egyszer˝ us´ ıt´ es, viszont ´ ıgy nagyobb hangs´ ulyt tudunk
+majd szentelni a l´ enyegi k¨ ul¨ onbs´ egekre a s´ ulyoz´ asok ¨ osszehasonl´ ıt´ as´ an´ al, vagy egy olyan
+esetben, amikor a befektet˝ o egy passz´ ıv alapot akar l´ etrehozni, amit k´ es˝ obb nem k´ ıv´ an
+m´ odos´ ıtani, abban az esetben is relev´ ans lehet teljesen az itt bemutatott eredm´ eny. M´ asik
+nagy k¨ ul¨ onbs´ eget az al´ abb l´ athat´ o ´ abr´ an is l´ athatjuk ( ´Abra 3), ahol a k¨ uls˝ o k¨ or´ ıv mutatja
+az egys´ eges s´ ulyoz´ as´ ut ´ es a bels˝ o a piaci s´ ulyoz´ as´ u S&P500 indexet. ´Eszrevehetj¨ uk, hogy
+b´ ar az egys´ eges s´ ulyoz´ as´ un´ al is van valamennyire koncentr´ aci´ o az egyes szektorokn´ al, de
+23ez kor´ antsem olyan mark´ ans, mint a piacin´ al. Itt a koncentr´ aci´ o oka az, hogy az egyes
+szektorokb´ ol h´ any v´ allalat szerepel a list´ aban. Ugyanakkor itt m´ ar nem j´ atszanak nagyobb
+szerepet a hatalmas v´ allalatok, mint az Apple ´ es a Microsoft, hanem ezek is ugyanolyan
+s´ ullyal szerepelnek, mint a t¨ obbi 498 v´ allalat. Ez el˝ oseg´ ıti azt, hogy az ´ ugy nevezett large
+cap v´ allalatok ne legyenek fel¨ ulreprezent´ alva, ´ es ´ ıgy jobb betekint´ est kaphatunk a mid ´ es
+small cap v´ allalatok ´ altal ny´ ujtott teljes´ ıtm´ enybe is. M´ eg az a gondolat is az egys´ eges
+s´ ulyoz´ as mellett sz´ ol, hogyha ´ alland´ o kiigaz´ ıt´ ast haszn´ alunk, akkor azokat a r´ eszv´ enyeket
+eladjuk, amiknek az ´ ara n˝ ott ´ es azokat vessz¨ uk, amiknek pedig cs¨ okkent. Ez persze akkor
+el˝ ony¨ os, ha a befektet˝ o v´ arakoz´ asa az, hogy a r´ eszv´ enyek ´ arai egyfajta ´ atlag ´ arfolyamhoz
+k¨ ozel´ ıtenek, ´ ıgy ha most felment, akkor esni fog, ha lement, akkor n˝ oni fog az ´ ara. Persze
+itt az ´ atlag ´ arfolyam meghat´ aroz´ asa is kulcsszerepet j´ atszik az elgondol´ as kapcs´ an.
+3. ´ abra. A k¨ uls˝ o k¨ or´ ıv az egyenl˝ o a bels˝ o k¨ or´ ıv a piaci s´ ulyoz´ as´ u S&P500 index szektoronk´ enti
+megoszl´ as´ at mutatja. Let¨ olt´ es: 2023.03.31
+Az al´ abbi k´ et ´ abr´ an ( ´Abra 4 ´ es ´Abra 5) a k´ et s´ ulyoz´ as egy-egy teljes´ ıtm´ enyi mu-
+tat´ oj´ at l´ athatjuk a havi historikus adataik felhaszn´ al´ as´ aval. Az els˝ on az ´ eves hozamok
+alakul´ as´ at l´ athatjuk 2006-t´ ol 2022-ig bez´ ar´ olag. L´ athatjuk, hogy ´ altal´ aban nem nagy az
+elt´ er´ es k¨ oz¨ ott¨ uk, amit az ´ atlaghozam elt´ er´ es¨ uk is mutat, ami 0,55%-kal nagyobb hozamot
+mutat historikusan az egyenl˝ o s´ ulyoz´ as´ unak, viszont ennek megfelel˝ oen a sz´ or´ asa is 2,2%-kal
+nagyobb. Ez a k¨ ul¨ onbs´ eg a mid- ´ es small cap v´ allalatok teljes´ ıtm´ eny´ enek k¨ osz¨ onhet˝ o, mivel
+azok jobban teljes´ ıtettek a 2008-as v´ als´ agot k¨ ovet˝ oen, viszont ezekre ´ altal´ anosan jellemz˝ o
+24a nagyobb fluktu´ al´ as gazdas´ agi teljes´ ıtm´ enyt tekintve, illetve az alacsonyabb tartal´ ekaikat
+tekintve nagyobb kitetts´ eg¨ uk lehet egy-egy v´ als´ ag alkalm´ aval. A m´ asodik ´ abr´ an l´ athatjuk
+az indexek maximum drawdown-j´ at is, ami azt mutatja meg nek¨ unk, hogy mekkora vesz-
+tes´ eg ´ erhet minket, ha ´ eppen a legmagasabb ´ arfolyamon sz´ alltunk be miel˝ ott elkezd esni az
+´ arfolyam. A tart´ osan 100%-on l´ ev˝ o szakasz csup´ an annyit jelent, hogy az ´ arfolyam azok-
+ban az id˝ oszakokban emelkedett, ´ es ezek lettek emiatt a legmagasabb ´ arfolyamok a vizsg´ alt
+id˝ oszakon. Megfigyelhetj¨ uk, hogy itt is az jellemz˝ o, hogy az egyenl˝ o s´ ulyoz´ as´ u portf´ oli´ oval
+nagyobb vesztes´ eg ´ erhet benn¨ unket, ha az id˝ oz´ ıt´ es rossznak bizonyul.
+4. ´ abra. ´Eves hozamok ¨ osszehasonl´ ıt´ asa
+Az adatok let¨ olt´ esi ideje: 2023.03.31
+255. ´ abra. Maximum Drawdown
+Az adatok let¨ olt´ esi ideje: 2023.03.31
+266. Adatok
+Az adatok kiv´ alaszt´ as´ an´ al az egyik f˝ o szempont az volt, hogy olyan r´ eszv´ enyekkel
+v´ egezz¨ uk az ¨ osszehasonl´ ıt´ ast, ami sok ember sz´ am´ ara ismert, ´ es min´ el ink´ abb a r´ eszv´ enypiaci
+f´ okusz k¨ oz´ eppontj´ aban ´ allnak. Ez´ ert a kiv´ alasztott r´ eszv´ enyek az S&P500 indexben tal´ alhat´ o
+r´ eszv´ enyek ¨ osszess´ ege lett, mivel az egyik legk¨ ozelebbr˝ ol szemmel tartott benchmark a vil´ ag
+r´ eszv´ enypiacain. A nagy n´ epszer˝ us´ ege ´ es jelent˝ os´ ege miatt az ¨ osszehasonl´ ıt´ asban kapott
+eredm´ enyek sz´ elesebb k¨ orben is jobban ´ ertelmezhet˝ o azok sz´ am´ ara is, akik nem felt´ etlen
+szak´ ert˝ oi a portf´ oli´ ok ¨ ossze´ all´ ıt´ as´ anak. Ez a befektet´ esi alapoknak is kedvez˝ o lehet, akiknek
+befektet˝ oi k¨ or´ enek jobban prezent´ alhat´ o ´ ıgy a l´ etrehozott portf´ oli´ o. Persze jelent˝ os´ ege abban
+is rejlik, hogy ezek a v´ allalatok a vil´ ag legnagyobb v´ allalatai k¨ oz¨ ott vannak, ´ ıgy p´ enz¨ ugyi
+teljes´ ıtm´ eny¨ uk alapj´ an is er˝ osen indokolt ezen v´ allalatok r´ eszv´ enyeinek a vizsg´ alata. Egy-
+szer˝ us´ eget is jelent egy l´ etez˝ o index vizsg´ alata, mivel ´ ıgy az ´ ert´ ekalap´ u s´ ulyoz´ ast a piacr´ ol
+k¨ ozvetlen¨ ul megkapva vizsg´ alhatjuk annak teljes´ ıtm´ eny´ et ´ es kock´ azati mutat´ oit is egyszer˝ uen
+sz´ amolhatjuk a megl´ ev˝ o historikus adatokb´ ol. Ugyancsak az el˝ oz˝ o fejezetb˝ ol ismert egyenl˝ o
+s´ ulyoz´ as´ u S&P500 is megtal´ alhat´ o, viszont ezt a dolgozat sor´ an saj´ at sz´ amol´ assal ´ all´ ıtottam
+el˝ o ´ es nem a megl´ ev˝ o index adatait haszn´ altam fel. Ez ebben az esetben sem t´ ul komplik´ alt,
+mivel ez a k´ et s´ ulyoz´ asi met´ odus tal´ an a legegyszer˝ ubb a portf´ oli´ o kialak´ ıt´ asi m´ odszerek
+k¨ oz¨ ul. A m´ asik k´ et s´ ulyoz´ as, a Markowitz ´ es a CVaR, m´ ar sokkal t¨ obb sz´ am´ ıt´ asi ´ es mate-
+matikai tud´ ast ig´ enyel, ahogy azt a kor´ abbi fejezetekben is l´ attuk.
+Az 500 r´ eszv´ ennyel val´ o m´ atrixm˝ uveletek ´ es k¨ ul¨ on¨ osen a konvex programoz´ asi feladat
+megold´ asa igen nagy sz´ am´ ıt´ asi ig´ ennyel rendelkezik, ami a vizsg´ alt id˝ ot´ av n¨ ovel´ es´ evel
+l´ enyegesen megemelkedhet. Az id˝ ot´ av haszn´ alata az el˝ obb eml´ ıtett okok miatt k¨ ul¨ on¨ os fi-
+gyelmet ´ erdemel. Az elemz´ es sor´ an egy hossz´ u id˝ osort fogok alkalmazni az optimaliz´ al´ ashoz,
+viszont egy olyan m´ odszert is fogok alkalmazni mely sor´ an egy vizsg´ alt id˝ ot´ avb´ ol meg-
+hat´ arozott sz´ am´ u v´ eletlen keresked´ esi napot fogok felhaszn´ alni az optimaliz´ al´ as sor´ an, ´ ıgy
+rem´ elhet˝ oleg az esetleg id˝ oszakosan fenn´ all´ o trendek kisz˝ urhet˝ oek, vagy legal´ abbis hat´ asuk
+cs¨ okkenthet˝ o. Az ut´ obb eml´ ıtett m´ odszern´ el fontos megvizsg´ alni, hogy a kiv´ alasztott keres-
+ked´ esi napok sz´ ama hogyan befoly´ asolja az eredm´ enyt. Term´ eszetesen nem k¨ ul¨ on v´ alasztjuk
+ki minden r´ eszv´ enyre, hogy mely keresked´ esi napokat haszn´ aljuk, hanem egys´ egesen ugyan-
+azt alkalmazzuk az ¨ osszes r´ eszv´ enyre. Itt ´ erdemesebb min´ el nagyobb id˝ ot´ avot alkalmazni,
+amib˝ ol kiv´ alasztjuk a megadott sz´ am´ u mint´ at, hogy min´ el kev´ esb´ e legyen autokorrel´ aci´ o a
+felhaszn´ alt adatok k¨ oz¨ ott, ami torz´ ıthatja a kapott eredm´ enyt. A hossz´ u id˝ ot´ avnak viszont
+lehet egy olyan hat´ asa, hogy van t¨ or´ es az id˝ osorban, ´ es´ ıgy olyan adatokkal dolgozhatunk, ami
+m´ ar nem relev´ ans sz´ amunkra. Ilyen t¨ or´ es lehet a v´ allalati kult´ ura vagy ir´ any´ ıt´ as ´ atalakul´ asa,
+vagy megv´ altozott p´ enz¨ ugyi ´ es fejl˝ od´ esi c´ elok haszn´ alata. Ezeken k´ ıv¨ ul persze sok m´ as oka is
+lehet egy v´ allalat p´ enz¨ ugyi teljes´ ıtm´ eny´ eben be´ all´ o v´ altoz´ asnak. Viszont amennyiben ez nem
+´ all fent a r´ eszv´ enyek t¨ obbs´ eg´ en´ el ´ ugy ez a hat´ as elhanyagolhat´ o ilyen sok v´ allalat eset´ eben
+ahhoz k´ epest, hogy az ´ atmeneti trend vagy v´ als´ ag hat´ as´ at ´ ıgy jobban lehet sz˝ urni.
+Az elemz´ esn´ el viszont nem csak az optimaliz´ al´ ashoz felhaszn´ alt id˝ ot´ av, vagy keresked´ esi
+napok a fontosak, hanem az ¨ osszehasonl´ ıt´ asukhoz haszn´ alt tesztel´ esi id˝ oszak is, amikor egy
+olyan ¨ osszef¨ ugg˝ o id˝ ot´ avot kell kiv´ alasztani, amin megfelel˝ oen lehet vizsg´ alni a p´ enz¨ ugyi
+rendszer stresszj´ enek a hat´ asait is, amik ´ altal´ anosan ´ erintik a r´ eszv´ enypiacot is. Egy ilyen
+megfelel˝ o id˝ oszak lehet a 2020 els˝ o fel´ eben bek¨ ovetkez˝ o visszaes´ es a COVID-19 hat´ as´ ara.
+Ez szignifik´ ans v´ altoz´ ast eredm´ enyezett az ´ altalunk vizsg´ alt amerikai r´ eszv´ enypiacra is, ´ ıgy
+27az itt kapott eredm´ enyek j´ ol t¨ ukr¨ ozhetik, hogy mennyire alkalmasak a kock´ azat megfelel˝ o
+m´ er´ es´ ere az egyes m´ odszerek. Egy m´ asik aktu´ alis id˝ oszak lehet a SVB (Sillicon Valley
+Bank) cs˝ odje. B´ ar ez nem volt annyira nagy hat´ assal a r´ eszv´ enypiacra, mint a COVID-19
+´ altal okozott visszaes´ es, az´ ert relev´ ans lehet sz´ amunkra, ak´ ar olyan megfontol´ asb´ ol is, hogy
+az ilyen fajta p´ enz¨ ugyekben nagy szerepet j´ atsz´ o bankokra helyezked˝ o stresszre mennyire
+immunisak a kapott portf´ oli´ ok. Teh´ at a vizsg´ alt id˝ oszak az el˝ obbi esetben 2020.02.14 -
+2020.04.17-ig tart, az ut´ obbin´ al meg 2023.03.06 - 2023.03.21-ig terjed. L´ athatjuk majd,
+hogy ezek az id˝ oszakok nem csak az es´ es id˝ oszak´ at tartalmazz´ ak, hanem a visszapattan´ as
+is megtal´ alhat´ o benne, ami ugyan´ ugy l´ enyeges t´ enyez˝ o lehet egy hosszabb t´ av´ u befektet´ es
+eset´ eben, hogy mennyire k´ epes helyre´ allni a portf´ oli´ o ´ ert´ eke, illetve milyen gyorsan, ami a
+likvidit´ as miatt lehet megfontoland´ o szempont.
+Az elemz´ es sor´ an azt is szem¨ ugyre vehetj¨ uk majd, hogy a 4.3 alfejezetben l´ atott (55)-
+¨ os ´ es (57)-es minimaliz´ al´ asi feladatok optim´ alis eredm´ enye t´ enyleg ugyanarra a megold´ asra
+jut-e. Az el˝ ozetes v´ arakoz´ as az, hogy nem, mivel ahogy kor´ abban eml´ ıtett¨ uk a hozamok
+nem k¨ ovetnek norm´ alis eloszl´ ast, ´ ıgy a felt´ etel s´ er¨ ul, ´ ıgy a k´ et m´ odszernek meglesznek a
+saj´ atoss´ agai, ´ es egy befektet˝ o sz´ am´ ara is, mint l´ atni fogjuk, azt kell m´ erlegelnie, hogy melyik
+kock´ azati mutat´ o a relev´ ansabb, ´ es ´ ıgy annak megfelel˝ o optimaliz´ al´ asi feladat megold´ as´ at
+tudja haszn´ alni a portf´ oli´ o kialak´ ıt´ as´ an´ al. Persze fenn´ all az a k´ erd´ es is, hogy vajon van-e
+olyan s´ ulyoz´ asi m´ odszer, ami minden vizsg´ alt szempont szerint jobban teljes´ ıt, mint a t¨ obbi.
+287. Portf´ oli´ ooptimaliz´ al´ asi ´ es kiv´ alaszt´ asi m´ odszerek
+vizsg´ alata
+Az elemz´ es sor´ an a kor´ abbi fejezetekben kifejtett m´ odszertant fogom felhaszn´ alni a
+port´ oli´ ok kialak´ ıt´ as´ ara. El˝ osz¨ or csak az S&P500-at alkot´ o r´ eszv´ enyekre fogjuk megn´ ezni
+az eredm´ enyeket, majd ezt kieg´ esz´ ıtj¨ uk egy kock´ azatmentes eszk¨ ozzel, ami jelen esetben
+sz´ amunkra az 1 ´ eves lej´ arat´ u amerikai kincst´ arjegy napi hozamait fogja jelenteni. Ez lesz
+az elemz´ es¨ unk sor´ an a ”kock´ azatmentes” eszk¨ oz, ami a p´ enz szerep´ et hivatott bet¨ olteni,
+ami likvidit´ asi szempontb´ ol nagyj´ ab´ ol helyt´ all´ o ha a m¨ og¨ ottes eszk¨ ozt vessz¨ uk, viszont jelen
+esetben mi csak egy szintetikus eszk¨ ozt haszn´ alunk, hogy ne kelljen ennek az eszk¨ oznek
+az ´ arfolyamv´ altoz´ as´ at is figyelembe venni, ´ es ´ ıgy k¨ ozelebb jutunk ahhoz a feltev´ es¨ unkh¨ oz,
+hogy ez az eszk¨ oz fogja jelenteni a portf´ oli´ onkban azt r´ eszt, amit p´ enzben tartunk. Mint
+k´ es˝ obb l´ athatjuk jelent˝ os m´ eretet jelent majd ez a portf´ oli´ onkban t¨ obbek k¨ oz¨ ott az´ ert,
+mivel a kock´ azatosabb r´ eszv´ enyek mellett ez a kev´ esb´ e volatilis ´ ert´ ekpap´ ır megfelel˝ o eszk¨ oz
+a kock´ azatok cs¨ okkent´ es´ ere. Persze itt a hozam ´ es kock´ azat k¨ oz¨ otti ´ atv´ alt´ as l´ athat´ o, ´ es
+amennyiben nagy v´ arhat´ o hozamot szeretn´ enk el´ erni, abban az esetben l´ athat´ o is, hogy egyre
+kisebb ar´ anyban tartjuk a portf´ oli´ onkat ebben az eszk¨ ozben. K´ es˝ obb a r´ eszv´ enyekre sim´ an
+csak kock´ azatos eszk¨ oz¨ okk´ ent, az el˝ obb eml´ ıtett szintetikus eszk¨ ozre meg kock´ azatmentes
+eszk¨ ozk´ ent is hivatkozni fogunk.
+Az els˝ o feladat teh´ at, hogy megtal´ aljuk melyik a legmegfelel˝ obb a vizsg´ alt keresked´ esi
+napokra alkalmazott m´ odszerek k¨ oz¨ ul kiz´ ar´ olag a r´ eszv´ enyeket tekintve. Itt 4 lehet˝ os´ eget
+fogunk l´ atni, ezek k¨ oz¨ ul egy lesz az ¨ osszef¨ ugg˝ o id˝ otartamon vizsg´ alt, ´ es a tov´ abbi h´ arom a
+v´ eletlenszer˝ u keresked´ esi napokat fogja felhaszn´ alni, ahol az elt´ er´ es csup´ an a kiv´ alasztott
+keresked´ esi napok sz´ ama lesz. Itt az el˝ ony¨ oket ´ es a h´ atr´ anyokat m´ erlegelve ¨ osszeha-
+sonl´ ıtjuk a n´ egy m´ odszert ´ es kiv´ alasztunk egyet, amivel a k´ es˝ obbiekben dolgozni fogunk.
+Ezut´ an a m´ asodik feladat lesz a dolgozat egyik f˝ o elemz´ esi r´ esze. Itt a kiv´ alasztott
+m´ odszeren bel¨ ul most a portf´ oli´ o¨ ossze´ all´ ıt´ asi m´ odok tulajdons´ agait fogjuk egym´ assal ¨ ossze-
+hasonl´ ıtani k¨ ul¨ onb¨ oz˝ o szempontok szerint. Ezt k¨ ovet˝ oen az el˝ oz˝ o l´ ep´ eseket elv´ egezz¨ uk ism´ et
+a kock´ azatmentes eszk¨ ozzel kieg´ esz´ ıtve. Majd v´ eg¨ ul az elemz´ es utols´ o r´ esze a stressz-
+helyzetben val´ o tesztel´ es lesz, ahol minden portf´ oli´ o¨ ossze´ all´ ıt´ asi m´ odb´ ol kiv´ alasztunk egy
+portf´ oli´ ot (kiv´ eve az egys´ eges ´ es a piaci kapitaliz´ aci´ o szerinti s´ ulyoz´ as´ ub´ ol, mivel itt csak
+egy lehet˝ os´ eg¨ unk van, sz´ oval itt ezeket fogjuk haszn´ alni), ´ es ezeket a kor´ abban t´ argyalt
+id˝ oszakokban ny´ ujtott teljes´ ıtm´ eny¨ uk alapj´ an ¨ osszehasonl´ ıtjuk, ´ es ´ ert´ ekelj¨ uk, hogy mennyi-
+re voltak k´ epesek az egyes s´ ulyoz´ asok a t˝ ol¨ uk elv´ art tulajdons´ agokat teljes´ ıteni. Fontos
+megjegyezni, hogy a konkl´ uzi´ o nem csak arra ir´ anyul, hogy melyik m´ odszer a legjobb, mivel
+k¨ ul¨ onb¨ oz˝ o befektet˝ ok sz´ am´ ara m´ as ´ es m´ as befektet´ esi strat´ egia lehet megfelel˝ o, hanem a
+m´ odszerek hat´ ekonys´ ag´ at is vizsg´ alni fogjuk.
+7.1. Keresked´ esi napok kiv´ alaszt´ asa kock´ azatos eszk¨ oz¨ okkel
+Az els˝ o l´ ep´ es teh´ at, hogy csak az S&P500 r´ eszv´ enyeit felhaszn´ alva megtal´ aljuk a
+sz´ amunkra legoptim´ alisabb m´ odszert, ami alapj´ an kiv´ alasszuk az optimaliz´ al´ ashoz fel-
+29haszn´ alt keresked´ esi napokat. Fontos az elej´ en megjegyezni, hogy csak olyan vizsg´ alati
+m´ odszernek van relevanci´ aja, ami figyelembe veszi azt, hogy a n´ egy vizsg´ alt lehet˝ os´ eg k¨ oz¨ ul
+h´ aromban a v´ eletlen is nagy szerepet j´ atszik. Persze emiatt a tulajdons´ aguk miatt ker¨ ult
+r´ ajuk a v´ alaszt´ as, mivel a v´ eletlen kiv´ alaszt´ assal pr´ ob´ aljuk meg valamennyire ellens´ ulyozni
+azt, hogyha a vizsg´ alt id˝ osorunkban valamilyen saj´ atoss´ ag van, mint p´ eld´ aul v´ als´ ag vagy
+´ atmenetileg emelked˝ o trend. Ezenk´ ıv¨ ul a t´ ulilleszked´ es is egy probl´ ema lehet, ami ´ ıgy
+kev´ esb´ e hat´ ekonny´ a teszi, amikor a tesztid˝ oszakot vessz¨ uk figyelembe majd. A v´ eletlennek
+viszont olyan nem k´ ıv´ ant hat´ asa lehet, hogy a vizsg´ alt keresked´ esi napoknak a tulajdons´ agai
+v´ eletlenszer˝ uek. Teh´ at lehet, hogy az optimaliz´ al´ as sor´ an ´ eppen t´ ulnyom´ or´ eszt cs¨ okken˝ o
+vagy pont ellenkez˝ oleg t´ ulnyom´ o r´ eszt n¨ ovekv˝ o hozamokkal tal´ alkozunk, ami nagyon
+eltolhatja a kimenetelt az egyik vagy a m´ asik ir´ anyba. ´Igy az olyan lehet˝ os´ eget r´ eszes´ ıtj¨ uk
+el˝ onyben, ami az el˝ obbi kedvez˝ o tulajdons´ agokat hordozza mag´ aban ´ es emellett viszonylag
+stabil a minta olyan ´ ertelemben, hogy a Monte Carlo szimul´ aci´ o sor´ an az egyes utaknak
+viszonylag homog´ en a kimenetele. Ennek a vizsg´ alat´ ara alkalmas lehet az egys´ eges s´ ulyoz´ as´ u
+S&P500 kiv´ alasztott hozamainak az ´ atlaga, a sz´ or´ asa/varianci´ aja vagy az amplit´ ud´ oja. Az
+egys´ eges s´ ulyoz´ as tal´ an jobb lek´ epez´ es´ et ny´ ujtja az eg´ esz piacr´ ol, mint a piaci s´ ulyoz´ as´ u,
+olyan ´ ertelemben, hogy a legt¨ obb m´ odszer k¨ oz¨ omb¨ os arra n´ ezve, hogy mekkora a piaci
+kapitaliz´ aci´ oja az egyes v´ allalatoknak, ´ es az egys´ eges s´ ulyoz´ as ´ ıgy ennek megfelel˝ oen azo-
+nosan kezel minden r´ eszv´ enyt, ami sz´ amunkra k´ ıv´ anatosabb kiindul´ asi pont, mivel nek¨ unk
+csak a hozamok lesznek fontosak. Alkalmas lehet m´ eg a kock´ azati mutat´ ok stabilit´ as´ anak
+a vizsg´ alata is, mint p´ eld´ aul a sz´ or´ asnak/varianci´ anak ´ es a k¨ ul¨ onb¨ oz˝ o konfidencia szintek
+mellett sz´ amolt Conditional Value-at-Risk-nek. Fontos megjegyezni, hogy a CVaR-et
+ford´ ıtott el˝ ojellel haszn´ aljuk, mint a hozamok eset´ eben a vesztes´ eget, mivel ez azt vizsg´ alja,
+hogy a vesztes´ eg mekkora sz´ azal´ eka a potf´ oli´ onknak. A stabilit´ ast itt is m´ erhetj¨ uk az egyes
+kock´ azati m´ er˝ osz´ amok sz´ or´ as´ aval/varianci´ aj´ aval vagy az amplit´ ud´ oj´ aval. Teh´ at ezeket
+fogjuk m´ erlegelni az egyes esetekben amellett, hogy megn´ ezz¨ uk, hogy milyen hat´ assal van
+az egyes portf´ oli´ ooptimaliz´ al´ asi m´ odszerek kimenetel´ ere, amikor az el˝ obb eml´ ıtett hozamok
+´ atlaga k¨ ozel azonos egym´ ashoz. Itt a viszony´ ıt´ asi pontot az egybef¨ ugg˝ o id˝ oszakon val´ o
+optimaliz´ al´ as fogja jelenteni. Az elemz´ es sor´ an pr´ ob´ alom azokat a tulajdons´ agbeli elt´ er´ eseket
+kiemelni, ami t¨ obbsz¨ ori futtat´ as mellett megfigyelhet˝ o volt az egyes kiv´ alaszt´ asi m´ odszerekre.
+Most teh´ at tekints¨ uk ´ at a v´ arhat´ o hozam, sz´ or´ as, CV aR 90,CV aR 95´ es aCV aR 99v´ arhat´ o
+´ ert´ ek´ et ´ es sz´ or´ as´ at, hogy ¨ ossze tudjuk hasonl´ ıtani az egyes kiv´ alaszt´ asi m´ odokat. Az egyes
+adatokat ahogy kor´ abban is eml´ ıtettem Monte Carlo szimul´ aci´ oval sz´ amoltam, ahol az utak
+sz´ ama jelen esetben 100 volt.
+E[µ(x)]Teljes k=1000 k=1500 k=2000
+1/N 10,51% 12,55% 12,29% 10,38%
+S&P500 8,75% 9,59% 9,78% 7,72%
+1. T´ abla
+30σ(µ(x))Teljes k=1000 k=1500 k=2000
+1/N 0% 10,77% 9,91% 7,78%
+S&P500 0% 9,80% 8,73% 6,84%
+2. T´ abla
+El˝ osz¨ or tekints¨ uk a v´ arhat´ o hozamok v´ arhat´ o ´ ert´ ek´ et ´ es sz´ or´ as´ at. Ezeket az ´ ert´ ekeket a
+fentebb l´ athat´ o T´ abla 1 ´ es T´ abla 2 t´ abl´ azatokban l´ athatjuk csoportos´ ıtva. A benchmarkot
+az el˝ obb eml´ ıtettek szerint az 1/N portf´ oli´ o fogja jelenteni, viszont ´ erdekes lehet az ¨ ossze-
+hasonl´ ıt´ as szempontj´ ab´ ol megn´ ezni a piaci s´ ulyoz´ assal is. Ez kieg´ esz´ ıt´ es´ et is jelenti a piaci
+´ es az egys´ eges s´ ulyoz´ as ¨ osszehasonl´ ıt´ as´ anak, amit egy kor´ abbi fejezetben t´ argyaltunk m´ ar.
+Term´ eszetesen amikor a teljes id˝ otartamot vizsg´ aljuk ott nem j´ atszik szerepet a v´ eletlen
+ennek az ´ ert´ eknek az alakul´ as´ aban (oly m´ odon, hogy a futtat´ asok ugyanazt az eredm´ enyt
+eredm´ enyezik, term´ eszetesen maga a v´ arhat´ o hozam egy val´ osz´ ın˝ us´ egi v´ altoz´ o, viszont en-
+nek a v´ arhat´ o ´ ert´ eke m´ ar egy konkr´ et sz´ am ´ es nem egy val´ osz´ ın˝ us´ egi v´ altoz´ o, mint a t¨ obbi
+m´ odszer eset´ eben), ´ ıgy ennek a v´ arhat´ o ´ ert´ eke fix lesz minden futtat´ as sor´ an, ´ es sz´ or´ asa
+ennek megfelel˝ oen 0% lesz. Most tekints¨ uk azokat az eseteket, ahol a v´ eletlennek viszont
+nagy szerepe van a v´ arhat´ o ´ ert´ ek alakul´ as´ aban. Rendre n´ ezz¨ uk el˝ osz¨ or a k=1000, k=1500
+´ es a k=2000 esetet, ahol k jelenti azt, hogy h´ any keresked´ esi napot v´ alasztunk ki a tel-
+jes id˝ otartamb´ ol. Azt v´ arhatjuk el˝ ozetesen, hogy a k=1000 lesz a legvolatilisebb, azt´ an a
+k=1500 a m´ asodik ´ es a k=2000 a legstabilabb a h´ arom k¨ oz¨ ul.
+Most tekints¨ uk a T´ abla 1-et, hogy megn´ ezz¨ uk hogyan viszonyul a v´ arhat´ o hozam v´ arhat´ o
+´ ert´ eke a teljes id˝ otartammal ¨ osszehasonl´ ıtva. L´ athatjuk, hogy a v´ arhat´ o ´ ert´ ek a k=1000 ´ es
+k=1500 esetben nagyj´ ab´ ol 2%-kal nagyobb, mint a teljes id˝ otartamra sz´ amoltnak, viszont
+a k=2000 esetben ez k¨ ozel azonos ´ ert´ eket ad. Ez felt´ etelezhet˝ oen az´ ert van, mert a teljes
+id˝ otartamban k¨ or¨ ulbel¨ ul 3250 keresked´ esi nap van, ´ ıgy ez a 2000 keresked´ esi nap m´ ar el´ eg j´ ol
+lek¨ oveti ugyanazokat a mint´ azatokat. Ezzel ellent´ etben a k=1000 ´ es a k=1500 esetben m´ eg
+´ erezhet˝ o jobban az a hat´ as, hogy egyes olyan lok´ alis id˝ oszakot nem vesz figyelembe olyan
+er˝ oteljesen. Ilyen lehet a 2008-as v´ als´ ag hat´ asa is, amit val´ osz´ ın˝ uleg aluls´ ulyoz a k=2000-es ´ es
+teljes id˝ oszakkal szemben, ez´ ert is lehet, hogy a hozamaik v´ arhat´ oan nagyobbak. Ha viszont
+ezt nem akarjuk, akkor egy j´ o v´ alaszt´ as lehet a k=2000 eset, aminek alkalmaz´ asa jelent˝ osen
+cs¨ okkenti a sz´ am´ ıt´ asi id˝ ot. Az S&P500 eset´ eben is azt l´ athatjuk, hogy a k=1000 ´ es k=1500
+nagyobb ´ ert´ eket ad, viszont itt a k=2000 alacsonyabb ´ ert´ eket. Ez az´ ert lehet, mivel itt
+n´ eh´ any r´ eszv´ eny s´ ulya nagyobb, mint az egys´ eges s´ ulyoz´ as´ un´ al, ´ es ez´ ert a k=2000-es esetben
+is nagyobb szerepet kap a v´ eletlen a kiv´ alaszt´ asn´ al, mert ´ ıgy a t¨ obbi r´ eszv´ eny hat´ asa nem
+felt´ etlen¨ ul tudja ezeket az ´ ert´ ekpap´ ırokat ellens´ ulyozni, mint az el˝ oz˝ o esetben. A k´ es˝ obbi
+optimaliz´ al´ as sor´ an nek¨ unk, ahogy m´ ar kor´ abban eml´ ıtettem az 1/N eset lesz a m´ ervad´ o,
+mivel az optimaliz´ aci´ o sor´ an sem lesz a r´ eszv´ enyeknek kit¨ untetett szerepe a kapitaliz´ aci´ ojuk
+alapj´ an, ´ es ´ ıgy csak a hozamok lesznek nek¨ unk relev´ ansak.
+Most tekints¨ uk a T´ abla 2-t, ahol a v´ arhat´ o hozamok sz´ or´ as´ at l´ athatjuk. ´Ertelemszer˝ uen
+a teljes id˝ oszakot tekintve a sz´ or´ as 0%, mivel a v´ eletlen itt nem j´ atszik szerepet az el˝ oz˝ oleg
+is eml´ ıtett ´ ertelemben. Azt figyelhetj¨ uk meg, hogy a k=1000 esetben a legnagyobb a sz´ or´ as,
+majd a k=1500 ´ es ut´ ana a k=2000 eset k¨ ovetkezik. Ez az intu´ ıci´ onak megfelel, mivel az
+311000-es esetben ´ erv´ enyes¨ ul a leger˝ oteljesebben a v´ eletlen hat´ asa, ´ es a 2000-es esetben kap-
+juk a legstabilabb eredm´ enyt (a v´ eletlen n´ elk¨ uli esetet kiv´ eve). A k=1000 ´ es k=1500 eset
+k¨ oz¨ ott sem a v´ arhat´ o ´ ert´ ek sem a sz´ or´ asban nincs t´ ul nagy k¨ ul¨ onbs´ eg, viszont a k=1500
+eset egy kicsit stabilabbnak bizonyul a sz´ or´ as alapj´ an, viszont m´ eg mindig megmarad az a
+tulajdons´ aga, hogy az ´ atmeneti hat´ asokat jobban kisz˝ urheti, mint a k=2000 eset. Teh´ at,
+ha csak a v´ arhat´ o hozam v´ arhat´ o ´ ert´ ek´ et ´ es sz´ or´ as´ at vessz¨ uk figyelembe, akkor a k=1500 ´ es
+k=2000 eset k¨ oz¨ ul ´ erdemes v´ alasztani. A k=1500 volatilisebb viszont prominensebb az el˝ obb
+eml´ ıtett tulajdons´ aga, m´ ıg k=2000 stabilabb megold´ ast ad ´ es ugyan´ ugy gyorsabb, mint a
+teljes id˝ oszakon val´ o optimaliz´ al´ as.
+E[σ] Teljes k=1000 k=1500 k=2000
+1/N 20,86% 20,70% 20,91% 20,82%
+S&P500 19,30% 19,21% 19,29% 19,21
+3. T´ abla
+σ(σ) Teljes k=1000 k=1500 k=2000
+1/N 0% 1,21% 0,94% 0,83%
+S&P500 0% 1,42% 1,08% 0,89%
+4. T´ abla
+Most n´ ezz¨ uk a Markowitz-modell tekintet´ eben az egyik legjelent˝ osebb mutat´ ot, a sz´ or´ ast.
+Ez kit¨ untetett szerepet j´ atszik a Markowitz-f´ ele s´ ulyok meghat´ aroz´ as´ an´ al a hozamok mellett.
+A sz´ or´ as minimaliz´ al´ asa a feladat egy adott hozamszint mellett, ´ ıgy ennek stabilit´ asa a
+hozamok stabilit´ as´ aval egy¨ utt befoly´ asolja az optimaliz´ al´ as stabiliz´ al´ as´ at is. Ha teh´ at min´ el
+konzisztensebb megold´ asokat szeretn´ enk kapni (ami alapvet˝ oen c´ el, mivel nem szeretn´ enk
+minden optimaliz´ al´ as sor´ an mer˝ oben elt´ er˝ o erdem´ enyekkel tal´ alkozni, viszont a kor´ abban
+eml´ ıtett j´ o tulajdons´ agokat is szeretn´ enk megtartani), akkor ennek a stabilit´ as´ at is n¨ ovelni
+kell.
+A T´ abla 3 a hozamok sz´ or´ as´ as´ anak a v´ arhat´ o ´ ert´ ek´ et, a T´ abla 4 a sz´ or´ as sz´ or´ as´ at tartal-
+mazza. El˝ osz¨ or tekints¨ uk a T´ abla 3-at. L´ athatjuk, hogy itt is a k=2000-es eset ´ all a legk¨ oze-
+lebb a teljes id˝ oszakban megfigyelhet˝ o sz´ or´ ashoz, viszont ezt szorosan k¨ oveti a k=1500-as
+eset. A legnagyobb elt´ er´ est itt is teh´ at a k=1000 produk´ alja. A k=1500-as eseben az ab-
+szol´ ut elt´ er´ es 0,05%, m´ ıg a k=1000-n´ el ez az ´ ert´ ek 0,16%. L´ athatjuk teh´ at, hogy az abszol´ ut
+elt´ er´ es az 1000 kiv´ alasztott keresked´ esi napn´ al h´ aromszorosa az 1500-n´ al megfigyeltn´ el.
+Most n´ ezz¨ uk a T´ abla 4-et, ahol a sz´ or´ asok vannak megadva. Itt is ugyanaz a mint´ azat
+l´ athat´ o, viszont itt a k=2000 az 1500-hoz k´ epest m´ ar nem csak margin´ alisan kisebb, ´ ıgy
+ugyan´ ugy mint a v´ arhat´ o hozamok eset´ en´ el, most is stabilabb ´ ert´ eket ad. A k=1000 eset
+kimagasl´ oan rossz a stabilit´ as tekintet´ eben a sz´ or´ ast vizsg´ alva is, majdnem 30%-kal nagyobb
+32a sz´ or´ asa az 1500-as esethet viszony´ ıtva.
+A k¨ ovetkez˝ oekben a CVaR k¨ ul¨ onb¨ oz˝ o konfidencia szinten vett v´ arhat´ o ´ ert´ ekeit ´ es sz´ or´ asait
+tekintj¨ uk ´ at az el˝ oz˝ oekhez hasonl´ oan. A CVaR ´ ugy, mint a sz´ or´ as a Markowitz modellben,
+is k¨ ozponti szerepet j´ atszik a CVaR optimaliz´ aci´ o sor´ an, ´ ıgy az m´ er˝ osz´ am stabilit´ asa elen-
+gedhetetlen, hogy konzisztens eredm´ enyeket kapjunk, ha ezt az optimaliz´ aci´ ot alkalmazzuk.
+E[CVaR 90]Teljes k=1000 k=1500 k=2000
+1/N 2,41% 2,38% 2,40% 2,42%
+S&P500 2,24% 2,22% 2,23% 2,25%
+5. T´ abla
+σ(CV aR 90)Teljes k=1000 k=1500 k=2000
+1/N 0% 0,16% 0,14% 0,12%
+S&P500 0% 0,15% 0,13% 0,1%
+6. T´ abla
+El˝ osz¨ or n´ ezz¨ uk a CV aR 90-et, ami a β= 90% melletti CVaR-t jeleni, ahol a βa konfidencia
+szintet jelenti. L´ athatjuk, hogy v´ arhat´ o ´ ert´ eket tekintve (T´ abla 5) nincs nagy elt´ er´ es az egyes
+esetek k¨ oz¨ ott, ´ es el´ eg k¨ ozel vannak a historikusan megfigyelhet˝ oh¨ oz, hab´ ar itt is l´ athat´ o, hogy
+az 1000-es kicsit jobban elt´ er ett˝ ol, mint a m´ asik kett˝ o. A sz´ or´ ast megfigyelve is azt l´ athatjuk,
+hogy az esetek k¨ ozel azonos m´ odon stabilak, att´ ol eltekintve, hogy csek´ ely m´ ert´ ekben cs¨ okken
+a sz´ or´ asuk, ha nagyobb a kiv´ alaszott napok sz´ ama, viszont ez az elt´ er´ es csak margin´ alisnak
+t˝ unik, ami v´ arhat´ oan nem befoly´ asolja nagyban a kialak´ ıtott portf´ oli´ okat.
+Fontos, hogy az egyes konfidencia szinteken vett CVaR a k´ es˝ obbiekben majd csak azt
+a portf´ oli´ ot fogja befoly´ asolni, aminek a optimaliz´ al´ asi feladat´ aban ez a konfidencia szint
+szerepel. Persze valamennyire van ¨ osszef¨ ugg´ es az egyes CVaR-ek k¨ oz¨ ott k¨ ul¨ onb¨ oz˝ o konfi-
+dencia szinten, de az eloszl´ ast´ ol f¨ ugg˝ oen ezek az ´ ert´ ekek nagym´ ert´ ekben k¨ ul¨ onb¨ ozhetnek is
+egym´ ast´ ol, ´ es ahogy azt majd k´ es˝ obb l´ atni is fogjuk, az egyes portf´ oli´ ok teljes´ ıtm´ enye att´ ol
+f¨ ugg˝ oen, hogy milyen konfidencia szintet haszn´ alunk a minimaliz´ al´ asi feladatban, teljesen
+elt´ er egym´ ast´ ol ´ es k¨ ul¨ onb¨ oz˝ o tulajdons´ agokkal fognak rendelkezni.
+E[CVaR 95]Teljes k=1000 k=1500 k=2000
+1/N 3,23% 3,18% 3,23% 3,24%
+S&P500 3,00% 2,95% 2,98% 3,02%
+7. T´ abla
+33σ(CV aR 95)Teljes k=1000 k=1500 k=2000
+1/N 0% 0,25% 0,21% 0,18%
+S&P500 0% 0,24% 0,20% 0,16%
+8. T´ abla
+Most tekints¨ uk a β= 95% melletti CVaR-re vonatkoz´ o mutat´ okat. A T´ abla 7 a v´ arhat´ o
+´ ert´ ekeket ´ es a T´ abla 8 a sz´ or´ asokat tartalmazza. L´ athatjuk, hogy a v´ arakoz´ asoknak meg-
+felel˝ oen itt a v´ arhat´ o ´ ert´ ekek nagyobbak, mint a CV aR 90esetben. Ez az´ ert van, mivel
+itt a hozamok als´ o 5%-´ at tekintj¨ uk, m´ ıg az el˝ oz˝ o esetben a hozamok als´ o 10%-´ at vett¨ uk
+figyelembe, ´ ıgy ´ ertelemszer˝ uen itt a felt´ eteles v´ arhat´ o vesztes´ eg¨ unk nagyobb lesz.
+A v´ arhat´ o ´ ert´ ekek hasonl´ oan viselkednek, mint az el˝ oz˝ o esetben, teh´ at a k=1500 ´ es
+k=2000 eset nagyj´ ab´ ol egybe esik a teljes id˝ oszakon sz´ amolttal, m´ ıg a k=1000 eset kisebb
+´ ert´ eket ad (T´ abla 7). B´ ar gondolhatn´ ank azt, hogy ez j´ o, hogy a k=1000 esetben kisebb
+lesz a CVaR, viszont ez csak azt eredm´ enyezi, hogy a kock´ azat nincs megfelel˝ oen m´ erve, ´ es
+a kitetts´ eg¨ unk nagyobb lesz, mint arra sz´ am´ ıtunk. Ez kock´ azatkezel´ esi szempontb´ ol m´ eg
+rosszabb is lehet a c´ elt´ ol f¨ ugg˝ oen, mintha nagyobb ´ ert´ eket sz´ amoln´ ank, mivel ´ ıgy olyan
+vesztes´ egek is ´ erhethetik a befektet˝ ot, amiket nem b´ ır megfelel˝ oen kezelni p´ eld´ aul likvidit´ asi
+szempontb´ ol.
+A T´ abla 8 a sz´ or´ asokat tartalmazza. Ugyanaz figyelhet˝ o meg ugyancsak, mint az el˝ oz˝ o
+esetn´ el, azzal az elt´ er´ essel, hogy itt ´ atlagosan nagyobb sz´ or´ as figyelhet˝ o meg mindegyik
+esetben. A k=1000 esetben n˝ ott meg a legjobban a sz´ or´ as, 90 b´ azisponttal, amit szorosan
+k¨ ovet a k=1500 a maga 70 b´ azispontos n¨ oveked´ es´ evel, majd a legkisebb n¨ oveked´ es a k=2000
+esetben tal´ alhat´ o, ahol csak 40 b´ azisponttal nagyobb a sz´ or´ as a β= 90%-os esethez k´ epest.
+E[CVaR 99]Teljes k=1000 k=1500 k=2000
+1/N 5,56% 5,39% 5,49% 5,54%
+S&P500 5,15% 4,98% 5,06% 5,15%
+9. T´ abla
+σ(CV aR 99)Teljes k=1000 k=1500 k=2000
+1/N 0% 0,68% 0,52% 0,50%
+S&P500 0% 0,65% 0,47% 0,48%
+10. T´ abla
+V´ eg¨ ul vegy¨ uk szem¨ ugyre a CV aR 99v´ arhat´ o ´ ert´ ek´ et ´ es sz´ or´ as´ at. L´ athatjuk, hogy ez
+nagyj´ ab´ ol 2%-kal nagyobb ´ ert´ ekeket mutat, mint a CV aR 95v´ arhat´ o ´ ert´ ekben. Ez az´ ert
+34van, mert itt m´ ar csak a legrosszabb 1% hozamot vessz¨ uk figyelembe. A napi vesztes´ eg
+ebben az esetben k¨ ozel 5,5%-ot tesz ki, ami igen jelent˝ os egy portf´ oli´ o eset´ eben. A β= 99%
+m´ ar az extr´ em farokkock´ azatot t¨ ukr¨ ozi, ami ´ altal´ aban az egyik legjelent˝ osebb t´ enyez˝ o, mivel
+ez ´ altal´ aban azokat az esem´ enyeket jelenti amik, ha bek¨ ovetkeznek, vesz´ elyeztetik az eg´ esz
+portf´ oli´ o fenntarthat´ os´ ag´ at. Ez´ ert ha erre optimaliz´ alunk, akkor az egy konzervat´ ıvabb be-
+fektet´ esi strat´ egi´ at jelent, mint a m´ asik k´ et eset, mivel itt nincs akkora mozg´ ast´ er az optima-
+liz´ aci´ o sor´ an, ´ ıgy val´ osz´ ın˝ uleg nagyobb kompromisszumot kell k¨ otni a kock´ azat cs¨ okkent´ ese
+´ es a magasabb hozamok k¨ oz¨ ott.
+A T´ abla 9-ben l´ athatjuk a v´ arhat´ o ´ ert´ ekeit, amikn´ el megfigyelhet˝ o az eddigi mint´ azat,
+csak itt az abszol´ ut elt´ er´ es nagyobb az esetek k¨ oz¨ ott, mint az el˝ oz˝ o esetekben. Ez is azt
+mutatja, hogy ez ink´ abb az extr´ em eseteket t¨ ukr¨ ozi jobban, ahol alapvet˝ oen nagyobb
+a sz´ or´ od´ as. Ezt a T´ abla 10 is meger˝ os´ ıti, ahol l´ athatjuk, hogy a sz´ or´ asa nagyj´ ab´ ol
+h´ aromszorosa, mint a CV aR 95esetben. A legnagyobb elt´ er´ est a t¨ obbit˝ ol a k=1000 eset
+mutatja, ami az el˝ obb le´ ırtak alapj´ an el˝ ozetesen is v´ arhat´ o volt, mivel itt maguk a vizsg´ alt
+adatok is eredend˝ oen volatilisebbek.
+Most n´ ezz¨ uk meg egy-egy realiz´ aci´ oj´ at az egyes eseteknek, ´ es vizsg´ aljuk meg, hogy ezekn´ el
+megfigyelhet˝ oek-e az el˝ obb eml´ ıtett tulajdons´ agok. Mivel ezek realiz´ aci´ ok itt nem felt´ etlen
+´ allnak fent az eml´ ıtett elt´ er´ esek, mivel itt a v´ eletlen hat´ asa jobban ´ erz´ ekelhet˝ o, m´ ıg a Mon-
+te Carlo szimul´ aci´ oban 100 ilyen realiz´ aci´ o alapj´ an hasonl´ ıtottuk ˝ oket ¨ ossze. Az ´ abr´ akon
+viszont a hat´ arportf´ oli´ okat l´ athatjuk az egyes optimaliz´ aci´ os feladatok eredm´ enyek´ eppen,
+´ ıgy ezek t´ argyal´ asa is m´ ar el˝ ot´ erbe ker¨ ul az el˝ obbi ´ altal´ anos ¨ osszehasonl´ ıt´ as ut´ an. Persze
+ezekre is ´ ugyan´ ugy hat´ assal van a v´ eletlen ´ es mivel egy realiz´ aci´ ot n´ ez¨ unk minden esetben,
+ez´ ert k¨ or¨ ultekint˝ oen kell elj´ arnunk, amikor levonjuk a k¨ ovetkeztet´ eseket. A realiz´ aci´ okat 3
+t´ erben fogjuk megvizsg´ alni: hozam-sz´ or´ as, hozam- CV aR 90´ es hozam- CV aR 99. A k¨ ovetkez˝ o
+alfejezetben, amikor meghat´ arozzuk, hogy melyik kiv´ alaszt´ asi m´ oddal fogunk dolgozni, ak-
+kor term´ eszetesen k¨ ul¨ on r´ eszletesen is fogjuk vizsg´ alni az egyes hat´ arportf´ oli´ okat, ´ es akkor
+megn´ ezz¨ uk majd a hozam- CV aR 95-¨ os t´ erben is ˝ oket, viszont egyel˝ ore el´ eg az el˝ oz˝ o h´ arom
+teret megn´ ezni az egyszer˝ us´ eg kedv´ e´ ert.
+Tekints¨ uk el˝ osz¨ or a hozam-sz´ or´ as teret ( ´Abra 6), ami tal´ an a legink´ abb ismert a
+portf´ oli´ ooptimaliz´ al´ as ter¨ ulet´ en, mivel a Markowitz ´ altal k´ esz´ ıtett modell is ezeket a pa-
+ram´ etereket haszn´ alja az optimaliz´ aci´ o sor´ an. A sz´ or´ as egy k¨ onnyen ´ ertelmezhet˝ o kock´ azati
+m´ er˝ osz´ am, ´ ıgy tal´ an ´ erdemes ezzel kezdeni a vizsg´ alatot. L´ athatjuk, hogy a teljes
+id˝ oszakon vizsg´ alva az egyes hat´ arportf´ oli´ ok k¨ ozel azonos eredm´ enyt produk´ alnak, m´ ıg a
+m´ asik h´ arom esetben j´ ol elk¨ ul¨ on´ ıthet˝ oek. A legk¨ ozelebb a k=2000 eset ´ all, ami meg-
+felel a v´ arakoz´ asainknak, viszont itt is l´ athat´ o, hogy a CV aR 99-re val´ o optimaliz´ al´ assal
+kapott hat´ arportf´ oli´ ok jobban elk¨ ul¨ on¨ ulnek a t¨ obbit˝ ol, ami a m´ ar eml´ ıtett ´ erz´ ekenys´ eg´ et
+a mutat´ onak jobban szeml´ elteti. A k=1000 esetben a legmegfigyelhet˝ obb a szepar´ aci´ o
+a hat´ arportf´ oli´ ok k¨ oz¨ ott, ´ es t¨ obbsz¨ ori futtat´ as sor´ an az volt a jellemz˝ o, hogy itt a
+legv´ altoz´ ekonyabb a hat´ arportf´ oli´ ok teljes´ ıtm´ enye. A k=2000 volt a h´ arom lehet˝ os´ eg k¨ oz¨ ul
+a legstabilabb a vizsg´ alat sor´ an, amennyiben ezt a teret tekintj¨ uk.
+356. ´ abra. Kiv´ alaszt´ asi m´ odszerek a hozam-sz´ or´ as t´ erben
+Most n´ ezz¨ uk a hozam- CV aR 90teret, ahol ´ ertelemszer˝ uen az x tengelyen a portf´ oli´ ok
+CVaR-je l´ athat´ o β= 90%-os szint mellett ( ´Abra 7). Itt is azt l´ athatjuk, hogy a teljes
+id˝ otartamra val´ o optimaliz´ al´ as eset´ en a portf´ oli´ ok k¨ ozel azonos teljes´ ıtm´ ennyel rendelkez-
+nek, viszont megfigyelhet˝ o, hogy a CV aR 99hat´ arportf´ oli´ ok adott hozam mellett nagyobb
+CV aR 90-kel rendelkeznek, mint a t¨ obbi. Ebben a t´ erben vizsg´ al´ odva is nagyj´ ab´ ol ugyanarra
+az eredm´ enyre jutunk, hogy a k=2000 a legstabilabb, viszont a k=1500 is egy j´ o alternat´ ıv´ aja
+lehet, ha jobban akarjuk sz˝ urni a lok´ alis hat´ asokat. A k=1000 eset tov´ abbra is a legink´ abb
+elt´ er˝ o, ´ es a stabilit´ as´ aban is ez volt megfigyelhet˝ o t¨ obbsz¨ ori futtat´ as eredm´ enyek´ eppen.
+367. ´ abra. Kiv´ alaszt´ asi m´ odszerek a hozam- CV aR 90t´ erben
+V´ eg¨ ul tekints¨ uk a hozam- CV aR 99teret ( ´Abra 8), ahol hasonl´ o m´ odon az el˝ oz˝ oekhez a
+teljes id˝ oszaki ugyan´ ugy hasonl´ o eredm´ enyeket produk´ al mindegyik optimaliz´ aci´ os m´ odszer
+eset´ en. A k=1000 ebben a t´ erben ´ erv´ enyes´ ıti legjobban azt, hogy ez adja a legink´ abb
+elt´ er˝ o eredm´ enyeket. Ez a t´ abl´ azatok elemz´ es´ evel is v´ arhat´ o volt, hogy itt lesz a legna-
+gyobb k¨ ul¨ onbs´ eg a kiv´ alaszt´ asi m´ odok k¨ oz¨ ott. A k=2000 hasonl´ o mint´ azatot mutat, mint a
+teljes id˝ oszakon vizsg´ alt eredm´ eny, viszont ugyancsak a k=1500 is ´ ıg´ eretes jel¨ olt.
+378. ´ abra. Kiv´ alaszt´ asi m´ odszerek a hozam- CV aR 99t´ erben
+A t´ abl´ azatokat ´ es az ´ abr´ akat ¨ osszevetve a 2 es´ elyes v´ alaszt´ as a k=1500 ´ es a k=2000. A
+kett˝ o k¨ oz¨ otti v´ alaszt´ as puszt´ an att´ ol f¨ ugg, hogy ki mely tulajdons´ agokat r´ eszes´ ıti el˝ onyben.
+A k=2000 konzisztensebb ´ es stabilabb eredm´ enyt produk´ al, m´ ıg a k=1500-n´ al jobban
+´ erv´ enyes¨ ulnek a v´ eletlenb˝ ol k¨ ovetkez˝ o el˝ ony¨ os, de ugyanakkor a h´ atr´ anyos tulajdons´ agok
+is. A h´ atr´ anyos tulajdons´ agok a k=2000 esetben pont abb´ ol erednek, hogy t´ ul nagy a minta,
+ez´ ert ´ erdemes m´ erlegelni a v´ alaszt´ as el˝ ott, hogy ki melyiket r´ eszes´ ıti el˝ onyben. Jelen dol-
+gozatban a k=2000-as esettel folytatjuk az egyes optimaliz´ aci´ os m´ odszerek eredm´ enyeinek
+¨ osszehasonl´ ıt´ as´ at a stabilit´ ast r´ eszes´ ıtve el˝ onyben, ´ ıgy a reproduk´ al´ as egyszer˝ us´ eg´ et is szem
+el˝ ott tartjuk ´ es emellett a t´ ulilleszked´ es probl´ em´ aj´ at is elker¨ ulj¨ uk.
+387.2. Optimaliz´ al´ asi m´ odszerek ¨ osszehasonl´ ıt´ asa csak kock´ azatos
+eszk¨ oz¨ okkel
+Ebben az alfejezetben az egyes optimaliz´ aci´ os feladatok ´ altal produk´ alt hat´ arportf´ oli´ okat
+fogjuk ¨ osszehasonl´ ıtani az el˝ oz˝ oekben eml´ ıtett terekben. Az el˝ oz˝ oekhez k´ epest most viszont
+kivonjuk a v´ eletlen vizsg´ alat´ at az elemz´ esb˝ ol ´ es egy adott realiz´ aci´ on fogunk vizsg´ al´ odni.
+Ezt az´ ert kell megtegy¨ uk, mert amikor egy portf´ oli´ o ¨ ossze´ all´ ıt´ as´ at v´ egezz¨ uk, akkor is csak
+egy realiz´ aci´ on alapul´ o eredm´ enyt fogunk felhaszn´ alni, ´ es ez´ ert volt fontos megv´ alasztani,
+hogy melyik kiv´ alaszt´ asi m´ odot alkalmazzuk, mivel ´ ıgy a fut´ asi id˝ ot cs¨ okkenteni szerett¨ uk
+volna a teljes id˝ oszakon val´ o optimaliz´ aci´ ohoz k´ epest. Amennyiben valaki m´ eg t¨ obb eszk¨ oz¨ on
+alkalmazza a m´ odszereket, ´ ugy a fut´ asi id˝ o m´ eg ink´ abb meghat´ aroz´ ov´ a v´ alik.
+Teh´ at az el˝ obb elmondottak alapj´ an ezen realiz´ aci´ o alapj´ an fogjuk megn´ ezni a
+m´ odszereket, ´ es az itt kapott eredm´ enyeket fogjuk megvizsg´ alni a teszt id˝ oszakon, hogy
+a most kapott portf´ oli´ ok hogyan teljes´ ıtenek stresszes k¨ or¨ ulm´ enyek k¨ oz¨ ott, ´ es a kock´ azati
+mutat´ ok hat´ ekonys´ ag´ at is majd jobban ¨ ossze tudjuk hasonl´ ıtani.
+Most is hozam-kock´ azat t´ erben fogjuk vizsg´ alni ˝ oket, viszont az el˝ oz˝ oeket kieg´ esz´ ıtj¨ uk
+a hozam- CV aR 95t´ errel is, hogy azon portf´ oli´ ok teljes´ ıtm´ eny´ et is megfelel˝ oen szem¨ ugyre
+vegy¨ uk, amelyeket a β= 95% mellett optimaliz´ altunk. El˝ osz¨ or a sz´ or´ assal kezdj¨ uk, majd
+a CVaR-eket n´ ezz¨ uk meg n¨ ovekv˝ o βszerint. Az ´ abr´ akon l´ athat´ o, hogy a Markowitz
+portf´ oli´ okat k´ ekkel, a β= 90% portf´ oli´ okat z¨ olddel, a β= 95% portf´ oli´ okat narancss´ arg´ aval,
+aβ= 99% portf´ oli´ okat z¨ olddel, az 1/N portf´ oli´ ot feket´ evel ´ es az S&P500 portf´ oli´ ot lil´ aval
+jel¨ olj¨ uk.
+Az´Abra 9-en l´ athatjuk teh´ at a hat´ arportf´ oli´ okat a hozam-sz´ or´ as t´ erben. Ahogy megfi-
+gyelhetj¨ uk az S&P500 ´ es az 1/N portf´ oli´ ok teljes´ ıtenek a legrosszabbul. Nagyj´ ab´ ol k´ etszer
+akkora sz´ or´ asuk van ugyanakkora hozam mellett, mint a t¨ obbi hat´ arportf´ oli´ o megfelel˝ o
+pontj´ anak. Adott hozam mellett a legkisebb sz´ or´ ast a Markowitz portf´ oli´ ok ´ altal alko-
+tott hat´ arportf´ oli´ o biztos´ ıtja, ami v´ arhat´ o is volt, mivel ezeknek a portf´ oli´ oknak a minima-
+liz´ al´ asi feladata ´ eppen ez, hogy adott hozam mellett minimaliz´ alj´ ak a sz´ or´ ast. Nem sokkal
+rosszabbul teljes´ ıtenek a β= 90% ´ es a β= 95% CVaR hat´ arportf´ oli´ ok. Ezek nagyj´ ab´ ol
+ugyan´ ugy teljes´ ıtenek, viszont l´ athat´ o, hogy nagyobb hozamszintek mellett a β= 90% job-
+ban k¨ ozel´ ıti a Markowitz portf´ oli´ okat. Ez az´ ert lehet mivel a β= 90%-ra val´ o optimaliz´ al´ as
+kock´ azatosabb eszk¨ oz¨ oket is megenged (CVaR szempontj´ ab´ ol), mivel nem annyira szigor´ u
+a farokkock´ azatokra n´ ezve, mint a m´ asik kett˝ o. Ebb˝ ol ad´ od´ oan l´ athat´ o, hogy a β= 99%
+teljes´ ıt a legrosszabbul, ha a sz´ or´ ast haszn´ aljuk kock´ azatm´ er´ es alapj´ aul. K¨ or¨ ulbel¨ ul 2%-kal
+nagyobb sz´ or´ ast v´ arhatunk t˝ ole ugyanazon hozam mellett, mint a t¨ obbi hat´ arportf´ oli´ ot´ ol. Ez
+term´ eszetesen nem azt jelenti, hogy rosszabbul teljes´ ıtenek az ezen hat´ aron l´ ev˝ o portf´ oli´ ok,
+hanem azt jelenti, hogy nem ezt a kock´ azatot cs¨ okkentj¨ uk a minimaliz´ al´ as sor´ an, teh´ at ´ ıgy
+csak annyiban teljes´ ıt j´ ol amennyira a k´ et kock´ azati m´ er˝ osz´ am szerinti optimaliz´ al´ as korrell´ al.
+L´ athatjuk, hogy a β= 90% megold´ asai hasonl´ o eredm´ enyt mutatnak, mint a Markowitz,
+ami annyit jelent, hogy a k´ et kock´ azati m´ er˝ osz´ am ott jobban ¨ osszef¨ ugg egym´ assal, mint az
+extr´ em farokkock´ azatot m´ er˝ o CV aR 99eset´ eben.
+399. ´ abra. Hat´ arportf´ oli´ ok a hozam-sz´ or´ as t´ erben
+Most n´ ezz¨ uk a hozam-CVaR t´ erben a hat´ arportf´ oli´ okat β= 90%-os szinten. Az ´Abra
+10-en l´ athatjuk az egyes portf´ oli´ ok teljes´ ıtm´ eny´ et. Itt is az figyelhet˝ o meg, hogy az S&P500-
+nak ´ es az 1/N portf´ oli´ onak a CVaR-je k¨ ozel m´ asf´ elszer akkora, mint a hat´ arportf´ oli´ oknak
+´ ugy, hogy a hat´ arportf´ oli´ ok nagyobb hozamot is biztos´ ıtanak a minim´ alis CVaR pontjuk-
+ban. ´Erdekes megvizsg´ alnunk, hogy b´ ar az 1/N portf´ oli´ onak v´ arhat´ oan nagyobb a hozama,
+ahogy azt a T´ abla 1-n´ el l´ attuk, ´ es hogy a sz´ or´ asa is nagyobb v´ arhat´ oan a T´ abla 3 szerint,
+mint az S&P500-nak, ami l´ atszik is az ´Abra 9-en, b´ ar itt ´ epp olyan realiz´ aci´ oval tal´ alkozunk,
+ahol a hozamuk is nagyj´ ab´ ol megegyezik, viszont az ´Abra 10-en l´ athatjuk, hogy ugyanez a
+mint´ azat l´ atszik a CVaR-n´ el is, mint a sz´ or´ asn´ al, teh´ at az S&P500-nak kisebb a v´ arhat´ o vesz-
+tes´ ege, amennyiben a vesztes´ eg nagyobb, mint a V aR 90. Ez a small cap v´ allalatok nagyobb
+s´ uly´ anak is betuthat´ o, amelyekre jellemz˝ obb, hogy volatilisebbek, viszont nagyobb v´ arhat´ o
+hozamokat ´ ıg´ ernek. Megfigyelhetj¨ uk, hogy ebben a t´ erben vizsg´ alva is hasonl´ o alak´ uak
+a hat´ arportf´ oli´ ok, mint a sz´ or´ as vizsg´ alat´ an´ al. Ez is egy j´ o indik´ ator lehet, hogy helyet-
+tes´ ıtheti a CVaR a hagyom´ anyos sz´ or´ ast a vizsg´ alatok sor´ an. Az el˝ oz˝ o esethez hasonl´ oan
+itt is a CV aR 99hat´ arportf´ oli´ ok teljes´ ıtenek alul szignifik´ ansan a t¨ obbihez k´ epest. A Marko-
+witz ´ es CV aR 95hat´ arportf´ oli´ ok v´ egig hasonl´ oan teljes´ ıtenek, ´ es nagyobb hozamszint mellett
+nagyj´ ab´ ol utol´ erik a CV aR 90portf´ oli´ okat.
+4010. ´ abra. Hat´ arportf´ oli´ ok a hozam-CVaR t´ erben ( β= 90%)
+Tekints¨ uk az ´Abra 11-et, ahol most a hat´ arportf´ oli´ okat a β= 95%-os CVaR t´ erben
+vizsg´ alhatjuk a hozamok mellett. Ahogy eddig is az a hat´ arportf´ oli´ o teljes´ ıt a legjobban
+ebben t´ erben, amelyiknek a minimaliz´ al´ asi feladat´ aban is ez szerepel. Ezut´ an ism´ et
+a Markowitz-ot l´ athatjuk, ahogy ugyan´ ugy teljes´ ıt, mint a CV aR 90-es portf´ oli´ ok. Az
+el˝ oz˝ o esetekhez hasonl´ oan a hat´ arportf´ oli´ ok k¨ oz¨ ul most is a β= 99%-os hat´ atportf´ oli´ ok
+teljes´ ıtenek a legrosszabbul, viszont l´ athat´ o, hogy ahogy n¨ ovelj¨ uk a β´ ert´ ek´ et, ´ ugy kezd el
+k¨ ozeledni a t¨ obbi hat´ arportf´ oli´ ohoz. Ez persze term´ eszetes, mivel egyre jobban a legnagyobb
+vesztes´ egekre helyez˝ odik a hangs´ uly, amit ezek a portf´ oli´ ok m´ ar megfelel˝ oen kezelnek. Az
+S&P500 ´ es az 1/N megtartott´ ak a m´ asf´ elszeres szorz´ ot itt is a t¨ obbihez k´ epest, ´ es ar´ anylag
+egym´ ashoz viszony´ ıtva is konzisztensen ugyan´ ugy teljes´ ıtenek.
+4111. ´ abra. Hat´ arportf´ oli´ ok a hozam-CVaR t´ erben ( β= 95%)
+V´ egs˝ o soron tekints¨ uk az al´ abb l´ athat´ o ´Abra 12-˝ ot, ahol a hozam- CV aR teret β= 99%-
+os szinten l´ athatjuk. Itt ahogy ´ eszrevehetj¨ uk megfordult a sorrend a teljes´ ıtm´ enyekn´ el a
+hat´ arportf´ oli´ okat tekintve, ´ es most, hogy a legextr´ emebb vesztes´ egeket vizsg´ aljuk a h´ arom
+k¨ oz¨ ul, ´ ıgy a CV aR 99hat´ arportf´ oli´ ok teljes´ ıtenek szignifik´ ansan jobban, mint a t¨ obbi. A
+m´ asik h´ arom hat´ arportf´ oli´ o l´ athatjuk, hogy k¨ ozel azonos szinten mozognak, azonban n´ eh´ any
+hozamszinten megfigyelhet˝ o n´ emi elt´ er´ es. Itt ´ erdemes megjegyezni, hogy a hagyom´ anyos
+Markowitz portf´ oli´ ok mind a h´ arom esetben k¨ ozel azonos teljes´ ıtm´ enyt ny´ ujtott, mint a
+β= 90% ´ es a β= 95% ´ altal produk´ alt portf´ oli´ ok. Ez mutatja, hogy b´ ar manaps´ ag jobb
+kock´ azatm´ er´ esi mutat´ okat haszn´ alunk, att´ ol m´ eg az eredeti sz´ or´ as is remek alternat´ ıva ma-
+radt, amit nem lehet figyelmen k´ ıv¨ ul hagyni. Az el˝ oz˝ oekkel ellent´ etben a hozam n¨ ovel´ es´ evel
+sem k¨ ozel´ ıti a t¨ obbi a β= 99%-os portf´ oli´ okat. Az S&P500 ´ es az 1/N portf´ oli´ onk enn´ el
+a vizsg´ alt kock´ azati mutat´ on´ al m´ ar k´ etszeres ´ ert´ eket mutat a m´ asf´ el helyett, ami m´ eg job-
+ban r´ aer˝ os´ ıt arra, hogy ezek mennyire sz´ els˝ os´ eges hozamok, amik itt a vizsg´ alat t´ argy´ at
+k´ epezik. Ennek ellen´ ere az egyik legfontosabb lehet sz´ amunkra ez a t´ er, mivel itt vannak
+azok a vesztes´ egek, ami komoly likvidit´ asi ´ es egy´ eb p´ enz¨ ugyi probl´ em´ at okozhatnak az egyes
+befektet˝ oknek, amikor bek¨ ovetkeznek.
+4212. ´ abra. Hat´ arportf´ oli´ ok a hozam-CVaR t´ erben ( β= 99%)
+7.3. Keresked´ esi napok kiv´ alaszt´ asa kock´ azatos ´ es
+”kock´ azatmentes” eszk¨ oz¨ okkel
+Most t´ erj¨ unk ´ at arra az esetre, ahol az S&P500 r´ eszv´ enyei mellett a portf´ oli´ o r´ esz´ et
+k´ epezheti az el˝ oz˝ oekben is eml´ ıtett kock´ azatmentes eszk¨ oz. Hogy jobb r´ al´ at´ ast kapjunk
+mi´ ert nevezz¨ uk kock´ azatmentesnek, n´ ezz¨ uk meg ennek a v´ arhat´ o hozam´ ara ´ es sz´ or´ as´ ara is a
+kor´ abban l´ atott mutat´ okat. Al´ abb teh´ at a T´ abla 11-14-ig a kor´ abban l´ atott m´ odon l´ athatjuk
+ezek ´ ert´ ekeit.
+E[µ(x)]Teljes k=1000 k=1500 k=2000
+1,08% 1,07% 1,07% 1,07%
+11. T´ abla
+43σ(µ(x))Teljes k=1000 k=1500 k=2000
+0% 0,04% 0,03% 0,03%
+12. T´ abla
+E[σ]Teljes k=1000 k=1500 k=2000
+0,08 % 0,08% 0,08% 0,00%
+13. T´ abla
+σ(µ)Teljes k=1000 k=1500 k=2000
+0% 0,00% 0,00% 0,00%
+14. T´ abla
+Ahogy a T´ abl´ akb´ ol is l´ atjuk most gyakorlatilag mondhatjuk, hogy nincs elt´ er´ es a
+v´ arhat´ o ´ ert´ ekek ´ es sz´ or´ asokban, ´ ıgy a kock´ azatmentes eszk¨ oz alapj´ an b´ armelyik lehet˝ os´ eg
+adott. Itt m´ eg a k=1000 eset is k´ ıv´ anatos lehet sz´ amunkra, mivel csak a j´ o tulajdons´ agokat
+hozza mag´ aval a v´ eletlenb˝ ol. Persze ne felejts¨ uk el, hogy ez csak egy komponense lesz a
+portf´ oli´ onknak, ´ ıgy a 7.1-es alfejezetben l´ atott megl´ at´ asok tov´ abbra is ´ ertv´ enyben vannak a
+r´ eszv´ enyekre n´ ezve. Mostm´ ar csak az a k´ erd´ es, hogy az optimaliz´ al´ as sor´ an h´ any sz´ azal´ ek´ at
+k´ epezi ez a kock´ azatmentes eszk¨ oz a teljes potf´ oli´ onak, mivel ha sz´ amottev˝ o r´ esz´ et, akkor
+itt ´ erdemesebb lehet a v´ eletlennek nagyobb szerepet ad´ o k=1000 vagy k=1500-as esetet
+v´ alasztanunk an´ elk¨ ul, hogy a stabil eredm´ enyeket feladn´ ank.
+A k¨ ovetkez˝ o t´ abl´ azatokban egy-egy realiz´ aci´ o kapcs´ an vizsg´ aljuk meg az eseteket aszerint,
+hogy mekkora r´ esz´ et k´ epezi az S&P500 r´ eszv´ enyei ´ es a kock´ azatmentes eszk¨ oz¨ unk. Persze
+itt most pont ezt akarjuk kisz˝ urni, hogy melyik kiv´ alaszt´ asi m´ odot akarjuk v´ alasztani, ez´ ert
+kicsit kontraprodukt´ ıvnak t˝ unik egy-egy realiz´ aci´ ot tekinteni, viszont ezzel megkaphatjuk
+nagys´ agrendileg az ´ ert´ ekeiket, ´ ıgy ez is hozz´ aj´ arul a kiv´ alaszt´ as szempontjaihoz. Az egyes
+realiz´ aci´ okn´ al a hat´ arportf´ oli´ okr´ ol a 16%-os hozamhoz tartoz´ o portf´ oli´ ok ¨ osszet´ etel´ et fogjuk
+r´ eszletesebben is megn´ ezni a T´ abla 15-18-ban.
+44Markowitz Kincst´ arjegy S&P500
+Teljes 40,49% 59,51%
+k=1000 73,09% 26,29%
+k=1500 66,49% 33,51%
+k=2000 65,76% 34,24%
+15. T´ abla. r=16% mellett a Markowitz ¨ osszet´ etele
+CVaR 90Kincst´ arjegy S&P500
+Teljes 40,96% 59,04%
+k=1000 73,74% 26,26%
+k=1500 66,55% 33,45%
+k=2000 65,38% 34,62%
+16. T´ abla. r=16% mellett a CV aR 90¨ osszet´ etele
+CVaR 95Kincst´ arjegy S&P500
+Teljes 41,37% 58,63%
+k=1000 72,69% 27,31%
+k=1500 64,91% 35,09%
+k=2000 65,60% 34,40%
+17. T´ abla. r=16% mellett a CV aR 95¨ osszet´ etele
+CVaR 99Kincst´ arjegy S&P500
+Teljes 44,78% 55,22%
+k=1000 74,46% 25,54%
+k=1500 61,79% 38,21%
+k=2000 65,00% 35,00%
+18. T´ abla. r=16% mellett a CV aR 99¨ osszet´ etele
+45L´ athatjuk a t´ abl´ azatokb´ ol, hogy mindegyik optimaliz´ al´ asi ´ es kiv´ alaszt´ asi m´ odszert
+vizsg´ alva el´ eg sz´ amottev˝ o r´ esz´ et k´ epezi a portf´ oli´ oinknak a kock´ azatmentes eszk¨ oz. Azt
+a tendenci´ at mutatja m´ as hozamszintek mellett, hogy min´ el alacsonyabb a hozam, ann´ al na-
+gyobb r´ esz´ et k´ epezi ´ es ford´ ıtva meg az ellenkez˝ oje igaz ´ ertelemszer˝ uen (l´ asd ´Abra 13), mivel
+t¨ obb r´ eszv´ eny kell a portf´ oli´ oba, hogy el´ erj¨ uk a nagyobb v´ arhat´ o hozamokat, mert ahogy
+l´ athattuk a kock´ azatmentes eszk¨ oznek k¨ ozel 1%-os a v´ arhat´ o hozama ´ eves szinten.
+13. ´ abra. Kock´ azatmentes eszk¨ oz ar´ anya k¨ ul¨ onb¨ oz˝ o hozamszintek mellett (k=1500)
+Itt k´ et ´ ujabb megfontol´ ast kell szem¨ ugyre venn¨ unk. Az egyik az, hogy l´ athat´ oan a
+k=1000 esetben nagyobb az ar´ anya, mint a t¨ obbi esetben. Ez az´ ert lehets´ eges, mivel a
+v´ eletlen hat´ as´ at ennek az ar´ anynak a n¨ ovel´ es´ evel k¨ usz¨ ob¨ oli ki. Teh´ at a nagyobb v´ eletlen
+nagyobb ar´ anyt jelent nek¨ unk kock´ azatmentes eszk¨ ozben. Ez viszont nem felt´ etlen¨ ul j´ o, mi-
+vel a befektet˝ ok nem mindig szeretn´ ek ilyen eszk¨ oz¨ okben tartani a p´ enz¨ uket, mivel ez egy
+kompromisszumot jelent ´ altal´ aban a hozamok ter´ en. Persze itt most mindegyik portf´ oli´ o
+azonos v´ arhat´ o hozamszinten van, viszont az´ ert c´ elszer˝ u az el˝ oz˝ oeket is ´ eszben tartani. A
+m´ asik lehets´ eges magyar´ azat, hogy a realiz´ aci´ on´ al olyan hozamokkal szembes¨ ult¨ unk az opti-
+maliz´ aci´ o sor´ an, amik nagy v´ arhat´ o hozamokat mutatnak viszont nagy kock´ azattal, aminek
+cs¨ okkent´ es´ ere kock´ azatmentes eszk¨ oz ar´ anya is megn˝ ott. L´ enyeg´ eben ez is a v´ eletlen hat´ asa,
+viszont ez azt jelenti, hogy vannak olyan esetek, amikor az ar´ anya enn´ el kisebb. Itt ´ ugy
+t˝ unik, hogy megint nagy szerepet kap a stabilit´ as k´ erd´ ese a kock´ azatos eszk¨ oz¨ ok k¨ or´ eben,
+hogy min´ el jobban a realit´ ashoz k¨ ozeli legyen a kock´ azatos ´ es kock´ azatmentes eszk¨ oz¨ oknek
+az ar´ anya. ´Igy teh´ at ism´ et a k´ erd´ es ink´ abb k=1500 ´ es k=2000 k¨ oz´ e esik ebb˝ ol az okb´ ol
+kifoly´ olag.
+46Tekints¨ uk az ´Abra 14-et el˝ osz¨ or, ahol l´ athatjuk ism´ et a hat´ arportf´ oli´ okat a hozam-sz´ or´ as
+t´ erben. A hat´ arportf´ oli´ ok alakja hasonl´ ıt az ´Abra 1-en l´ athat´ o ´ ert´ ekpiaci egyeneshez, amit
+szint´ en ´ ugy kaptunk meg, hogy egy kock´ azatmentes eszk¨ ozt haszn´ altunk fel a r´ eszv´ enyek
+mellett. Az ´Abra 15-et tekintve is ugyanezt az eredm´ enyt l´ athatjuk, hogy a hat´ arportf´ oli´ ok
+egyeneseket alkotnak. Az egyes kiv´ alaszt´ asi m´ odszerek k¨ oz¨ ott nem l´ atunk t´ ul nagy elt´ er´ est
+azon k´ ıv¨ ul, hogy az el˝ oz˝ oekben l´ attuk, hogy elt´ er˝ o kock´ azatmentes eszk¨ ozt tartalmaznak.
+Jelen esetben a k=1500-as esetet fogjuk v´ alasztani az elemz´ es t´ argyak´ ent, mivel az elt´ er´ es
+ebben az esetben igen csek´ ely a k=2000-es esethez k´ epest.
+14. ´ abra. Kiv´ alaszt´ asi m´ odszerek a hozam-sz´ or´ as t´ erben
+4715. ´ abra. Kiv´ alaszt´ asi m´ odszerek a hozam- CV aR 95t´ erben
+7.4. Optimaliz´ al´ asi m´ odszerek ¨ osszehasonl´ ıt´ asa kock´ azatmentes
+eszk¨ ozzel
+Az al´ abb l´ athat´ o ´ abr´ akon ( ´Abra 16-18) l´ athat´ o, hogy a csak kock´ azatos esethez k´ epest
+az S&P500 ´ es az 1/N portf´ oli´ ok most sokkal rosszabbul teljes´ ıtenek a hat´ arportf´ oli´ okhoz
+k´ epest. A sz´ or´ ast tekintve nagyj´ ab´ ol n´ egyszeres´ et l´ atjuk ugyanazon hozam mellett, a 99%-os
+βmelletti CVaR-n´ al m´ ar t¨ obb, mint ¨ otsz¨ or¨ ose az adott kock´ azati m´ er˝ osz´ am.
+A hat´ arportf´ oli´ okat tekintve minden esetben ugyanazt l´ atjuk tendenci´ aj´ aban, mint a
+csak kock´ azatos eszk¨ oz¨ ok eset´ en. A k¨ ul¨ onbs´ egnek tal´ an azt eml´ ıthetj¨ uk, hogy a CV aR 99-en
+k´ ıv¨ ul az ¨ osszes hat´ arportf´ oli´ o teljes´ ıtm´ enye sokkal szorosabb egym´ ashoz mindegyik t´ erben
+tekintve, kiv´ eve a CVaR t´ erben, ahol a β99%-os, mivel itt a Markowitz alulteljes´ ıti a t¨ obbi
+hat´ arportf´ oli´ ot.
+48A k¨ ovetkez˝ o fejezetben az egyes portf´ oli´ ooptimaliz´ al´ asi m´ odszerek teljes´ ıtm´ eny´ et fogjuk
+megn´ ezni az adatok fejezetben is eml´ ıtett k´ et id˝ oszakban. A tesztel´ es egy ´ atfog´ obb k´ epet
+biztos´ ıt majd nek¨ unk az egyes kock´ azati m´ er˝ osz´ amok hat´ ekonys´ ag´ ar´ ol, ´ es jobb meg´ ert´ essel
+lesz¨ unk az egyes portf´ oli´ ok el˝ onyeir˝ ol ´ es h´ atr´ anyair´ ol.
+16. ´ abra. Hat´ arportf´ oli´ ok a hozam-CVaR t´ erben ( β= 95%)
+4917. ´ abra. Hat´ arportf´ oli´ ok a hozam-CVaR t´ erben ( β= 95%)
+5018. ´ abra. Hat´ arportf´ oli´ ok a hozam-CVaR t´ erben ( β= 95%)
+8. Portf´ oli´ ok teljes´ ıtm´ enye a COVID-19 ´ es a Silicon Val-
+ley Bank cs˝ od idej´ en
+A mostani fejezetben az el˝ oz˝ o fejezetben kiv´ alasztott hat´ arportf´ oli´ ok egy pontj´ at fogjuk
+megn´ ezni. Ahogy az el˝ oz˝ o fejezetben itt is a µ(x) = 16%-os portf´ oli´ okat v´ alasztjuk ki. Ezek
+nagyobb hozamot ´ ıg´ ernek, mint az 1/N ´ es az S&P500 portf´ oli´ ok, de mint l´ athattuk kor´ abban
+´ ıgy is kisebb kock´ azattal rendelkeznek. Ezt a tesztid˝ oszakokon is megn´ ezz¨ uk, hogy ezekben
+a specifikus esetekben is teljes¨ ul-e. Fontos megjegyezni, hogy az itt l´ atott eredm´ enyek majd
+nem felt´ etlen t¨ ukr¨ ozik a portf´ oli´ ok teljes´ ıtm´ eny´ et minden stresszhelyzetre n´ ezve, mivel a
+vizsg´ alt id˝ oszaknak is megvannak a saj´ atos tulajdons´ agai, amik az egyes portf´ oli´ okra jobban
+m´ eg m´ asokra kev´ esb´ e vannak hat´ assal. Ez´ ert kell k¨ ul¨ on¨ os hangs´ ulyt fektetni arra, hogy
+az el˝ oz˝ oleg ¨ ossze´ all´ ıtott portf´ oli´ ok az ilyen jelleg˝ u v´ als´ agokban viselkednek hasonl´ oan, mint
+ahogy itt l´ atni fogjuk. A csak kock´ azatos eszk¨ oz¨ okkel ´ es a kock´ azatmentes eszk¨ ozzel alkotott
+portf´ oli´ ok teljes´ ıtm´ eny´ et egym´ as mellett fogjuk bemutatni ´ es ¨ ossze is hasonl´ ıtjuk ˝ oket, hogy
+teljesebb k´ epet kapjunk.
+518.1. COVID-19 visszaes´ es
+Az itt bemutatott alfejezetben a COVID-19 kit¨ or´ es´ enek a hat´ asait l´ athatjuk a portf´ oli´ ok
+´ ert´ ekeire. Az itt vizsg´ alt id˝ oszak, ahogy az Adatok fejezetben is eml´ ıtett¨ uk m´ ar, a 2020.02.18-
+2020.04.16-ig terjed˝ o id˝ otartam. Ez mag´ aban foglalja a legnagyobb es´ eseket ´ es az abb´ ol val´ o
+visszapattan´ as elej´ et is.
+Csak kock´ azatos eszk¨ oz¨ ok
+ Kock´ azatmentes eszk¨ ozzel
+19. ´ abra. Portf´ oli´ ok hozama a teljes id˝ oszakon (r=16%)
+Tekints¨ uk el˝ osz¨ or a teljes id˝ oszakon vizsg´ alt hozamaikat, amiben ahogy m´ ar kor´ abban
+eml´ ıtettem benne van a visszapattan´ as id˝ oszak´ anak az eleje is. Ahogy l´ athatjuk a csak
+kock´ azatos eszk¨ oz¨ okn´ el ( ´Abra 19 bal oldali) a β= 90%-os CVaR portf´ oli´ o teljes´ ıtett a
+legjobban az id˝ oszakban ´ es ˝ ot k¨ oveti a Markowitz portf´ oli´ o. Az es´ es¨ uk rendre 1,96% ´ es
+3,32% , ezzel szemben a β= 99% CVaR portf´ oli´ o es´ ese meghaladja a 10%-ot is, m´ ıg az 1/N
+t¨ obb, mint 22%-ot ´ es az S&P500 majdnem 17%-ot esett az id˝ oszak alatt.
+A kock´ azatmentes esetn´ el ( ´Abra 19 jobb oldali) azt l´ athatjuk, hogy a 99%-os β-val
+rendelkez˝ o ´ es a Markowitz teljes´ ıtettek a legjobban k¨ ozel 8%-os es´ essel. Itt a hat´ arportf´ oli´ ok
+k¨ oz¨ ul a CV aR 95esett a legnagyobbat, amit a CV aR 90k¨ ovet szorosan.
+Az´Abra 20-on bal oldalon l´ athatjuk, hogy a kock´ azatos eszk¨ oz¨ okn´ el a Markowitz ´ es
+CV aR 90estek a legkisebbet. Ez az´ ert lehet v´ aratlan els˝ ore, mivel az ilyen extr´ em es´ esekn´ el
+v´ arhat´ oan a CV aR 99teljes´ ıt a legjobban, viszont itt az a portf´ oli´ o teljes´ ıtett majdnem a
+legrosszabbul az ¨ osszes k¨ oz¨ ul a maga 10,43%-os napi es´ es´ evel. Ez´ ert is volt fontos megjegyezni
+a fejezet elej´ en, hogy ez egy realiz´ aci´ o, ami tov´ abbra sem v´ altoztat a v´ arhat´ o ´ ert´ ekeken.
+Ami m´ eg az el˝ oz˝ o esetn´ el is meglep˝ obb, hogy a kock´ azatmentes esetn´ el ( ´Abra 20 jobb
+oldali) is a CV aR 99-nek van a legnagyobb es´ ese a hat´ arportf´ oli´ ok k¨ oz¨ ul, ´ ugy hogy az
+el˝ obb l´ attuk, hogy a teljes id˝ oszakon ˝ o teljes´ ıtett az egyik legjobban. ´Igy t´ enyleg nem tel-
+jes´ ıtette azt, amit v´ artunk volna t˝ ole az adott id˝ oszakon. A teljes id˝ oszaki teljes´ ıtm´ enye az´ ert
+t˝ unik ilyen j´ onak ennek ellen´ ere, mivel az emelked´ esek is nagyobbak voltak a t¨ obbihez k´ epest.
+52Csak kock´ azatos eszk¨ oz¨ ok
+ Kock´ azatmentes eszk¨ ozzel
+20. ´ abra. Portf´ oli´ ok legnagyobb cs¨ okken´ ese a teljes id˝ oszakon (r=16%)
+A k¨ ovetkez˝ o 2 ´ abr´ an most n´ ezz¨ unk meg egy-egy napot, amikor az egyik legnagyobb es´ est
+´ es n¨ oveked´ est l´ athatjuk. Erre alkalmas a k´ et egym´ ast k¨ ovet˝ o nap m´ arcius k¨ ozep´ en, a m´ arcius
+16-ai ´ es a 17-ei napok.
+El˝ osz¨ or tekints¨ uk a m´ arcius 16-ai napot ( ´Abra 21 bal oldal), amikor az egyik legnagyobb
+es´ est l´ athattuk a piacokon. L´ athatjuk, hogy csak a kock´ azatos eszk¨ oz¨ okn´ el a Markowitz
+teljes´ ıtett a legkev´ esb´ e rosszul, amit a βn¨ oveked´ es´ evel egyre nagyobb es´ esek k¨ ovetnek. A
+kock´ azatmentes esetet tekintve ( ´Abra 21 jobb oldal) is hasonl´ o figyelhet˝ o meg, b´ ar itt a
+β= 95%-os portf´ oli´ o kiss´ e jobban teljes´ ıtett, mint a 90%-os.
+Csak kock´ azatos eszk¨ oz¨ ok
+ Kock´ azatmentes eszk¨ ozzel
+21. ´ abra. Portf´ oli´ ok hozama 2020.03.16-´ an (r=16%)
+V´ eg¨ ul tekints¨ uk az ´Abra 22-˝ ot, ahol az egyik legnagyobb emelked´ esek l´ atsz´ odnak az
+id˝ oszak alatt. A baloldalon l´ athatjuk, hogy az emelked´ esben is azok a portf´ oli´ ok maradnak
+alul, amelyek eddig a legnagyobb es´ est produk´ alt´ ak, ´ ıgy jobban r´ aer˝ os´ ıtve az id˝ oszak alatti
+53gyenge teljes´ ıtm´ eny¨ ukre. A jobb oldali ´ abr´ an viszont azt l´ athatjuk, hogy az 1/N ´ es az
+S&P500 emelkedett jelent˝ osen a legnagyobbat, ezzel m´ eg jobban mutatva, hogy mennyire
+volatilisek a t¨ obbi portf´ oli´ ohoz k´ epest ebben az esetben. ˝Oket k¨ oveti a CV aR 99portf´ oli´ o,
+ami viszont az id˝ oszak alatt az egyik legjobb teljes´ ıtm´ enyt ´ erte el.
+Csak kock´ azatos eszk¨ oz¨ ok
+ Kock´ azatmentes eszk¨ ozzel
+22. ´ abra. Portf´ oli´ ok hozama 2020.03.17-´ en (r=16%)
+L´ athatjuk teh´ at, hogy a kock´ azatmentes eszk¨ oz nem biztos´ ıtja, hogy jobb teljes´ ıtm´ enye
+legyen a portf´ oli´ onak (ezt nem is v´ artuk t˝ ole, hiszen ugyanakkora v´ arhat´ o hozam´ u
+portf´ oli´ okat vizsg´ altunk), viszont ahogy az ´Abra 20 k´ et oldal´ an l´ athatjuk a maxim´ alis
+es´ est tomp´ ıtja a kock´ azatmentes eszk¨ oz haszn´ alata. Az es´ es majdnem mindegyik esetben
+k¨ ozel a fel´ ere cs¨ okkent a kock´ azatmentes esetben a csak kock´ azatos eszk¨ oz¨ okkel kialak´ ıtott
+portf´ oli´ okhoz k´ epest. Ahogy az ´Abra 19-en l´ athatjuk a kock´ azatmentes eszk¨ oz k¨ ozelebb
+hozza az egyes m´ odszereket egym´ ashoz ´ es kev´ esb´ e lesznek elt´ er˝ oek egym´ ast´ ol, ami annak is
+az eredm´ enye, hogy a kock´ azatmentes eszk¨ oz ar´ anya portf´ oli´ on bel¨ ul k¨ ozel 60%-os mindegyik
+m´ odszern´ el (l´ asd ´Abra 13 vagy T´ abla 15-18). Teh´ at a kock´ azatmentes eszk¨ ozt haszn´ alva
+kev´ esb´ e volatilis portf´ oli´ okat kapunk, ´ es val´ oban cs¨ okkenti a hozamok amplit´ ud´ oj´ at, amit
+el˝ ozetesen v´ artunk is t˝ ole.
+Az eddigiekben v´ egig r¨ ogz´ ıtett r=16%-os hozamszinten vizsg´ altuk az egyes
+hat´ arportf´ oli´ ok teljes´ ıtm´ eny´ et. Most n´ ezz¨ unk meg egy hat´ arportf´ oli´ ot k¨ ul¨ onb¨ oz˝ o hozam-
+szintek mellett, hogy l´ assuk hogyan befoly´ asolja a teljes´ ıtm´ enyt ha a v´ arhat´ o hozamok
+k¨ ul¨ onb¨ oznek. Ez a hat´ arportf´ oli´ o legyen a CV aR 95. A k¨ ovetkez˝ oekben l´ athat´ o eredm´ enyek
+t¨ obbi hat´ arportf´ oli´ ora is ugyan´ ugy ´ erv´ enyesek, ez´ ert nem hib´ azunk nagyot, hogyha nem
+mutatjuk be k¨ ul¨ on az ¨ osszeset.
+El˝ osz¨ or tekints¨ uk a csak kock´ azatos eszk¨ oz¨ okkel vett esetet. Ekkor nem l´ athatunk
+egy´ ertelm˝ u mint´ azatot abban, hogy a v´ arhat´ o hozamok n¨ ovel´ es´ evel jobb eredm´ enyeket ´ ernek
+el az egyes portf´ oli´ ok. Ezt is bizony´ ıtja, hogy az 36%-os v´ arhat´ o hozammal rendelkez˝ o
+portf´ oli´ o a teljes id˝ oartamon jobban teljes´ ıt, mint a 26%-os, viszont rosszabbul, mint a 16%-
+kal rendelkez˝ o (l´ asd ´Abra 23).
+5423. ´ abra. CV aR 95hat´ arportf´ oli´ ok k¨ ul¨ onb¨ oz˝ o v´ arhat´ o hozamok mellett (csak kock´ azatos
+eszk¨ oz¨ ok)
+Az el˝ oz˝ oekkel szemben viszont ha a kock´ azatmentes esetet vessz¨ uk (l´ asd ´Abra 24), akkor
+egy´ ertelm˝ uen l´ athat´ o, hogy min´ el nagyobb v´ arhat´ o hozam´ ut v´ alasztunk a hat´ arportf´ oli´ okb´ ol,
+ann´ al nagyobb vesztes´ egeket realiz´ alhatunk a v´ als´ ag idej´ en. Ez egybeesik azzal a t´ ennyel,
+hogy min´ el nagyobb a v´ arhat´ o hozam, ann´ al kisebb a kock´ azatmentes eszk¨ oz ar´ anya a
+portf´ oli´ on bel¨ ul (l´ asd ´Abra 13). Ez persze m´ asik oldalr´ ol azt is jelenti, hogy amikor ´ eppen
+gazdas´ agi konjunkt´ ura van, akkor az alacsonyabb v´ arhat´ o hozam´ u portf´ oi´ ok rosszabbul tel-
+jes´ ıtenek.
+5524. ´ abra. CV aR 95hat´ arportf´ oli´ ok k¨ ul¨ onb¨ oz˝ o v´ arhat´ o hozamok mellett (kock´ azatmentes
+eszk¨ ozzel)
+8.2. Silicon Valley Bank cs˝ od
+Most tekints¨ uk a kev´ esb´ e nagy hat´ as´ u stresszhelyzetet, ami aktu´ alisabb a dolgozat
+´ ır´ asakor. Ez a stresszhelyzet f˝ ok´ ent a p´ enz¨ ugyi szektort ´ erint˝ o hat´ ast foglal mag´ aban. A
+vizsg´ alt id˝ oszak a Sillicon Valley Bank cs˝ odje ut´ ani id˝ oszak, amikor a vil´ ag piacain magas
+kamatokkal tal´ alkozhatunk. Az egyre n¨ ovekv˝ o kamatk¨ ornyezet a hossz´ u lej´ arat´ u k¨ otv´ enyek
+le´ ert´ ekel˝ od´ es´ et jelenti, ami miatt likvidit´ asi probl´ em´ akkal szembes¨ ulnek a befektet˝ ok,
+akiknek nagy a kitetts´ ege ilyen eszk¨ oz¨ okben. Ez t¨ ort´ ent a SVB (Sillicon Valley Bank)
+kapcs´ an is, ´ es az eszk¨ ozeik gyors le´ ert´ ekel˝ od´ ese miatt likvidit´ asi probl´ em´ ai lettek, amik
+v´ egs˝ o soron a bank cs˝ odj´ et jelentett´ ek. Most n´ ezz¨ uk meg, hogy ennek a hatalmas banknak a
+cs˝ odje mik´ ent ´ erintette az amerikai r´ eszv´ enypiacot, ´ es ennek kapcs´ an a m´ ar el˝ oz˝ o fejezetben
+is t´ argyalt portf´ oli´ oinkat.
+Ha megn´ ezz¨ uk az ´Abra 25 bal oldal´ at, amikor csak a kock´ azatos eszk¨ oz¨ okkel ´ all´ ıtottuk
+¨ ossze a portf´ oli´ okat, akkor felt˝ unhet, hogy ism´ et a β= 90%-os CVaR teljes´ ıtett a legjobban
+az id˝ oszak alatt. Ez a portf´ oli´ o ´ es a Markowitz ´ es a β= 95%-os portf´ oli´ onk pozit´ ıv
+hozamot ´ ert el a teljes id˝ otartamon n´ ezve. ´Ugy l´ atszik, hogy ezek a portf´ oli´ ok nem csak
+a COVID-19 v´ als´ ag alatt ´ allt´ ak meg a hely¨ uket, hanem egy p´ enz¨ ugyi rendszert ´ erint˝ o
+sokkn´ al is sokkal jobban teljes´ ıtettek, mint a t¨ obbi. A portf´ oli´ ok k¨ oz¨ ul kimagasl´ oan az 1/N
+portf´ oli´ o ´ ert´ eke vesz´ ıti a legt¨ obbet, m´ ıg az S&P500 a kock´ azatmentes esetben nem bizonyul
+56annyival rosszabb v´ alaszt´ asnak, mint a hat´ arportf´ oli´ ok, ´ es l´ enyegesebben k¨ ozelebb ´ all a
+vesztes´ egeket vizsg´ alva hozz´ ajuk, mint a COVID-19 esetben. A CV aR 99portf´ oli´ onk itt is
+a legrosszabbul teljes´ ıt˝ o 1/N ´ es S&P500 el˝ ott van, viszont ez a portf´ oli´ o is negat´ ıvan z´ arta
+az id˝ oszakot. Kock´ azatmentes esetet vizsg´ alva ( ´Abra 22 jobb oldala) ugyanazt l´ athatjuk,
+mint az el˝ oz˝ o esetben, hogy a Markowitz ´ es a CV aR 99teljes´ ıt a legjobban. Val´ osz´ ın˝ uleg
+az´ ert lehet ez, mivel amikor csak kock´ azatos eszk¨ oz¨ okkel optimaliz´ alunk CVaR alapj´ an
+99%-os βmellett, akkor nem m˝ uk¨ odik olyan j´ ol az optimaliz´ aci´ o, mivel nincs olyan eszk¨ oz,
+amivel kell˝ ok´ eppen vissza tudja szor´ ıtani a kock´ azatot. Ez´ ert amikor kock´ azatmentes
+eszk¨ ozzel vizsg´ aljuk ott m´ ar l´ athatjuk, hogy ez a portf´ oli´ o sokkal hat´ ekonyabb a vesz-
+tes´ egek cs¨ okkent´ es´ eben, mivel ellen tudja s´ ulyozni ezzel a sokkal kock´ azatosabb r´ eszv´ enyeket.
+Csak kock´ azatos eszk¨ oz¨ ok
+ Kock´ azatmentes eszk¨ ozzel
+25. ´ abra. Portf´ oli´ ok hozama a teljes id˝ oszakon (r=16%)
+A legnagyobb cs¨ okken´ eseket tekintve az ´Abra 26-on is hasonl´ o eredm´ enyeket l´ athatunk,
+mint a COVID-19 eset´ eben az ´Abra 20-n´ al. 90%-CVaR a csak kock´ azatos eszk¨ ozt tartalmaz´ o
+esetn´ el itt l´ athat´ oan jobban teljes´ ıt, mint a Markowitz jelen esetben, ´ es term´ eszetesen a
+t¨ obbin´ el is kisebb es´ est l´ athatunk enn´ el a portf´ oli´ on´ al. A legnagyobb vesztes´ eget vizsg´ alva
+l´ athatjuk, hogy az S&P500 k¨ ozel azonos szinten van az 1/N portf´ oli´ ohoz annak ellen´ ere,
+hogy a teljes id˝ oszaki teljes´ ıtm´ enye l´ enyegesen jobb volt.
+57Csak kock´ azatos eszk¨ oz¨ ok
+ Kock´ azatmentes eszk¨ ozzel
+26. ´ abra. Portf´ oli´ ok legnagyobb cs¨ okken´ ese a teljes id˝ oszakon (r=16%)
+589. Konkl´ uzi´ o
+A portf´ oli´ ooptimaliz´ al´ as a p´ enz¨ ugyek ´ es a befektet´ esek k¨ or´ eben az egyik legn´ epszer˝ ubb
+´ es legkutatottabb t´ ema. Ezt mi sem bizony´ ıtja jobban, mint hogy Markowitz 1952-es m˝ uve
+´ ota sz´ amos Nobel-d´ ıjas k¨ ozgazd´ asz foglalkozott a ter¨ ulettel. Ennek k¨ osz¨ onhet˝ oen a 21.
+sz´ azadra sz´ amos nagyhat´ as´ u tanulm´ any sz¨ uletett, amik remek alapot ny´ ujtanak a tov´ abbi
+kutat´ asoknak. Az informatika fejl˝ od´ es´ evel olyan eszk¨ ozt´ arral ´ es m´ odszertannal b˝ ov¨ ult ki,
+ami teljesen m´ as ir´ anyvonalakat t´ art fel a t´ emak¨ orben, illetve l´ enyegesen megk¨ onny´ ıtette ´ es
+meggyors´ ıtotta az eddigi modellekkel val´ o oper´ al´ ast.
+A dolgozatom t´ em´ aja 4 portf´ oli´ o ¨ osszehasonl´ ıt´ as´ ara f´ okusz´ alt. Az ¨ osszes portf´ oli´ on´ al
+az S&P500-at alkot´ o r´ eszv´ enyeket haszn´ aljuk az optimaliz´ aci´ o sor´ an. Ezeket az eszk¨ oz¨ oket
+kock´ azatos eszk¨ oz¨ oknek h´ ıvtuk, amiket kieg´ esz´ ıtett¨ unk egy szintetikus eszk¨ ozzel, ami az 1
+´ eves lej´ arat´ u amerikai kincst´ arjegy hozamait haszn´ alja. Ez volt sz´ amunkra a kock´ azatmentes
+eszk¨ oz, ami a p´ enz szerep´ et t¨ olt¨ otte be a potf´ oli´ onkban. Az els˝ o portf´ oli´ o tal´ an a legismertebb
+ezek k¨ oz¨ ul, ami az amerikai legnagyobb 500 r´ eszv´ enyt tartalmaz´ o index, az S&P500. Ez a
+portf´ oli´ o ma a vil´ agban az egyik legt¨ obbet haszn´ alt index viszony´ ıt´ asi alapk´ ent az USA
+meghat´ aroz´ o gazdas´ agi ´ es p´ enz¨ ugyi szerepe miatt.
+A k¨ ovetkez˝ o portf´ oli´ o hab´ ar nem annyira haszn´ alt, viszont ugyanannyira intuit´ ıv be-
+fektet´ esi forma, ami a legt¨ obb ember sz´ am´ ara tal´ an jobban is ´ ertelmezhet˝ o, mint az el˝ obb
+eml´ ıtett index. Ez a portf´ oli´ o az S&P500 r´ eszv´ enyeib˝ ol ´ ugy kialak´ ıtott portf´ oli´ o, hogy min-
+den r´ eszv´ enynek ugyanakkora s´ ulya van. Ezt nevezt¨ uk mi a dolgozat sor´ an 1/N portf´ oli´ onak,
+ahol az N az eszk¨ oz¨ ok sz´ am´ at jel¨ oli.
+A harmadik t´ argyalt optimaliz´ al´ asi m´ odszer a m´ ar kor´ abban is eml´ ıtett Harry Mar-
+kowitzr´ ol elnevezett Markowitz modell (H. Markowitz, 1952). Ebben a modellben a his-
+torikus adatok alapj´ an alak´ ıtjuk ki a portf´ oli´ onkat ´ ugy, hogy egy adott hozam mellett a
+lehet˝ o legkisebb sz´ or´ ast szeretn´ enk. Ezen felt´ etel ment´ en hat´ arozzuk meg az optim´ alis
+portf´ oli´ o ¨ osszet´ etel´ et. L´ athatjuk, hogy ez a modell az el˝ oz˝ oekt˝ ol elt´ er˝ oen m´ ar egy komp-
+lexebb m´ odszertant foglal mag´ aban, mivel az eszk¨ oz¨ ok m´ ultbeli hozamait vizsg´ alja ´ es egy
+kock´ azati m´ er˝ osz´ amot is bevezet, a sz´ or´ ast. E modell keretei lehet˝ os´ eget biztos´ ıtanak arra,
+hogy ¨ osszehasonl´ ıtsuk az ¨ osszes lehets´ eges ¨ osszet´ etel˝ u portf´ oli´ ot egym´ assal, ´ es´ ıgy kiv´ alasszuk
+azokat, amelyek hozam-sz´ or´ as tekintet´ eben a legjobban teljes´ ıtenek. Ez l´ athatjuk, hogy az
+el˝ oz˝ oekkel szemben m´ ar nem egy egy´ ertelm˝ u portf´ oli´ ot fog meghat´ arozni, hanem egy olyan
+t´ erbe helyez minket, ahol t¨ obb lehets´ eges portf´ oli´ o k¨ oz¨ ul v´ alaszthatunk, amelyek az egyes
+befektet˝ ok preferenci´ ai alapj´ an rangsorolhat´ oak.
+A dolgozat egyik k¨ ozponti szerep´ et viszont az utols´ o m´ odszer alkotta. Ezt a modellt
+Uryasev ´ es Rockafellar alkotta meg, amely a Markowitz modellben haszn´ alt sz´ or´ ast a
+CVaR-re (Conditional Value-at-Risk) cser´ elte le (Rockafellar ´ es Uryasev, 2000). ´Igy ez az
+ut´ obbi a hozam-CVaR t´ erben optimaliz´ alja az egyes portf´ oli´ okat, ´ es itt kell a befektet˝ oknek
+v´ alasztaniuk. A CVaR-nek sz´ amos el˝ ony¨ os tulajdons´ aga van a sz´ or´ assal ´ es a VaR-kel
+(Value-at-Risk) szemben. A sz´ or´ assal ellent´ etben, ami mindk´ et ir´ any´ u kock´ azatot m´ eri, a
+CVaR csak a lefel´ e ir´ anyul´ o kock´ azatokkal foglalkozik, ami adekv´ atabb lehet a portf´ oli´ ok
+ter¨ ulet´ en, mivel csak ez jelenti a nem k´ ıv´ anatos kimenetelt, amennyiben az eszk¨ oz¨ oket
+megfelel˝ oen hat´ arozzuk meg. A m´ asik probl´ ema a sz´ or´ assal, hogy csak akkor ad megfelel˝ o
+viszony´ ıt´ asi alapot, amennyiben az eszk¨ oz¨ ok hozamai k¨ ozel norm´ alis eloszl´ ast k¨ ovetnek,
+59viszont ellenkez˝ o esetben a sz´ or´ as nem j´ o reprezent´ aci´ oja a kock´ azatnak. A VaR-kel szemben
+az´ ert el˝ ony¨ os a CVaR haszn´ alata, mivel az ut´ obbi koherens kock´ azati m´ ert´ ek, ´ es a VaR nem
+foglalkozik azokkal a kimenetekkel, amik meghaladj´ ak. A dolgozat sor´ an h´ arom βszinttel
+dolgoztunk a portf´ oli´ ok kialak´ ıt´ asa sor´ an: 90%, 95% ´ es 99%.
+A portf´ oli´ ok tesztel´ ese el˝ ott az optimaliz´ aci´ ohoz haszn´ alt historikus adatokn´ al is egy
+m´ asfajta megk¨ ozel´ ıt´ est alkalmaztunk. Ahelyett, hogy a teljes id˝ otartamot (2007-2020)
+haszn´ altuk volna fel, v´ eletlenszer˝ uen kiv´ alasztott keresked´ esi napokkal dolgoztunk, hogy
+a lok´ alis trendek (p´ eld´ aul rally vagy ´ atmeneti recesszi´ o) ne befoly´ asolj´ ak t´ uls´ agosan a
+kialak´ ıtott portf´ oli´ okat, illetve hogy elker¨ ulj¨ uk a t´ ulilleszked´ es probl´ em´ aj´ at. Itt k¨ ul¨ onb¨ oz˝ o
+mintaelemsz´ am´ u eseteket n´ ezt¨ unk meg, amin´ el a csak kock´ azatos eszk¨ oz¨ oket vizsg´ alva
+a 2000-es elemsz´ am´ u, m´ ıg a kock´ azatmentes eszk¨ ozzel kieg´ esz´ ıtett esetben az 1500-as
+elemsz´ am´ u bizonyult a legjobbnak a stabilit´ as meg˝ orz´ es´ eben amellett, hogy megmaradt
+a v´ eletlennek az el˝ obb eml´ ıtett kedvez˝ o tulajdons´ agai. Az hogy mint´ aval dolgozunk a
+megold´ asi id˝ ot is lecs¨ okkentheti, ami hossz´ u id˝ ot´ avokat tekintve ´ es sok eszk¨ oz mellett
+jelent˝ os t´ enyez˝ o lehet.
+Az elemz´ es sor´ an k´ et tesztel´ esi id˝ oszakot v´ alasztottunk ki, amik a dolgozat ´ ır´ asakor
+a legrelev´ ansabbnak bizonyultak. Az egyik a COVID-19 v´ als´ ag kezdet´ en´ el bek¨ ovetkez˝ o
+r´ eszv´ enypiaci zuhan´ as, illetve a m´ asik a Sillicon Valley Bank cs˝ odje ut´ ani id˝ oszak. Fontos
+megjegyezni, hogy a tesztel´ esi ´ es az optimaliz´ al´ asi id˝ oszak nem fedi egym´ ast, ´ ıgy elker¨ ulve
+azt, hogy azon tesztelj¨ uk, amin optimaliz´ aljuk. Ezzel teh´ at elker¨ ulj¨ uk azt, hogy ebb˝ ol az
+okb´ ol kifoly´ olag gyenge magyar´ az´ o ereje legyen az eredm´ enyeknek egy ezekt˝ ol f¨ uggetlen pi-
+aci sokkn´ al.
+A COVID-19 v´ als´ ag egy ´ altal´ anos, majdnem minden szektort ´ er´ ınt˝ o gazdas´ agi vissza-
+es´ es volt, amely jelent˝ os m´ ert´ ekben visszavetette a a r´ eszv´ enypiacokon az ´ arfolyamokat.
+Emiatt a tulajdons´ aga miatt kit˝ un˝ o v´ alaszt´ as a portf´ oli´ ok teljes´ ıtm´ eny´ enek m´ er´ es´ ere, mi-
+vel majdnem minden szektort ugyan´ ugy ´ erintett, ´ ıgy a koncentr´ aci´ onak a hat´ asa nem lesz
+t´ ul nagy. Azt l´ athattuk, hogy az S&P500 ´ es az 1/N portf´ oli´ o teljes´ ıtett szignifik´ ansan a
+legrosszabbul. Ez v´ arhat´ o eredm´ eny volt, mivel ez a k´ et portf´ oli´ o nem tartalmaz semmi
+optimaliz´ aci´ ot, mindig az adott piaci viszonyoknak megfelel˝ o az ¨ osszet´ etel¨ uk. A legjobban a
+90%-os β-val rendelkez˝ o CVaR portf´ oli´ o teljes´ ıtett a csak kock´ azatos eszk¨ oz¨ okkel n´ ezve, amit
+a Markowitz portf´ oli´ o k¨ ovetett. A legrosszabbul a 99%-os CVaR teljes´ ıtett a hat´ arportf´ oli´ ok
+k¨ oz¨ ul. Kock´ azatmentes esetet tekintve viszont a sorrend megv´ altozott, ´ es a Markowitz ´ es a
+CV aR 99portf´ oli´ ok teljes´ ıtettek. Ez azzal is magyar´ azhat´ o, hogy a csak kock´ azatos eszk¨ oz¨ ok
+haszn´ alat´ aval nem volt megfelel˝ o eszk¨ oz a CV aR 99sz´ am´ ara, amivel hat´ ekonyan tudott volna
+optimaliz´ alni erre az extr´ em farokkock´ azatra. A kock´ azatmentes eszk¨ oz haszn´ alata minden
+hat´ arportf´ oli´ o eset´ en ugyan´ ugy cs¨ okkentette a hozamok volatilit´ as´ at.
+A Sillicon Valley Bank cs˝ odje az el˝ oz˝ oekben vizsg´ alt v´ als´ aggal ellent´ etben nem ´ altal´ anos,
+hanem a p´ enz¨ ugyi szektor specifikus sokkhat´ as. Ett˝ ol f¨ uggetlen¨ ul egy m´ ers´ ekelt visszaes´ es
+figyelhet˝ o meg a r´ eszv´ enypiac eg´ esz´ en. Ez persze ´ erthet˝ o, mivel a p´ enz¨ ugyi szektor ´ allapota
+hat´ assal van az ¨ osszes t¨ obbi szektor finansz´ ıroz´ as´ ara, ´ ıgy k¨ ozvetetten ´ erinti a gazdas´ ag
+eg´ esz´ et. Itt is ugyanazt a tendenci´ at figyelhetj¨ uk meg mind a csak kock´ azatos esetben, mind
+a kock´ azatmentes eszk¨ ozzel. Az egyetlen k¨ ul¨ onbs´ eg, hogy az S&P500 teljes´ ıtm´ enye most
+megk¨ ozel´ ıtette a hat´ arportf´ oli´ ok´ et.
+60L´ athattuk teh´ at, hogy b´ ar a Markowitz portf´ oli´ oban haszn´ alt sz´ or´ as nem a leg-
+jobb kock´ azati m´ er˝ osz´ am a tulajdons´ agai alapj´ an, viszont a Markowitz modellel alkotott
+portf´ oli´ ok teljes´ ıtm´ enye k¨ ozel azonos a CVaR ´ altal kialak´ ıtott portf´ oli´ okkal. Ez is bizony´ ıtja
+Markowitz munk´ ass´ ag´ anak a relevanci´ aj´ at ´ es id˝ ot´ all´ os´ ag´ at a mai napig. A CVaR optima-
+liz´ al´ as ahogy l´ athattuk egy j´ o alternat´ ıv´ aja lehet a gyakorlatban a sz´ or´ asnak, ´ es defin´ ıci´ oja
+szerint is jobban t¨ ukr¨ ozi a befektet˝ oknek a lefel´ e ir´ anyul´ o kock´ azatokat, amik a legt¨ obb eset-
+ben relev´ ansabbak a t´ em´ aban, ´ es a kock´ azatkezel´ esi szempontb´ ol kritikus farokkock´ azatot is
+megfelel˝ oen reprezent´ alja.
+61Hivatkoz´ asok
+Black, F., ´ es Litterman, R. (1992). Global portfolio optimization. Financial Analysts
+Journal ,48(5), 28–43.
+Dupire, B., et al. (1994). Pricing with a smile. Risk,7(1), 18–20.
+Gordon, M. J. (1962). The savings investment and valuation of a corporation. The Review
+of Economics and Statistics ,44(1), 37–51.
+G´ all, J., ´ es Pap, G. (2010). Bevezet´ es a p´ enz¨ ugyi matematik´ aba: hasznoss´ agelm´ elet,
+portf´ oli´ omenedzsment, opci´ oelm´ elet . Polygon.
+Hicks, J. R. (1962, 12). Liquidity. The Economic Journal ,72(288), 787-802.
+Kahneman, D., ´ es Tversky, A. (1979). Prospect theory: An analysis of decision under risk.
+Econometrica ,47(2), 263–291.
+Karandikar, R. L., ´ es Sinha, T. (2012). Modelling in the spirit of markowitz portfolio theory
+in a non-gaussian world. Current Science , 666–672.
+Kibzun, A. I., ´ es Kan, Y. S. (1997). Stochastic programming problems with probability and
+quantile functions. Journal of the Operational Research Society ,48(8), 849–849.
+Mandelbrot, B. B. (1997). The variation of certain speculative prices . Springer.
+Markowitz, H. (1952). Portfolio selection. The Journal of Finance ,7(1), 77–91.
+Markowitz, H. M. (1959). Portfolio selection: Efficient diversification of investments . Yale
+University Press.
+Modigliani, F., ´ es Miller, M. H. (1963). Corporate income taxes and the cost of capital: A
+correction. The American Economic Review ,53(3), 433–443.
+Morgan, J. (1995). Riskmetrics technical manual. New York: JP Morgan .
+Rockafellar, R. T., ´ es Uryasev, S. (2000). Optimization of conditional value-at-risk. Journal
+of risk ,2, 21–42.
+Sarykalin, S., Serraino, G., ´ es Uryasev, S. (2008). Value-at-risk vs. conditional value-at-risk
+in risk management and optimization. In State-of-the-art decision-making tools in the
+information-intensive age (pp. 270–294). Informs.
+Sharpe, W. F. (1964). Capital asset prices: A theory of market equilibrium under conditions
+of risk*. The Journal of Finance ,19(3), 425-442.
+62Shefrin, H., ´ es Statman, M. (2000). Behavioral portfolio theory. Journal of financial and
+quantitative analysis ,35(2), 127–151.
+Sz´ az, J. (2019). Kvantitat´ ıv p´ enz¨ ugyek .
+Thaler, R. H., ´ es Ganser, L. (2015). Misbehaving: The making of behavioral economics.
+Tobin, J. (1958, 02). Liquidity Preference as Behavior Towards Risk1. The Review of
+Economic Studies ,25(2), 65-86.
+Tyrrell Rockafellar, R. (1970). Convex analysis. Princeton mathematical series ,28.
+Uryasev, S. (1995). Derivatives of probability functions and some applications. Annals of
+Operations Research ,56, 287–311.
+Wilmott, P. (1998). Derivatives: the theory and practice of financial engineering . Wiley.
+63

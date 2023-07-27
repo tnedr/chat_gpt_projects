@@ -105,13 +105,17 @@ def get_current_position():
 d_place = {
     'left full': [-186, 120],
     'right full': [2354, 158],
-    'left small right up part': [-82, 663]}
+    'left small right up part': [-82, 663],
+    '2 left': [-171, 686]
+}
 
 # get_current_position()
-click_interval = 60
-inactivity_threshold = 3
+click_interval = 6
+inactivity_threshold = 10
 # type = 'right full'
 type = 'left full'
+type = '2 left'
+
 # type='left small right up part'
 x_coord = d_place[type][0]
 y_coord = d_place[type][1]
