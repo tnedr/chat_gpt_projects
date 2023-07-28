@@ -7,6 +7,12 @@ from selenium.webdriver.common.by import By
 from datetime import datetime
 import json
 
+# todo multiple phase
+# todo sleep times
+# todo parralelization
+# todo preinfo non show more
+
+
 # Constants
 BROWSE_DOWN_RESULTS_SLEEP_TIME = 6
 CLICK_TO_JOB_SLEEP_TIME = 6
@@ -20,7 +26,7 @@ logging.basicConfig(level=logging.INFO)
 url = 'https://www.linkedin.com/jobs/search?keywords=Data%20Scientist&location=Gyor&geoId=&trk=public_jobs_jobs-search-bar_search-submit&redirect=false&position=1&pageNum=0'
 
 # Set of previously scraped job IDs
-PREVIOUSLY_SCRAPED_JOB_IDS = {"123", "456", "789"}  # Update this set with your real data
+PREVIOUSLY_SCRAPED_JOB_IDS = {"123", "456", "789", '3652076362', '3674290696'}  # Update this set with your real data
 
 def extract_number(text):
     return int(text.replace(',', '').replace('+', ''))
@@ -128,6 +134,8 @@ def main():
         if job_id not in PREVIOUSLY_SCRAPED_JOB_IDS:
             job_url = job_element.find_element(By.CSS_SELECTOR, 'a').get_attribute('href')
             job_urls[job_id] = job_url
+        else:
+            logging.info(f'Skipping job: {job_id}')
 
     job_info_list = []
     job_details_list = []
