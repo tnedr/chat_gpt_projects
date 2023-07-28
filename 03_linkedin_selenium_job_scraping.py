@@ -9,6 +9,8 @@ import json
 
 # todo multiple phase
 # todo database
+# todo execution
+# todo embedding
 # todo sleep times
 # todo prefect
 # todo parralelization
