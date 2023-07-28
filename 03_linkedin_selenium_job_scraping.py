@@ -8,9 +8,13 @@ from datetime import datetime
 import json
 
 # todo multiple phase
+# todo database
 # todo sleep times
+# todo prefect
 # todo parralelization
+# todo notification
 # todo preinfo non show more
+# todo check fields, error handling
 
 
 # Constants
