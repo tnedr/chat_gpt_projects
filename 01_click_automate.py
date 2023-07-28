@@ -114,7 +114,7 @@ click_interval = 6
 inactivity_threshold = 10
 # type = 'right full'
 type = 'left full'
-type = '2 left'
+# type = '2 left'
 
 # type='left small right up part'
 x_coord = d_place[type][0]
