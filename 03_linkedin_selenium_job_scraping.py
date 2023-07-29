@@ -116,6 +116,42 @@ def collect_job_details_by_visiting_the_site(driver, job_link):
     job_description = div_element.text.replace('\n', ' ')
     return job_description, job_characteristics
 
+def get_job_urls(driver):
+    job_list = driver.find_element(By.CLASS_NAME, 'jobs-search__results-list')
+    job_elements = job_list.find_elements(By.TAG_NAME, 'li')
+
+    job_urls = {}
+    for job_element in job_elements:
+        element = job_element.find_element(By.CSS_SELECTOR, 'div[data-entity-urn]')
+        job_id = element.get_attribute('data-entity-urn').split(':')[-1]
+        if job_id not in PREVIOUSLY_SCRAPED_JOB_IDS:
+            job_url = job_element.find_element(By.CSS_SELECTOR, 'a').get_attribute('href')
+            job_urls[job_id] = job_url
+        else:
+            logging.info(f'Skipping job: {job_id}')
+    return job_urls
+
+def scrape_job_data(driver, job_urls):
+    job_info_list = []
+    job_details_list = []
+    for job_id, job_url in job_urls.items():
+        driver.get(job_url)
+        time.sleep(CLICK_TO_JOB_SLEEP_TIME)
+        job_title, company_name, location, script_date_posted, \
+        script_title, script_description, script_hiringOrganization, script_jobLocation, script_address, script_addressLocality, script_addressRegion, \
+        script_industry, script_employmentType, script_validThrough, script_skills, script_educationRequirements \
+            = collect_job_info(driver)
+        logging.info(f'Scraping job: {job_id}, {job_title}, {company_name}, {location}, {script_date_posted}')
+        job_info_list.append((job_id, job_title, company_name, location, script_date_posted, job_url,
+                              script_title, script_description, script_hiringOrganization, script_jobLocation,
+                              script_address, script_addressLocality, script_addressRegion,
+                              script_industry, script_employmentType, script_validThrough, script_skills,
+                              script_educationRequirements))
+        job_details_list.append(collect_job_details_by_visiting_the_site(driver, job_url))
+    return job_info_list, job_details_list
+
+
+
 def main():
     # Set up WebDriver
     service = Service(WEBDRIVER_PATH)
@@ -129,36 +165,11 @@ def main():
     # Browse all jobs
     browse_down_all_jobs(driver, num_jobs)
 
-    # Collect job info and details
-    job_list = driver.find_element(By.CLASS_NAME, 'jobs-search__results-list')
-    job_elements = job_list.find_elements(By.TAG_NAME, 'li')
+    # Get job urls
+    job_urls = get_job_urls(driver)
 
-    job_urls = {}
-    for job_element in job_elements:
-        element = job_element.find_element(By.CSS_SELECTOR, 'div[data-entity-urn]')
-        job_id = element.get_attribute('data-entity-urn').split(':')[-1]
-        if job_id not in PREVIOUSLY_SCRAPED_JOB_IDS:
-            job_url = job_element.find_element(By.CSS_SELECTOR, 'a').get_attribute('href')
-            job_urls[job_id] = job_url
-        else:
-            logging.info(f'Skipping job: {job_id}')
-
-    job_info_list = []
-    job_details_list = []
-    for job_id, job_url in job_urls.items():
-        driver.get(job_url)
-        time.sleep(CLICK_TO_JOB_SLEEP_TIME)
-        job_title, company_name, location, script_date_posted, \
-        script_title, script_description, script_hiringOrganization, script_jobLocation, script_address, script_addressLocality, script_addressRegion, \
-        script_industry, script_employmentType, script_validThrough, script_skills, script_educationRequirements\
-            = collect_job_info(driver)
-        logging.info(f'Scraping job: {job_id}, {job_title}, {company_name}, {location}, {script_date_posted}')
-        job_info_list.append((job_id, job_title, company_name, location, script_date_posted, job_url,
-                              script_title, script_description, script_hiringOrganization, script_jobLocation,
-                              script_address, script_addressLocality, script_addressRegion,
-                              script_industry, script_employmentType, script_validThrough, script_skills,
-                              script_educationRequirements))
-        job_details_list.append(collect_job_details_by_visiting_the_site(driver, job_url))
+    # Scrape job data
+    job_info_list, job_details_list = scrape_job_data(driver, job_urls)
 
     # Create DataFrames and save to CSV
     df_jobs = pd.DataFrame(job_info_list,
