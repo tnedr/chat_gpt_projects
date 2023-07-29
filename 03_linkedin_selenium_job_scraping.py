@@ -6,9 +6,8 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from datetime import datetime
 import json
+import os
 
-# todo multiple phase
-# todo database
 # todo execution
 # todo embedding
 # todo sleep times
@@ -17,7 +16,6 @@ import json
 # todo notification
 # todo preinfo non show more
 # todo check fields, error handling
-
 
 # Constants
 BROWSE_DOWN_RESULTS_SLEEP_TIME = 6
@@ -33,6 +31,52 @@ url = 'https://www.linkedin.com/jobs/search?keywords=Data%20Scientist&location=G
 
 # Set of previously scraped job IDs
 PREVIOUSLY_SCRAPED_JOB_IDS = {"123", "456", "789", '3652076362', '3674290696'}  # Update this set with your real data
+# PREVIOUSLY_SCRAPED_JOB_IDS = {"123", "456", "789"}  # Update this set with your real data
+
+
+class JobURLsDB:
+    def __init__(self, filename='job_urls.csv'):
+        self.filename = filename
+        if os.path.exists(filename):
+            self.data = pd.read_csv(filename, dtype={'Job ID': str})
+        else:
+            self.data = pd.DataFrame(columns=['Job ID', 'URL', 'Generated At', 'Scraped'])
+
+    def add_job_urls(self, job_urls):  # job_urls is a list of dictionaries
+        # Filter job_urls list to exclude jobs that are already in self.data
+        job_urls = [d_job for d_job in job_urls if d_job['Job ID'] not in list(self.data['Job ID'].values)]
+        self.data = pd.concat([self.data, pd.DataFrame(job_urls)], ignore_index=True)
+
+    def mark_as_scraped(self, job_ids):  # job_ids is a list of job IDs
+        self.data.loc[self.data['Job ID'].isin(job_ids), 'Scraped'] = True
+
+    def get_unscraped_jobs(self):
+        return self.data.loc[self.data['Scraped'] == False]
+
+    def save(self):
+        self.data.to_csv(self.filename, index=False)
+
+class JobDetailsDB:
+    def __init__(self, filename='job_details.csv'):
+        self.filename = filename
+        if os.path.exists(filename):
+            self.data = pd.read_csv(filename)
+        else:
+            self.data = pd.DataFrame(columns=['Job ID', 'Job Title', 'Company Name', 'Location', 'Date Posted', 'Job URL',
+                                              'Script Title', 'Script Description', 'Script Hiring Organization',
+                                              'Script Job Location', 'Script Address', 'Script Address Locality',
+                                              'Script Address Region', 'Script Industry', 'Script Employment Type',
+                                              'Script Valid Through', 'Script Skills', 'Script Education Requirements',
+                                              'Job Description', 'Job Characteristics', 'Scraped At'])
+
+    def add_job_details(self, job_details):  # job_details is a list of dictionaries
+        self.data = pd.concat([self.data, pd.DataFrame(job_details)], ignore_index=True)
+
+    def get_job_details(self, job_id):
+        return self.data.loc[self.data['Job ID'] == job_id]
+
+    def save(self):
+        self.data.to_csv(self.filename, index=False)
 
 def extract_number(text):
     return int(text.replace(',', '').replace('+', ''))
@@ -56,8 +100,6 @@ def browse_down_all_jobs(driver, num_jobs, sleep_time=BROWSE_DOWN_RESULTS_SLEEP_
     logging.info('Finished browsing. Total execution time: %s seconds', time.time() - start_time)
 
 def collect_job_info(driver):
-    # element = job.find_element(By.CSS_SELECTOR, 'div[data-entity-urn]')
-    # job_id = element.get_attribute('data-entity-urn').split(':')[-1]
 
     jobinfo_path = '// *[ @ id = "main-content"] / section[1] / div / section[2] / div / div[1] / div'
     jobinfo = driver.find_element(By.XPATH, jobinfo_path)
@@ -72,7 +114,6 @@ def collect_job_info(driver):
     location = jobinfo.find_element(By.XPATH, 'h4 / div / span[2]').text
     # Identify the script tag with the relevant information.
     # You may need to adjust the xpath to accurately target the correct script tag.
-
     script = driver.find_element(By.XPATH, "//script[@type='application/ld+json']").get_attribute('innerHTML')
     data = json.loads(script)
     script_date_posted = data.get('datePosted', None)
@@ -91,8 +132,6 @@ def collect_job_info(driver):
     script_skills = data.get('skills', None)
     script_educationRequirements = data.get('educationRequirements', None)
 
-    # date_posted = driver.find_element(By.CSS_SELECTOR, 'div > div > time').get_attribute('datetime')
-    # job_link = job.find_element(By.CSS_SELECTOR, 'a').get_attribute('href')
     return job_title, company_name, location, script_date_posted,\
            script_title, script_description, script_hiringOrganization, script_jobLocation, script_address, script_addressLocality, script_addressRegion,\
            script_industry, script_employmentType, script_validThrough, script_skills, script_educationRequirements
@@ -131,26 +170,48 @@ def get_job_urls(driver):
             logging.info(f'Skipping job: {job_id}')
     return job_urls
 
-def scrape_job_data(driver, job_urls):
-    job_info_list = []
-    job_details_list = []
-    for job_id, job_url in job_urls.items():
+def scrape_job_data(driver, job_urls_db, job_details_db):
+
+    unscraped_jobs = job_urls_db.get_unscraped_jobs()
+    for index, row in unscraped_jobs.iterrows():
+        job_id = row['Job ID']  # or whatever the correct column name is
+        job_url = row['URL']
         driver.get(job_url)
         time.sleep(CLICK_TO_JOB_SLEEP_TIME)
+        # scrape the job info
         job_title, company_name, location, script_date_posted, \
         script_title, script_description, script_hiringOrganization, script_jobLocation, script_address, script_addressLocality, script_addressRegion, \
         script_industry, script_employmentType, script_validThrough, script_skills, script_educationRequirements \
             = collect_job_info(driver)
         logging.info(f'Scraping job: {job_id}, {job_title}, {company_name}, {location}, {script_date_posted}')
-        job_info_list.append((job_id, job_title, company_name, location, script_date_posted, job_url,
-                              script_title, script_description, script_hiringOrganization, script_jobLocation,
-                              script_address, script_addressLocality, script_addressRegion,
-                              script_industry, script_employmentType, script_validThrough, script_skills,
-                              script_educationRequirements))
-        job_details_list.append(collect_job_details_by_visiting_the_site(driver, job_url))
-    return job_info_list, job_details_list
+        job_description, job_characteristics = collect_job_details_by_visiting_the_site(driver, job_url)
+        job_details_db.add_job_details([
+            {
+                'Job ID': job_id,
+                'Job Title': job_title,
+                'Company Name': company_name,
+                'Location': location,
+                'Date Posted': script_date_posted,
+                'Job URL': job_url,
+                'Script Title': script_title,
+                'Script Description': script_description,
+                'Script Hiring Organization': script_hiringOrganization,
+                'Script Job Location': script_jobLocation,
+                'Script Address': script_address,
+                'Script Address Locality': script_addressLocality,
+                'Script Address Region': script_addressRegion,
+                'Script Industry': script_industry,
+                'Script Employment Type': script_employmentType,
+                'Script Valid Through': script_validThrough,
+                'Script Skills': script_skills,
+                'Script Education Requirements': script_educationRequirements,
+                'Job Description': job_description,
+                'Job Characteristics': job_characteristics,
+                'Scraped At': datetime.now()
+            }
+        ])
 
-
+        job_urls_db.mark_as_scraped([job_id])
 
 def main():
     # Set up WebDriver
@@ -158,6 +219,7 @@ def main():
     driver = webdriver.Chrome(service=service)
     driver.get(url)
     time.sleep(5)
+
     # Get number of jobs
     element = driver.find_element(By.CSS_SELECTOR, 'h1>span')
     num_jobs = extract_number(element.get_attribute('innerText'))
@@ -165,27 +227,21 @@ def main():
     # Browse all jobs
     browse_down_all_jobs(driver, num_jobs)
 
+    # Initialize databases
+    job_urls_db = JobURLsDB('job_urls.csv')
+    job_details_db = JobDetailsDB('job_details.csv')
+
     # Get job urls
     job_urls = get_job_urls(driver)
+    job_urls_db.add_job_urls([{'Job ID': str(job_id), 'URL': url, 'Generated At': datetime.now(), 'Scraped': False} for job_id, url in job_urls.items()])
+    job_urls_db.save()
 
     # Scrape job data
-    job_info_list, job_details_list = scrape_job_data(driver, job_urls)
+    scrape_job_data(driver, job_urls_db, job_details_db)
 
-    # Create DataFrames and save to CSV
-    df_jobs = pd.DataFrame(job_info_list,
-                           columns=['Job ID', 'Job Title', 'Company Name', 'Location', 'Date Posted', 'Job url',
-                                    'Script Title', 'Script Description', 'Script Hiring Organization', 'Script Job Location',
-                                    'Script Address', 'Script Address Locality', 'Script Address Region',
-                                    'Script Industry', 'Script Employment Type', 'Script Valid Through', 'Script Skills',
-                                    'Script Education Requirements'])
-    df_descriptions = pd.DataFrame([desc for desc, _ in job_details_list], columns=['Job Description'])
-    df_characteristics = pd.DataFrame([charac for _, charac in job_details_list])
-    df = pd.concat([df_jobs, df_descriptions, df_characteristics], axis=1)
-
-    # Add the date and time of scraping to the DataFrame
-    df['Scraped at'] = datetime.now()
-
-    df.to_csv('linkedin_jobs.csv', index=False)
+    # Save the data
+    job_urls_db.save()
+    job_details_db.save()
 
 if __name__ == "__main__":
     main()
