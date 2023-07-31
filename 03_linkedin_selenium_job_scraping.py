@@ -7,6 +7,22 @@ from selenium.webdriver.common.by import By
 from datetime import datetime
 import json
 import os
+import prefect
+from prefect import task, flow
+from prefect.task_runners import SequentialTaskRunner
+# from prefect_dask.task_runners import DaskTaskRunner
+
+from prefect import context
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+handler = logging.StreamHandler()
+handler.setLevel(logging.INFO)
+
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+
+logger.addHandler(handler)
 
 
 import sys
@@ -16,12 +32,12 @@ from urllib.parse import quote
 # location = quote('Gyor')
 # sys.exit()
 
-# todo drop exclusion list (may be important later, so keep it)
 
+# todo parralelization
 # todo execution
 # todo embedding
-# todo prefect
-# todo parralelization
+# todo drop exclusion list (may be important later, so keep it)
+# todo how to pass logger to prefect logger?
 # todo notification
 # todo preinfo non show more
 # todo check fields, error handling
@@ -36,7 +52,9 @@ CONSTANTS = {
 }
 
 # Set up logging
-logging.basicConfig(level=logging.INFO)
+# logging.basicConfig(level=logging.INFO)
+# logger = prefect.context.get_logger()
+# logger = context.get("logger")
 
 # Set of previously scraped job IDs
 PREVIOUSLY_SCRAPED_JOB_IDS = {"123", "456", "789", '3652076362'}  # Update this set with your real data
@@ -135,13 +153,13 @@ class JobScraper:
         num_pages = (num_jobs // 25) + 1
         for page_num in range(2, num_pages + 1):
             self.driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
-            logging.info('Browsing page: %s', page_num)
+            logger.info('Browsing page: %s', page_num)
             try:
                 button_xpath = "/html/body/div/div/main/section/button"
                 self.driver.find_element(By.XPATH, button_xpath).click()
-                logging.info('Next page button clicked.')
+                logger.info('Next page button clicked.')
             except Exception as e:
-                logging.error('No next page button found.')
+                logger.error('No next page button found.')
             time.sleep(sleep_time)
 
     def _get_job_urls(self):
@@ -155,9 +173,9 @@ class JobScraper:
             if job_id not in PREVIOUSLY_SCRAPED_JOB_IDS:
                 job_url = job_element.find_element(By.CSS_SELECTOR, 'a').get_attribute('href')
                 job_urls[job_id] = job_url
-                logging.info(f'Getting job url: {job_id}')
+                logger.info(f'Getting job url: {job_id}')
             else:
-                logging.info(f'Skipping job: {job_id}')
+                logger.info(f'Skipping job: {job_id}')
         self.job_urls_db.add_job_urls([
             {
                 'Job ID': str(job_id),
@@ -222,10 +240,6 @@ class JobScraper:
         job_description = div_element.text.replace('\n', ' ')
         return job_description, job_characteristics
 
-import prefect
-from prefect import task, flow
-from prefect.task_runners import SequentialTaskRunner
-# from prefect_dask.task_runners import DaskTaskRunner
 
 # Tasks
 @task
