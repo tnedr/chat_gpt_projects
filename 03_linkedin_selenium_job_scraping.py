@@ -38,9 +38,6 @@ CONSTANTS = {
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 
-# Your URLs (You're overwriting the url variable, is this intentional?)
-url = 'https://www.linkedin.com/jobs/search?keywords=Data%20Scientist&location=Gyor&geoId=&trk=public_jobs_jobs-search-bar_search-submit&redirect=false&position=1&pageNum=0'
-
 # Set of previously scraped job IDs
 PREVIOUSLY_SCRAPED_JOB_IDS = {"123", "456", "789", '3652076362'}  # Update this set with your real data
 # PREVIOUSLY_SCRAPED_JOB_IDS = {"123", "456", "789"}  # Update this set with your real data
