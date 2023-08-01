@@ -4,33 +4,22 @@ import logging
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 from datetime import datetime
 import json
 import os
-import prefect
 from prefect import task, flow
-from prefect.task_runners import SequentialTaskRunner
-# from prefect_dask.task_runners import DaskTaskRunner
 
-from prefect import context
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-
 handler = logging.StreamHandler()
 handler.setLevel(logging.INFO)
-
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
-
 logger.addHandler(handler)
-
-
-import sys
-from urllib.parse import quote
-
-# keywords = quote('Data Scientist')
-# location = quote('Gyor')
-# sys.exit()
 
 
 # todo parralelization
@@ -51,10 +40,6 @@ CONSTANTS = {
     'BASE_URL': 'https://www.linkedin.com/jobs/search?'
 }
 
-# Set up logging
-# logging.basicConfig(level=logging.INFO)
-# logger = prefect.context.get_logger()
-# logger = context.get("logger")
 
 # Set of previously scraped job IDs
 PREVIOUSLY_SCRAPED_JOB_IDS = {"123", "456", "789", '3652076362'}  # Update this set with your real data
@@ -121,7 +106,6 @@ class WebDriverManager:
     def get_driver(self):
         return self.driver
 
-
 class JobScraper:
     def __init__(self, driver, search_url, keywords, location):
         self.driver = driver
@@ -133,12 +117,15 @@ class JobScraper:
 
 
     def scrape(self):
-        num_jobs = self._get_num_jobs()
-        self._browse_down_all_jobs(num_jobs)
-        self._get_job_urls()
-        self._scrape_job_data()
-        self.job_urls_db.save()
-        self.job_details_db.save()
+        try:
+            num_jobs = self._get_num_jobs()
+            self._browse_down_all_jobs(num_jobs)
+            self._get_job_urls()
+            self._scrape_job_data()
+            self.job_urls_db.save()
+            self.job_details_db.save()
+        finally:
+            self.driver.quit()
 
     def _get_num_jobs(self):
         element = self.driver.find_element(By.CSS_SELECTOR, 'h1>span')
@@ -154,6 +141,17 @@ class JobScraper:
         for page_num in range(2, num_pages + 1):
             self.driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
             logger.info('Browsing page: %s', page_num)
+
+            # try:
+            #     button_xpath = "/html/body/div/div/main/section/button"
+            #     wait = WebDriverWait(self.driver, CONSTANTS['BROWSE_DOWN_RESULTS_SLEEP_TIME'])
+            #     button_element = wait.until(EC.presence_of_element_located((By.XPATH, button_xpath)))
+            #     button_element.click()
+            #     logger.info('Next page button clicked.')
+            # except TimeoutException as e:
+            #     logger.error('No next page button found.')
+
+
             try:
                 button_xpath = "/html/body/div/div/main/section/button"
                 self.driver.find_element(By.XPATH, button_xpath).click()
@@ -194,9 +192,19 @@ class JobScraper:
         for index, row in unscraped_jobs.iterrows():
             job_id = row['Job ID']  # or whatever the correct column name is
             job_url = row['URL']
+
             self.driver.get(job_url)
             time.sleep(CONSTANTS['CLICK_TO_JOB_SLEEP_TIME'])
-            logging.info(f'Scraping job: {job_id}')
+            logger.info(f'Scraping job: {job_id}')
+            # self.driver.get(job_url)
+            # wait = WebDriverWait(self.driver, CONSTANTS['CLICK_TO_JOB_SLEEP_TIME'])
+            # try:
+            #     wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'description__job-criteria-list')))
+            #     logger.info(f'Scraping job: {job_id}')
+            # except TimeoutException:
+            #     logger.error(f'Failed to load job details page: {job_id}')
+
+
             # scrape the job info
             job_data = self._collect_job_info()
             job_description, job_characteristics = self._collect_job_details_by_visiting_the_site(job_url)
