@@ -5,7 +5,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from datetime import datetime
@@ -97,7 +96,13 @@ class WebDriverManager:
         self.driver = webdriver.Chrome(service=service)
         self.driver.get(url)
         self.search_url = url  # Store the search URL
-        # time.sleep(5)
+
+    @classmethod
+    def from_job_urls_db(cls, webdriver_path: str, job_urls_db):
+        instance = cls.__new__(cls) # Create new instance
+        service = Service(webdriver_path)
+        instance.driver = webdriver.Chrome(service=service)
+        return instance
 
     # Getter for search URL
     def get_search_url(self):
@@ -106,24 +111,21 @@ class WebDriverManager:
     def get_driver(self):
         return self.driver
 
-class JobScraper:
+
+class JobURLScraper:
     def __init__(self, driver, search_url, keywords, location):
         self.driver = driver
         self.search_url = search_url
         self.keywords = keywords
         self.location = location
         self.job_urls_db = JobURLsDB('job_urls.csv')
-        self.job_details_db = JobDetailsDB('job_details.csv')
-
 
     def scrape(self):
         try:
             num_jobs = self._get_num_jobs()
             self._browse_down_all_jobs(num_jobs)
             self._get_job_urls()
-            self._scrape_job_data()
             self.job_urls_db.save()
-            self.job_details_db.save()
         finally:
             self.driver.quit()
 
@@ -186,6 +188,21 @@ class JobScraper:
             } for job_id, url in job_urls.items()
         ])
         self.job_urls_db.save()
+
+
+class JobDetailsScraper:
+    def __init__(self, driver, job_urls_db):
+        self.driver = driver
+        self.job_urls_db = job_urls_db
+        self.job_details_db = JobDetailsDB('job_details.csv')
+
+    def scrape(self):
+        try:
+            self._scrape_job_data()
+            self.job_details_db.save()
+        finally:
+            self.driver.quit()
+
 
     def _scrape_job_data(self):
         unscraped_jobs = self.job_urls_db.get_unscraped_jobs()
@@ -258,12 +275,45 @@ class JobScraper:
             return None, None  # or you could return some default values
 
 
+# class JobScraper:
+#     def __init__(self, driver, search_url, keywords, location):
+#         self.driver = driver
+#         self.search_url = search_url
+#         self.keywords = keywords
+#         self.location = location
+#         self.job_urls_db = JobURLsDB('job_urls.csv')
+#         self.job_details_db = JobDetailsDB('job_details.csv')
+#
+#
+#     def scrape(self):
+#         try:
+#             num_jobs = self._get_num_jobs()
+#             self._browse_down_all_jobs(num_jobs)
+#             self._get_job_urls()
+#             self._scrape_job_data()
+#             self.job_urls_db.save()
+#             self.job_details_db.save()
+#         finally:
+#             self.driver.quit()
+
+
+
+
+
 # Tasks
+
 @task
-def initialize_scraper(webdriver_path, keywords, location):
+def initialize_url_scraper(webdriver_path, keywords, location):
     manager = WebDriverManager(webdriver_path, keywords, location)
-    scraper = JobScraper(manager.get_driver(), manager.get_search_url(), keywords, location)
-    return scraper
+    url_scraper = JobURLScraper(manager.get_driver(), manager.get_search_url(), keywords, location)
+    return url_scraper
+
+@task
+def initialize_details_scraper(webdriver_path, job_urls_db):
+    manager = WebDriverManager.from_job_urls_db(webdriver_path, job_urls_db)
+    details_scraper = JobDetailsScraper(manager.get_driver(), job_urls_db)
+    return details_scraper
+
 
 @task
 def scrape(scraper):
@@ -292,12 +342,14 @@ def whole_process():
     webdriver_path = CONSTANTS["WEBDRIVER_PATH"]
     keywords = 'Data Scientist'  # You can change these values to your liking
     location = 'Gyor'
-    scraper = initialize_scraper(webdriver_path, keywords, location)
+    url_scraper = initialize_url_scraper(webdriver_path, keywords, location)
+    details_scraper = initialize_details_scraper(webdriver_path, url_scraper.job_urls_db)
 
-    scrape(scraper)
+    scrape(url_scraper)
+    scrape(details_scraper)
 
-    job_urls_db = get_job_urls_db(scraper)
-    job_details_db = get_job_details_db(scraper)
+    job_urls_db = get_job_urls_db(url_scraper)
+    job_details_db = get_job_details_db(details_scraper)
 
     save_job_urls_db(job_urls_db)
     save_job_details_db(job_details_db)
