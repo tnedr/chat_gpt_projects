@@ -43,10 +43,16 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
+# todo separate workflows: getting urls, scraping urls, using different drivers
+# todo add job title to urls
 # todo add progress info
 # todo move database, task for delete database
 # todo add new table for monitoring execution (jobs found, jobs scraped, jobs failed)
 # todo add success or not to the database
+# todo add record by record? concurrency? use file lock fcntl, or drivers can have temp files
+
+# todo filter jobs must exist (python) do not exist (C++)
+
 
 # embedding
 # free llm
@@ -80,9 +86,9 @@ class JobURLsDB:
         if os.path.exists(filename):
             self.data = pd.read_csv(filename, dtype={'Job ID': str})
         else:
-            self.data = pd.DataFrame(columns=['Job ID', 'URL', 'Search URL',
-                'Keywords', 'Location', 'Time', 'Job Type', 'Seniority',
-                'Generated At', 'Scraped'])
+            self.data = pd.DataFrame(columns=['Job ID',
+                'Title', 'Keywords', 'Location', 'Time', 'Work Type' ,'Job Type', 'Seniority',
+                'Generated At', 'Scraped At', 'URL'])
 
     def add_job_urls(self, job_urls):  # job_urls is a list of dictionaries
         # Filter job_urls list to exclude jobs that are already in self.data
@@ -90,10 +96,10 @@ class JobURLsDB:
         self.data = pd.concat([self.data, pd.DataFrame(job_urls)], ignore_index=True)
 
     def mark_as_scraped(self, job_ids):  # job_ids is a list of job IDs
-        self.data.loc[self.data['Job ID'].isin(job_ids), 'Scraped'] = True
+        self.data.loc[self.data['Job ID'].isin(job_ids), 'Scraped At'] = time.now()
 
     def get_unscraped_jobs(self):
-        return self.data.loc[self.data['Scraped'] == False]
+        return self.data.loc[self.data['Scraped At'] == ""]
 
     def save(self):
         self.data.to_csv(self.filename, index=False)
@@ -165,13 +171,13 @@ class JobURLScraper:
     def __init__(self, driver, search_url, keywords, location,
                  time, worktype, jobtype, seniority):
         self.driver = driver
-        self.search_url = search_url
         self.keywords = keywords
         self.location = location
         self.time = time
         self.worktype = worktype
         self.jobtype = jobtype
         self.seniority = seniority
+        self.search_url = search_url
         self.job_urls_db = JobURLsDB('job_urls.csv')
 
     def scrape(self):
@@ -231,20 +237,25 @@ class JobURLScraper:
             job_id = element.get_attribute('data-entity-urn').split(':')[-1]
             if job_id not in PREVIOUSLY_SCRAPED_JOB_IDS:
                 job_url = job_element.find_element(By.CSS_SELECTOR, 'a').get_attribute('href')
-                job_urls[job_id] = job_url
+                title = job_element.find_element(By.CSS_SELECTOR, 'span').get_attribute('innerText')
+                job_urls[job_id] = [title, job_url]
                 logger.info(f'Getting job url: {job_id}')
             else:
                 logger.info(f'Skipping job: {job_id}')
         self.job_urls_db.add_job_urls([
             {
                 'Job ID': str(job_id),
-                'URL': url,
-                'Search URL': self.search_url,  # Add the search URL
+                'Title': information[0],
+                'Scraped At': '',
                 'Keywords': self.keywords,  # Add the keywords
                 'Location': self.location,  # Add the location
+                'Time': self.time,  # Add the time
+                'Work Type': self.worktype,  # Add the work type
+                'Job Type': self.jobtype,  # Add the job type
+                'Seniority': self.seniority,  # Add the seniority
                 'Generated At': datetime.now(),
-                'Scraped': False
-            } for job_id, url in job_urls.items()
+                'URL': information[1]
+            } for job_id, information in job_urls.items()
         ])
         self.job_urls_db.save()
 
@@ -373,10 +384,11 @@ def save_job_details_db(job_details_db):
 # @flow(task_runner=SequentialTaskRunner(),
 # name='towering-infernflow')
 @flow
-def whole_process():
+def flow_scrape_urls():
     webdriver_path = CONSTANTS["WEBDRIVER_PATH"]
     keywords = 'Data Scientist'  # You can change these values to your liking
     location = 'United States'
+    location = 'Germany'
     time = 'Past Week'
     worktype = 'Remote'
     jobtype = 'Contract'
@@ -384,20 +396,23 @@ def whole_process():
 
     url_scraper = initialize_url_scraper(
         webdriver_path, keywords, location, time, worktype, jobtype, seniority)
-    details_scraper = initialize_details_scraper(webdriver_path, url_scraper.job_urls_db)
-
     scrape(url_scraper)
-    scrape(details_scraper)
-
     job_urls_db = get_job_urls_db(url_scraper)
-    job_details_db = get_job_details_db(details_scraper)
-
     save_job_urls_db(job_urls_db)
+
+
+@flow
+def flow_scrape_details():
+    webdriver_path = CONSTANTS["WEBDRIVER_PATH"]
+    details_scraper = initialize_details_scraper(webdriver_path, JobURLsDB('job_urls.csv'))
+    scrape(details_scraper)
+    job_details_db = get_job_details_db(details_scraper)
     save_job_details_db(job_details_db)
 
 
 if __name__ == "__main__":
-    whole_process()
+    flow_scrape_urls()
+    # flow_scrape_details
 
 
 
