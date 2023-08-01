@@ -219,34 +219,43 @@ class JobScraper:
             self.job_urls_db.mark_as_scraped([job_id])
 
     def _collect_job_info(self):
-        jobinfo_path = '// *[ @ id = "main-content"] / section[1] / div / section[2] / div / div[1] / div'
-        jobinfo = self.driver.find_element(By.XPATH, jobinfo_path)
-        job_title = jobinfo.find_element(By.XPATH, 'h1').text
-        company_name = jobinfo.find_element(By.XPATH, 'h4 / div / span').text
-        location = jobinfo.find_element(By.XPATH, 'h4 / div / span[2]').text
-        script = self.driver.find_element(By.XPATH, "//script[@type='application/ld+json']").get_attribute('innerHTML')
-        data = json.loads(script)
-        return {
-            'Job Title': job_title,
-            'Company Name': company_name,
-            'Location': location,
-            'Script Data': data
-        }
+        try:
+            jobinfo_path = '// *[ @ id = "main-content"] / section[1] / div / section[2] / div / div[1] / div'
+            jobinfo = self.driver.find_element(By.XPATH, jobinfo_path)
+            job_title = jobinfo.find_element(By.XPATH, 'h1').text
+            company_name = jobinfo.find_element(By.XPATH, 'h4 / div / span').text
+            location = jobinfo.find_element(By.XPATH, 'h4 / div / span[2]').text
+            script = self.driver.find_element(By.XPATH, "//script[@type='application/ld+json']").get_attribute(
+                'innerHTML')
+            data = json.loads(script)
+            return {
+                'Job Title': job_title,
+                'Company Name': company_name,
+                'Location': location,
+                'Script Data': data
+            }
+        except Exception as e:
+            logger.error(f'Error when collecting job info: {e}')
+            return None  # or you could return some default values
 
     def _collect_job_details_by_visiting_the_site(self, job_url):
-        self.driver.get(job_url)
-        time.sleep(CONSTANTS['CLICK_TO_JOB_SLEEP_TIME'])
-        ul_element = self.driver.find_element(By.CLASS_NAME, 'description__job-criteria-list')
-        li_elements = ul_element.find_elements(By.TAG_NAME, 'li')
-        job_characteristics = {li.find_element(By.CLASS_NAME, 'description__job-criteria-subheader').text:
-                               li.find_element(By.CLASS_NAME, 'description__job-criteria-text--criteria').text
-                               for li in li_elements}
-        self.driver.find_element(By.XPATH, '//button[contains(text(), "Show more")]').click()
-        time.sleep(CONSTANTS['SHOW_MORE_BUTTON_DESCRIPTION_SLEEP_TIME'])
-        section_element = self.driver.find_element(By.CSS_SELECTOR, "section.show-more-less-html")
-        div_element = section_element.find_element(By.CSS_SELECTOR, "div.show-more-less-html__markup")
-        job_description = div_element.text.replace('\n', ' ')
-        return job_description, job_characteristics
+        try:
+            self.driver.get(job_url)
+            time.sleep(CONSTANTS['CLICK_TO_JOB_SLEEP_TIME'])
+            ul_element = self.driver.find_element(By.CLASS_NAME, 'description__job-criteria-list')
+            li_elements = ul_element.find_elements(By.TAG_NAME, 'li')
+            job_characteristics = {li.find_element(By.CLASS_NAME, 'description__job-criteria-subheader').text:
+                                       li.find_element(By.CLASS_NAME, 'description__job-criteria-text--criteria').text
+                                   for li in li_elements}
+            self.driver.find_element(By.XPATH, '//button[contains(text(), "Show more")]').click()
+            time.sleep(CONSTANTS['SHOW_MORE_BUTTON_DESCRIPTION_SLEEP_TIME'])
+            section_element = self.driver.find_element(By.CSS_SELECTOR, "section.show-more-less-html")
+            div_element = section_element.find_element(By.CSS_SELECTOR, "div.show-more-less-html__markup")
+            job_description = div_element.text.replace('\n', ' ')
+            return job_description, job_characteristics
+        except Exception as e:
+            logger.error(f'Error when collecting job details: {e}')
+            return None, None  # or you could return some default values
 
 
 # Tasks
