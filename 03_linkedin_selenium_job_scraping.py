@@ -8,6 +8,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import NoSuchElementException
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
 
 from datetime import datetime
 import json
@@ -44,13 +46,16 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 
 
-# todo add progress info
-# for german language, we have different name of the button
 # todo using multiple drivers
-# todo move database, task for delete database
+# take x urls to download, set the status to pending
+# after ready, set the status to ready and fill the scraped at
+# at the end save the file, refresh scraped at, set the status to done
+
 # todo add new table for monitoring execution (jobs found, jobs scraped, jobs failed)
 # todo add success or not to the database
 # todo add record by record? concurrency? use file lock fcntl, or drivers can have temp files
+# for german language, we have different name of the button
+
 
 # todo filter jobs must exist (python) do not exist (C++)
 
@@ -71,7 +76,7 @@ CONSTANTS = {
     'BROWSE_DOWN_RESULTS_SLEEP_TIME': 6,
     'CLICK_TO_JOB_SLEEP_TIME': 5,
     'SHOW_MORE_BUTTON_DESCRIPTION_SLEEP_TIME': 1,
-    'WEBDRIVER_PATH': "C:\\Program Files\\chromedriver.exe",
+    'WEBDRIVER_PATH': "C:/Program Files/chromedriver.exe",
     'BASE_URL': 'https://www.linkedin.com/jobs/search?'
 }
 
@@ -88,16 +93,18 @@ class JobURLsDB:
             self.data = pd.read_csv(filename, dtype={'Job ID': str})
         else:
             self.data = pd.DataFrame(columns=['Job ID',
-                'Title', 'Keywords', 'Location', 'Time', 'Work Type' ,'Job Type', 'Seniority',
-                'Generated At', 'Scraped At', 'URL'])
+                'Title', 'Keywords', 'Location', 'Time', 'Work Type',
+                'Job Type', 'Seniority', 'Generated At', 'Scraped At', 'Status', 'URL'])
+            self.data['Status'] = None
 
     def add_job_urls(self, job_urls):  # job_urls is a list of dictionaries
         # Filter job_urls list to exclude jobs that are already in self.data
         job_urls = [d_job for d_job in job_urls if d_job['Job ID'] not in list(self.data['Job ID'].values)]
         self.data = pd.concat([self.data, pd.DataFrame(job_urls)], ignore_index=True)
 
-    def mark_as_scraped_and_save(self, job_ids):  # job_ids is a list of job IDs
+    def set_status_to_done(self, job_ids):  # job_ids is a list of job IDs
         self.data.loc[self.data['Job ID'].isin(job_ids), 'Scraped At'] = datetime.now()
+        self.data.loc[self.data['Status'].isin(job_ids), 'Done'] = datetime.now()
         # refresh database
         self.save()
 
@@ -113,17 +120,18 @@ class JobDetailsDB:
         if os.path.exists(filename):
             self.data = pd.read_csv(filename)
         else:
-            self.data = pd.DataFrame(columns=['Job ID', 'Job Title', 'Company Name', 'Location', 'Date Posted', 'Job URL',
-                                              'Script Title', 'Script Description', 'Script Hiring Organization',
-                                              'Script Job Location', 'Script Address', 'Script Address Locality',
-                                              'Script Address Region', 'Script Industry', 'Script Employment Type',
-                                              'Script Valid Through', 'Script Skills', 'Script Education Requirements',
-                                              'Job Description', 'Job Characteristics', 'Scraped At'])
+            self.data = pd.DataFrame(
+                columns=['Job ID', 'Job Title', 'Company Name', 'Location', 'Date Posted', 'Job URL',
+                        'Script Title', 'Script Description', 'Script Hiring Organization',
+                        'Script Job Location', 'Script Address', 'Script Address Locality',
+                        'Script Address Region', 'Script Industry', 'Script Employment Type',
+                        'Script Valid Through', 'Script Skills', 'Script Education Requirements',
+                        'Job Description', 'Job Characteristics', 'Scraped At'])
 
-    def add_job_details_and_save(self, job_details):  # job_details is a list of dictionaries
+    def add_job_details_to_the_database(self, job_details):  # job_details is a list of dictionaries
         self.data = pd.concat([self.data, pd.DataFrame(job_details)], ignore_index=True)
-        # save
         self.save()
+        logger.info(f"+++++ SAVED +++++ {job_details['Job ID']} saved")
 
     def get_job_details(self, job_id):
         return self.data.loc[self.data['Job ID'] == job_id]
@@ -214,16 +222,6 @@ class JobURLScraper:
             self.driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
             logger.info('Browsing page: %s', page_num)
 
-            # try:
-            #     button_xpath = "/html/body/div/div/main/section/button"
-            #     wait = WebDriverWait(self.driver, CONSTANTS['BROWSE_DOWN_RESULTS_SLEEP_TIME'])
-            #     button_element = wait.until(EC.presence_of_element_located((By.XPATH, button_xpath)))
-            #     button_element.click()
-            #     logger.info('Next page button clicked.')
-            # except TimeoutException as e:
-            #     logger.error('No next page button found.')
-
-
             try:
                 button_xpath = "/html/body/div/div/main/section/button"
                 self.driver.find_element(By.XPATH, button_xpath).click()
@@ -270,42 +268,51 @@ class JobDetailsScraper:
         self.driver = driver
         self.job_urls_db = job_urls_db
         self.job_details_db = JobDetailsDB('database/job_details.csv')
+        self.results_df = []  # a list to hold all the dataframes
 
-    def scrape(self):
+    def start_scraping(self, job_ids):
+        # for job_id in job_ids:
+        #     pending_job_ids.append(job_id)
+
+        # self.job_urls_db.data.loc[self.job_urls_db.data['Job ID'].isin(pending_job_ids), 'Status'] = 'Pending'
+        self.job_urls_db.data.loc[self.job_urls_db.data['Job ID'].isin(job_ids), 'Status'] = 'Pending'
+        self.job_urls_db.save()
+
+        # make a list to store job data dicts
+        jobs_data = []
         try:
-            self._scrape_job_data()
-            self.job_details_db.save()
+            for job_id in job_ids:
+                job_url = self.job_urls_db.data.loc[self.job_urls_db.data['Job ID'] == job_id, 'URL'].iloc[0]
+                title = self.job_urls_db.data.loc[self.job_urls_db.data['Job ID'] == job_id, 'Title'].iloc[0]
+                logger.info(f'Scraping job: {title}, {job_id}')
+                # get the job url
+                self.driver.get(job_url)
+                time.sleep(CONSTANTS['CLICK_TO_JOB_SLEEP_TIME'])
+                # scrape the job info
+                job_data = self._collect_job_info()
+                job_description, job_characteristics = self._collect_job_details_by_visiting_the_site(job_url)
+                job_data.update({
+                    'Job ID': job_id,
+                    'Job URL': job_url,
+                    'Job Description': job_description,
+                    'Job Characteristics': job_characteristics,
+                    'Scraped At': datetime.now()
+                })
+                logger.info(f'job_data: {job_data}')
+                # self.job_details_db.add_job_details_to_the_database([job_data])
+                # append the job_data dict to the list
+                jobs_data.append(job_data)
+            # set the status to done in the job urls database
+            self.job_urls_db.data.loc[self.job_urls_db.data['Job ID'].isin(job_ids), 'Status'] = 'Done'
+            self.job_urls_db.save()
         finally:
             self.driver.quit()
 
+            # convert the jobs data list into a DataFrame
+        jobs_df = pd.DataFrame(jobs_data)
 
-    def _scrape_job_data(self):
-        unscraped_jobs = self.job_urls_db.get_unscraped_jobs()
-        total_jobs_to_scrape = len(unscraped_jobs)
-        logger.info(f'Number of jobs to scrape: {total_jobs_to_scrape}')
-        i = 0
-        for index, row in unscraped_jobs.iterrows():
-            i = i + 1
-            job_id = row['Job ID']  # or whatever the correct column name is
-            job_url = row['URL']
-            title = row['Title']
-            self.driver.get(job_url)
-            time.sleep(CONSTANTS['CLICK_TO_JOB_SLEEP_TIME'])
-            logger.info(f'Scraping job {i}/{total_jobs_to_scrape}: {title}, {job_id}')
-
-
-            # scrape the job info
-            job_data = self._collect_job_info()
-            job_description, job_characteristics = self._collect_job_details_by_visiting_the_site(job_url)
-            job_data.update({
-                'Job ID': job_id,
-                'Job URL': job_url,
-                'Job Description': job_description,
-                'Job Characteristics': job_characteristics,
-                'Scraped At': datetime.now()
-            })
-            self.job_details_db.add_job_details_and_save([job_data])
-            self.job_urls_db.mark_as_scraped_and_save([job_id])
+        # return the DataFrame
+        return jobs_df
 
     def _collect_job_info(self):
         try:
@@ -347,6 +354,11 @@ class JobDetailsScraper:
             return None, None  # or you could return some default values
 
 
+def initialize_batch_details_scraper(webdriver_path, job_urls_db, job_ids):
+    manager = WebDriverManager.from_job_urls_db(webdriver_path)
+    details_scraper = JobDetailsScraper(manager.get_driver(), job_urls_db)
+    return details_scraper, job_ids
+
 @task
 def initialize_url_scraper(webdriver_path, keywords,
     location, time, worktype, jobtype, seniority):
@@ -371,6 +383,7 @@ def scrape(scraper):
 def get_job_urls_db(scraper):
     return scraper.job_urls_db
 
+
 @task
 def get_job_details_db(scraper):
     return scraper.job_details_db
@@ -387,6 +400,9 @@ def save_job_details_db(job_details_db):
 # name='towering-infernflow')
 @flow
 def flow_scrape_urls():
+    logger.info('----------------------------')
+    logger.info('Starting the scraping of job urls')
+    logger.info('----------------------------')
     webdriver_path = CONSTANTS["WEBDRIVER_PATH"]
     keywords = 'Data Scientist'  # You can change these values to your liking
     location = 'United States'
@@ -406,15 +422,40 @@ def flow_scrape_urls():
 
 @flow
 def flow_scrape_details():
+    logger.info('----------------------------')
+    logger.info('Starting the scraping job details')
+    logger.info('----------------------------')
     webdriver_path = CONSTANTS["WEBDRIVER_PATH"]
-    details_scraper = initialize_details_scraper(webdriver_path, JobURLsDB('database/job_urls.csv'))
-    scrape(details_scraper)
-    job_details_db = get_job_details_db(details_scraper)
-    save_job_details_db(job_details_db)
+    job_urls_db = JobURLsDB('database/job_urls.csv')
 
+    batch_size = 1  # Set the batch size for processing job URLs
+    unscraped_jobs = job_urls_db.get_unscraped_jobs()
+    total_jobs_to_scrape = len(unscraped_jobs)
+
+    with ThreadPoolExecutor() as executor:
+        futures = []
+        for i in range(0, total_jobs_to_scrape, batch_size):
+            logger.info(f'Batch {i // batch_size + 1} processing started.')
+            batch_job_ids = unscraped_jobs.iloc[i:i + batch_size]['Job ID'].tolist()
+            details_scraper, batch_job_ids = initialize_batch_details_scraper(webdriver_path, job_urls_db, batch_job_ids)
+            futures.append(
+                executor.submit(details_scraper.start_scraping, batch_job_ids))  # Change this to start_scraping
+
+            # executor.submit(details_scraper.scrape_details_for_jobids, batch_job_ids)
+            logger.info(f'Batch {i // batch_size + 1} processing ended.')
+
+        # Wait for all tasks to complete and gather results
+        for future in as_completed(futures):
+            result_df = future.result()  # This will give you the DataFrame returned by the start_scraping function
+            details_scraper.results_df.append(result_df)
+
+    # After all tasks are done, you can concatenate all the dataframes and save to your database
+    final_df = pd.concat(details_scraper.results_df, ignore_index=True)
+    # Here you can save your final_df to database
+    print(final_df)
 
 if __name__ == "__main__":
-    # flow_scrape_urls()
+    flow_scrape_urls()
     flow_scrape_details()
 
 
