@@ -7,10 +7,33 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import NoSuchElementException
+
 from datetime import datetime
 import json
 import os
 from prefect import task, flow
+D_TIME = {
+    'Past 24 ours': 'f_TPR=r86400',
+    'Past Week': 'f_TPR=r604800',
+    'Past Month': 'f_TPR=r2592000',
+ }
+D_WORKTYPE = {
+    'On-site': 'f_WT=1',
+    'Remote': 'f_WT=2',
+    'Hybrid': 'f_WT=3'
+}
+D_JOBTYPE = {
+    'Full-time': 'f_JT=F',
+    'Contract': 'f_JT=C'
+}
+D_SENIORITY = {
+    'Mid-Senior': 'f_E=4',
+    'Director': 'f_E=5',
+    'Executive': 'f_E=6',
+ }
+
+
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -20,13 +43,19 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
+# todo add progress info
+# todo move database, task for delete database
+# todo add new table for monitoring execution (jobs found, jobs scraped, jobs failed)
+# todo add success or not to the database
 
-# todo parralelization
-# todo execution
-# todo embedding
-# todo drop exclusion list (may be important later, so keep it)
-# todo how to pass logger to prefect logger?
+# embedding
+# free llm
+
+# todo non showing gui webdriver
+
 # todo notification
+# todo parralelization 3 instances
+# todo drop exclusion list (may be important later, so keep it)
 # todo preinfo non show more
 # todo check fields, error handling
 
@@ -51,7 +80,9 @@ class JobURLsDB:
         if os.path.exists(filename):
             self.data = pd.read_csv(filename, dtype={'Job ID': str})
         else:
-            self.data = pd.DataFrame(columns=['Job ID', 'URL', 'Search URL', 'Keywords', 'Location', 'Generated At', 'Scraped'])
+            self.data = pd.DataFrame(columns=['Job ID', 'URL', 'Search URL',
+                'Keywords', 'Location', 'Time', 'Job Type', 'Seniority',
+                'Generated At', 'Scraped'])
 
     def add_job_urls(self, job_urls):  # job_urls is a list of dictionaries
         # Filter job_urls list to exclude jobs that are already in self.data
@@ -90,15 +121,33 @@ class JobDetailsDB:
         self.data.to_csv(self.filename, index=False)
 
 class WebDriverManager:
-    def __init__(self, webdriver_path: str, keywords: str, location: str):
+    def __init__(self, webdriver_path: str, keywords: str,
+                 location: str, time: str, worktype: str, jobtype: str,
+                 seniority: str):
         service = Service(webdriver_path)
-        url = f"{CONSTANTS['BASE_URL']}keywords={keywords}&location={location}&geoId=&trk=public_jobs_jobs-search-bar_search-submit&redirect=false&position=1&pageNum=0"
+        url = self.generate_url(keywords, location, time, worktype, jobtype, seniority)
         self.driver = webdriver.Chrome(service=service)
         self.driver.get(url)
         self.search_url = url  # Store the search URL
 
     @classmethod
-    def from_job_urls_db(cls, webdriver_path: str, job_urls_db):
+    def generate_url(cls, keywords: str, location: str,
+                     time: str, worktype: str, jobtype: str, seniority: str):
+        url = f"{CONSTANTS['BASE_URL']}keywords={keywords}&location={location}"
+        if time in D_TIME:
+            url += f"&{D_TIME[time]}"
+        if worktype in D_WORKTYPE:
+            url += f"&{D_WORKTYPE[worktype]}"
+        if jobtype in D_JOBTYPE:
+            url += f"&{D_JOBTYPE[jobtype]}"
+        if seniority in D_SENIORITY:
+            url += f"&{D_SENIORITY[seniority]}"
+        url += "&geoId=&trk=public_jobs_jobs-search-bar_search-submit&redirect=false&position=1&pageNum=0"
+        logger.info(f"Generated URL: {url}")
+        return url
+
+    @classmethod
+    def from_job_urls_db(cls, webdriver_path: str):
         instance = cls.__new__(cls) # Create new instance
         service = Service(webdriver_path)
         instance.driver = webdriver.Chrome(service=service)
@@ -113,26 +162,36 @@ class WebDriverManager:
 
 
 class JobURLScraper:
-    def __init__(self, driver, search_url, keywords, location):
+    def __init__(self, driver, search_url, keywords, location,
+                 time, worktype, jobtype, seniority):
         self.driver = driver
         self.search_url = search_url
         self.keywords = keywords
         self.location = location
+        self.time = time
+        self.worktype = worktype
+        self.jobtype = jobtype
+        self.seniority = seniority
         self.job_urls_db = JobURLsDB('job_urls.csv')
 
     def scrape(self):
         try:
             num_jobs = self._get_num_jobs()
-            self._browse_down_all_jobs(num_jobs)
-            self._get_job_urls()
-            self.job_urls_db.save()
+            if num_jobs>0:
+                self._browse_down_all_jobs(num_jobs)
+                self._get_job_urls()
+                self.job_urls_db.save()
         finally:
             self.driver.quit()
 
     def _get_num_jobs(self):
-        element = self.driver.find_element(By.CSS_SELECTOR, 'h1>span')
-        num_jobs = self._extract_number(element.get_attribute('innerText'))
-        return num_jobs
+        try:
+            element = self.driver.find_element(By.CSS_SELECTOR, 'h1>span')
+            num_jobs = self._extract_number(element.get_attribute('innerText'))
+            return num_jobs
+        except NoSuchElementException:
+            print("Element not found")
+            return 0
 
     @staticmethod
     def _extract_number(text):
@@ -159,7 +218,7 @@ class JobURLScraper:
                 self.driver.find_element(By.XPATH, button_xpath).click()
                 logger.info('Next page button clicked.')
             except Exception as e:
-                logger.error('No next page button found.')
+                logger.info('No next page button found.')
             time.sleep(sleep_time)
 
     def _get_job_urls(self):
@@ -275,42 +334,18 @@ class JobDetailsScraper:
             return None, None  # or you could return some default values
 
 
-# class JobScraper:
-#     def __init__(self, driver, search_url, keywords, location):
-#         self.driver = driver
-#         self.search_url = search_url
-#         self.keywords = keywords
-#         self.location = location
-#         self.job_urls_db = JobURLsDB('job_urls.csv')
-#         self.job_details_db = JobDetailsDB('job_details.csv')
-#
-#
-#     def scrape(self):
-#         try:
-#             num_jobs = self._get_num_jobs()
-#             self._browse_down_all_jobs(num_jobs)
-#             self._get_job_urls()
-#             self._scrape_job_data()
-#             self.job_urls_db.save()
-#             self.job_details_db.save()
-#         finally:
-#             self.driver.quit()
-
-
-
-
-
-# Tasks
-
 @task
-def initialize_url_scraper(webdriver_path, keywords, location):
-    manager = WebDriverManager(webdriver_path, keywords, location)
-    url_scraper = JobURLScraper(manager.get_driver(), manager.get_search_url(), keywords, location)
+def initialize_url_scraper(webdriver_path, keywords,
+    location, time, worktype, jobtype, seniority):
+    manager = WebDriverManager(webdriver_path, keywords, location,
+                               time, worktype, jobtype, seniority)
+    url_scraper = JobURLScraper(manager.get_driver(), manager.get_search_url(),
+        keywords, location, time, worktype, jobtype, seniority)
     return url_scraper
 
 @task
 def initialize_details_scraper(webdriver_path, job_urls_db):
-    manager = WebDriverManager.from_job_urls_db(webdriver_path, job_urls_db)
+    manager = WebDriverManager.from_job_urls_db(webdriver_path)
     details_scraper = JobDetailsScraper(manager.get_driver(), job_urls_db)
     return details_scraper
 
@@ -341,8 +376,14 @@ def save_job_details_db(job_details_db):
 def whole_process():
     webdriver_path = CONSTANTS["WEBDRIVER_PATH"]
     keywords = 'Data Scientist'  # You can change these values to your liking
-    location = 'Gyor'
-    url_scraper = initialize_url_scraper(webdriver_path, keywords, location)
+    location = 'United States'
+    time = 'Past Week'
+    worktype = 'Remote'
+    jobtype = 'Contract'
+    seniority = None
+
+    url_scraper = initialize_url_scraper(
+        webdriver_path, keywords, location, time, worktype, jobtype, seniority)
     details_scraper = initialize_details_scraper(webdriver_path, url_scraper.job_urls_db)
 
     scrape(url_scraper)
