@@ -110,7 +110,7 @@ d_place = {
 }
 
 # get_current_position()
-click_interval = 6
+click_interval = 60
 inactivity_threshold = 10
 # type = 'right full'
 type = 'left full'
