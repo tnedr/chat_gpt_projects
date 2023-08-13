@@ -106,6 +106,8 @@ def aggregate_message_details(details_list):
         senders_counts[sender] += 1
     return sorted(senders_counts.items(), key=lambda x: x[1], reverse=True)
 
+
+#todo monitor execution, using pre
 @flow
 def gmail_flow():
     token = load_and_refresh_token()
