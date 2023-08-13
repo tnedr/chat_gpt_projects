@@ -37,11 +37,12 @@ def first_flow(x):
 @measure_execution_time
 @flow(task_runner=ConcurrentTaskRunner())
 def concurrent_flow(n, x):
+    futures = []
     for i in range(n):
         future = count_and_sleep.submit(x)
-        print(future)
-        print(future.result())
-        print(future.status())
-        print(type(future))
-concurrent_flow(6, 3)
+        futures.append(future)
+    return futures
+res_futures = concurrent_flow(6, 3)
+res = [fut.result() for fut in res_futures]
+print(res)
 sys.exit()
