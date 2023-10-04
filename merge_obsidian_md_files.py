@@ -16,6 +16,10 @@ def concatenate_notes(vault_folder_path, starts_with, target_note):
 
     # Write the aggregated content to the target note
     target_note_path = os.path.join(vault_folder_path, target_note)
+    # if file exists, delete it
+    if os.path.exists(target_note_path):
+        os.remove(target_note_path)
+
     with open(target_note_path, 'w', encoding='utf-8') as f:
         f.write(aggregated_content)
 
