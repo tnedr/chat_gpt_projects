@@ -2,18 +2,22 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
 # Replaceable dictionary for color palettes
+# Replaceable dictionary for color palettes
 palettes = {
     'Extended Modern and Tech-Savvy with Life and Energy': [
         ("Dark Blue", (3, 37, 65)),
         ("Teal", (0, 128, 128)),
         ("Silver", (192, 192, 192)),
         ("Steel Blue", (70, 130, 180)),
-        ("Moss Green", (173, 223, 173)),
+        ("Forest Green", (34, 139, 34)),
         ("Charcoal", (54, 69, 79)),
         ("Slate Grey", (112, 128, 144)),
         ("Goldenrod", (218, 165, 32)),
-        ('Fire Orange', (255, 69, 0)),
-    ]
+        ('Maroon', (128, 0, 0)),
+        ("Scarlet 'Orange'", (255, 36, 0)),
+        ("Fire Engine Red", (206, 32, 41)),
+        ("Coral", (255, 127, 80)),
+        ("Racing Red", (211, 0, 0))]
 }
 
 
