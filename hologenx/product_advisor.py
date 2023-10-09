@@ -1,11 +1,12 @@
 import pandas as pd
+from collections import defaultdict
 
 # Define the age, gender, activity level
 age = 47
 gender = 'male'
 activity_level = 3
 # Now use the slider to add more products
-slider_value = 0.7  # Replace this with the actual slider value between 0 and 1
+slider_value = 1  # Replace this with the actual slider value between 0 and 1
 
 
 
@@ -51,16 +52,16 @@ recommended_products = []
 for functionality in functional_preferences:  # Loop through the functional preferences
     for efficiency, product in product_efficiency.get(functionality, []):  # Get the product list for each functionality
         age_col = (age//5) * 5
-        if age_col > 50:
-            age_col = 50
+        if age_col > 60:
+            age_col = 60
         # get age efficiency for the product from age_matrix
         age_efficiency = age_matrix.loc[product, str(age_col)]  # Get the age-specific efficiency from the matrix
         if age_efficiency > 0:  # If the age-specific efficiency is greater than 0
             weighted_efficiency = efficiency * age_efficiency  # Apply the age-specific value
-            recommended_products.append((weighted_efficiency, product, functionality))  # Now a 3-element tuple  # Append to the recommended list
+            recommended_products.append((product, functionality, weighted_efficiency))  # Now a 3-element tuple  # Append to the recommended list
 
 # Sort the recommended products based on their weighted efficiency
-recommended_products.sort(reverse=True, key=lambda x: x[0])
+recommended_products.sort(reverse=True, key=lambda x: x[2])
 
 # Initialize final list of products to recommend
 final_recommendations = []
@@ -70,20 +71,35 @@ covered_functionalities = set()
 
 # Always include the top product for each functionality
 for functionality in functional_preferences:
-    for weighted_efficiency, product, func in recommended_products:
+    for product, func, weighted_efficiency in recommended_products:
         if func == functionality and func not in covered_functionalities:
-            final_recommendations.append((weighted_efficiency, product, func))
+            final_recommendations.append((product, func, weighted_efficiency))
             covered_functionalities.add(func)
             break
 
 additional_products = len(recommended_products)-len(final_recommendations)
 additional_products = int(additional_products * slider_value)
 
-for weighted_efficiency, product, func in recommended_products:
+for product, func, weighted_efficiency in recommended_products:
     if additional_products <= 0:
         break
-    if (weighted_efficiency, product, func) not in final_recommendations:
-        final_recommendations.append((weighted_efficiency, product, func))
+    if (product, func, weighted_efficiency) not in final_recommendations:
+        final_recommendations.append((product, func, weighted_efficiency))
         additional_products -= 1
 
 print(final_recommendations)
+
+# Initialize a dictionary to hold products and their aggregated functionalities and weighted efficiencies
+aggregated_products = defaultdict(list)
+
+# Iterate through the final recommendations
+for product, functionality, weighted_efficiency in final_recommendations:
+    aggregated_products[product].append((functionality, weighted_efficiency))
+
+# Generate a new list for final recommendations
+new_final_recommendations = [(product, aggregated_functions) for product, aggregated_functions in aggregated_products.items()]
+
+# Optionally sort by the first weighted efficiency of each product (you could choose another sorting method)
+new_final_recommendations.sort(key=lambda x: x[1][0][1], reverse=True)
+
+print(new_final_recommendations)
