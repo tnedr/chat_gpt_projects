@@ -20,6 +20,32 @@ palettes = {
         ("Racing Red", (211, 0, 0))]
 }
 
+palettes = {
+    'third color': [
+        ('Vivid Blue', (0, 123, 255)),
+    ('Emerald Green', (0, 128, 0)),
+    ('Crimson Red', (220, 20, 60)),
+    ('Golden Yellow', (255, 215, 0)),
+    ('Electric Purple', (128, 0, 128)),
+    ('Deep Teal', (0, 128, 128)),
+    ('Electric Blue1', (125, 249, 255)),
+    ('Electric Blue2', (44, 117, 255))
+     ]
+}
+
+palettes = {
+    'third color': [
+('Electric Blue2', (44, 117, 255)),
+('Complementary Orange', (255, 155, 44)),
+('Near-Complementary Coral', (255, 127, 80)),
+('Split-Complementary Colors Orange-Red', (255, 69, 0)),
+('Orange-Yellow', (255, 165, 0)),
+('Lighter Blue Analogous Colors', (135, 206, 250)),
+('Darker Blue Analogous Colors', (0, 0, 128))
+]
+}
+
+
 # Initialize the plot
 fig, ax = plt.subplots(figsize=(14, 10))
 
