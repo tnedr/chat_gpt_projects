@@ -31,6 +31,24 @@ edges = [("Sugar Metabolism", "Maillard Reaction"),
          ("Cellular Dysfunction", "Chronic Diseases"),
          ("Tissue Damage", "Chronic Diseases")]
 
+edge_labels = {
+    ("Sugar Metabolism", "Maillard Reaction"): 'ALA',
+    ("Sugar Metabolism", "Reactive Carbonyls"): 'ALA',
+    ("Lipid Peroxidation", "Reactive Carbonyls"): 'Vitamin E',
+    ("Lipid Peroxidation", "ROS Formation"): 'Vitamin E',
+    ("ROS Formation", "Lipid Peroxidation"): 'Vitamin E',
+    ("ROS Formation", "Protein Modification"): 'ALA',
+    ("Maillard Reaction", "Glycation"): 'Pyridoxamine',
+    ("Reactive Carbonyls", "Protein Modification"): 'Pyridoxamine',
+    ("Protein Modification", "Formation of AGEs"): '',
+    ("Glycation", "Formation of AGEs"): '',
+    ("Formation of AGEs", "Cellular Dysfunction"): 'Carnosine',
+    ("Formation of AGEs", "Tissue Damage"): 'Carnosine',
+    ("Cellular Dysfunction", "Chronic Diseases"): '',
+    ("Tissue Damage", "Chronic Diseases"): ''
+}
+
+
 G.add_edges_from(edges)
 
 # Draw the graph
@@ -45,14 +63,12 @@ pos = nx.fruchterman_reingold_layout(G)
 # pos = nx.random_layout(G)
 # pos = nx.spiral_layout(G)
 
-
-# positions for all nodes
+# Draw the graph
+# pos = nx.spring_layout(G, seed=42)  # positions for all nodes
 labels = {node: node for node in G.nodes()}
 
-nx.draw(G, pos, with_labels=True, labels=labels,
-        node_color='skyblue', font_size=12, font_color='black', font_weight='bold',
-        node_size=2000, edgecolors='black',
-        arrowsize=20, width=2)
-
-plt.title("Elements and Processes Related to AGEs", fontsize=16)
+nx.draw(G, pos, with_labels=True, labels=labels, node_color='lightblue', font_size=10, font_color='black',
+        font_weight='bold', node_size=1500, arrows=True)
+nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_color='red')
+plt.title("Elements and Processes Related to AGEs")
 plt.show()
