@@ -9,52 +9,34 @@ G = nx.DiGraph()
 
 # Add nodes
 nodes = ["Sugar Metabolism", "Lipid Peroxidation", "ROS Formation",
-         "Maillard Reaction", "Reactive Carbonyls", "Protein Modification",
-         "Glycation", "Formation of AGEs", "Cellular Dysfunction",
+         "Reactive Carbonyls", "Protein Modification", "Maillard Reaction",
+         "Glycation", "Formation of AGEs", "RAGE", "Cellular Dysfunction",
          "Tissue Damage", "Chronic Diseases"]
 
 G.add_nodes_from(nodes)
 
 # Add edges (arrows)
-edges = [("Sugar Metabolism", "Maillard Reaction"),
-         ("Sugar Metabolism", "Reactive Carbonyls"),
-         ("Lipid Peroxidation", "Reactive Carbonyls"),
-         ("Lipid Peroxidation", "ROS Formation"),
-         ("ROS Formation", "Lipid Peroxidation"),
-         ("ROS Formation", "Protein Modification"),
-         ("Maillard Reaction", "Glycation"),
-         ("Reactive Carbonyls", "Protein Modification"),
-         ("Protein Modification", "Formation of AGEs"),
-         ("Glycation", "Formation of AGEs"),
-         ("Formation of AGEs", "Cellular Dysfunction"),
-         ("Formation of AGEs", "Tissue Damage"),
-         ("Cellular Dysfunction", "Chronic Diseases"),
-         ("Tissue Damage", "Chronic Diseases")]
+edges = [("Sugar Metabolism", "Reactive Carbonyls", {"label": "Berberine, Metformin"}),
+         ("Lipid Peroxidation", "Reactive Carbonyls", {"label": "NAC, Vitamin E"}),
+         ("Lipid Peroxidation", "ROS Formation", {"label": "Vitamin E"}),
+         ("ROS Formation", "Reactive Carbonyls", {"label": "ALA, NAC"}),
+         ("Reactive Carbonyls", "Protein Modification", {"label": "Pyridoxamine, Aminoguanidine"}),
+         ("Reactive Carbonyls", "Maillard Reaction", {"label": "Pyridoxamine, Aminoguanidine"}),
+         ("Maillard Reaction", "Glycation", {"label": "Carnosine, Beta-Alanine"}),
+         ("Protein Modification", "Formation of AGEs", {"label": "Carnosine, Beta-Alanine"}),
+         ("Glycation", "Formation of AGEs", {"label": "Carnosine, Beta-Alanine"}),
+         ("Formation of AGEs", "RAGE", {"label": "Thymoquinone"}),
+         ("Formation of AGEs", "Cellular Dysfunction", {"label": "Alagebrium"}),
+         ("Formation of AGEs", "Tissue Damage", {"label": "Alagebrium"}),
+         ("Cellular Dysfunction", "Chronic Diseases", {"label": "Benfotiamine"}),
+         ("Tissue Damage", "Chronic Diseases", {"label": "Benfotiamine"})]
 
-edge_labels = {
-    ("Sugar Metabolism", "Maillard Reaction"): 'ALA',
-    ("Sugar Metabolism", "Reactive Carbonyls"): 'ALA',
-    ("Lipid Peroxidation", "Reactive Carbonyls"): 'Vitamin E',
-    ("Lipid Peroxidation", "ROS Formation"): 'Vitamin E',
-    ("ROS Formation", "Lipid Peroxidation"): 'Vitamin E',
-    ("ROS Formation", "Protein Modification"): 'ALA',
-    ("Maillard Reaction", "Glycation"): 'Pyridoxamine',
-    ("Reactive Carbonyls", "Protein Modification"): 'Pyridoxamine',
-    ("Protein Modification", "Formation of AGEs"): '',
-    ("Glycation", "Formation of AGEs"): '',
-    ("Formation of AGEs", "Cellular Dysfunction"): 'Carnosine',
-    ("Formation of AGEs", "Tissue Damage"): 'Carnosine',
-    ("Cellular Dysfunction", "Chronic Diseases"): '',
-    ("Tissue Damage", "Chronic Diseases"): ''
-}
-
-
-G.add_edges_from(edges)
+G.add_edges_from([(src, tgt, attr) for src, tgt, attr in edges])
 
 # Draw the graph
 # pos = nx.spring_layout(G, seed=42, iterations=100)
-# pos = nx.planar_layout(G)
-pos = nx.fruchterman_reingold_layout(G)
+pos = nx.planar_layout(G)
+# pos = nx.fruchterman_reingold_layout(G)
 
 # pos = nx.circular_layout(G)
 # pos = nx.kamada_kawai_layout(G)
@@ -65,10 +47,12 @@ pos = nx.fruchterman_reingold_layout(G)
 
 # Draw the graph
 # pos = nx.spring_layout(G, seed=42)  # positions for all nodes
-labels = {node: node for node in G.nodes()}
 
-nx.draw(G, pos, with_labels=True, labels=labels, node_color='lightblue', font_size=10, font_color='black',
-        font_weight='bold', node_size=1500, arrows=True)
+labels = {node: node for node in G.nodes()}
+nx.draw(G, pos, with_labels=True, labels=labels, node_color='lightblue', font_size=10,
+        font_color='black', font_weight='bold', node_size=1500, arrows=True)
+edge_labels = {(src, tgt): attr["label"] for src, tgt, attr in G.edges(data=True)}
 nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_color='red')
-plt.title("Elements and Processes Related to AGEs")
+
+plt.title("Elements and Processes Related to AGEs with Inhibiting Compounds")
 plt.show()
