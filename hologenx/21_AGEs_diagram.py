@@ -29,7 +29,12 @@ edges = [("Sugar Metabolism", "Reactive Carbonyls", {"label": "Berberine, Metfor
          ("Formation of AGEs", "Cellular Dysfunction", {"label": "Alagebrium"}),
          ("Formation of AGEs", "Tissue Damage", {"label": "Alagebrium"}),
          ("Cellular Dysfunction", "Chronic Diseases", {"label": "Benfotiamine"}),
-         ("Tissue Damage", "Chronic Diseases", {"label": "Benfotiamine"})]
+         ("Tissue Damage", "Chronic Diseases", {"label": "Benfotiamine"}),
+            ("RAGE", "Cellular Dysfunction", {"label": "Direct Effect"}),
+             ("RAGE", "Tissue Damage", {"label": "Direct Effect"}),
+             ("RAGE", "Chronic Diseases", {"label": "Direct Effect"})
+
+         ]
 
 G.add_edges_from([(src, tgt, attr) for src, tgt, attr in edges])
 
