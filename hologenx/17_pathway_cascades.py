@@ -1,59 +1,105 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 
+# Class definitions
+class Node:
+    def __init__(self, name):
+        self.name = name
 
-plt.figure(figsize=(15, 6))
+class Edge:
+    def __init__(self, source, target, interaction):
+        self.source = source
+        self.target = target
+        self.interaction = interaction
 
-# Create a directed graph
-G = nx.DiGraph()
-
-# Add nodes
-nodes = ['NAD Levels', 'Sirtuin Activation', 'mTOR Signaling', 'Cellular Senescence',
-         'Oxidative Stress', 'Inflammation', 'DNA Damage', 'Mitochondrial Dysfunction',
-         'AMPK Signaling', 'CD38 Activity']
-
-G.add_nodes_from(nodes)
-
-# Add edges with attributes for interaction and confidence
-edges = [
-    ('NAD Levels', 'Sirtuin Activation', {'interaction': 'upregulates'}),
-    ('CD38 Activity', 'NAD Levels', {'interaction': 'downregulates'}),
-    ('AMPK Signaling', 'NAD Levels', {'interaction': 'upregulates'}),
-    ('AMPK Signaling', 'mTOR Signaling', {'interaction': 'downregulates'}),
-    ('mTOR Signaling', 'Cellular Senescence', {'interaction': 'upregulates'}),
-    ('Oxidative Stress', 'DNA Damage', {'interaction': 'causes'}),
-    ('DNA Damage', 'Cellular Senescence', {'interaction': 'causes'}),
-    ('Mitochondrial Dysfunction', 'Oxidative Stress', {'interaction': 'causes'}),
-    ('Inflammation', 'Oxidative Stress', {'interaction': 'upregulates'}),
-    ('Cellular Senescence', 'Inflammation', {'interaction': 'upregulates'}),
-    ('Sirtuin Activation', 'DNA Damage', {'interaction': 'downregulates'}),
+# Create node objects
+node_objects = [
+    Node("NAD Levels"),
+    Node("Sirtuin Activation"),
+    Node("mTOR Signaling"),
+    Node("Cellular Senescence"),
+    Node("Oxidative Stress"),
+    Node("Inflammation"),
+    Node("DNA Damage"),
+    Node("Mitochondrial Dysfunction"),
+    Node("AMPK Signaling"),
+    Node("CD38 Activity"),
+    Node("Glycation"),
+    Node("AGEs")
 ]
 
-G.add_edges_from(edges)
+# Create edge objects
+edge_objects = [
+    Edge("NAD Levels", "Sirtuin Activation", "increase"),
+    Edge("CD38 Activity", "NAD Levels", "decrease"),
+    Edge("AMPK Signaling", "NAD Levels", "increase"),
+    Edge("AMPK Signaling", "mTOR Signaling", "decrease"),
+    Edge("mTOR Signaling", "Cellular Senescence", "increase"),
+    Edge("Oxidative Stress", "DNA Damage", "cause"),
+    Edge("DNA Damage", "Cellular Senescence", "cause"),
+    Edge("Mitochondrial Dysfunction", "Oxidative Stress", "cause"),
+    Edge("Inflammation", "Oxidative Stress", "increase"),
+    Edge("Cellular Senescence", "Inflammation", "increase"),
+    Edge("Sirtuin Activation", "DNA Damage", "decrease"),
+    Edge("Glycation", "AGEs", "cause"),  # Glycation leads to the formation of AGEs
+    Edge("AGEs", "Inflammation", "increase"),  # AGEs can increase inflammation
+    Edge("AGEs", "Oxidative Stress", "increase"),  # AGEs can also increase oxidative stress
+    Edge("AGEs", "Cellular Senescence", "increase"),  # AGEs can accelerate cellular senescence
+    Edge("AGEs", "DNA Damage", "cause")
+]
 
-# Define positions directly using a dictionary
+# Initialize NetworkX graph
+plt.figure(figsize=(15, 6))
+G = nx.DiGraph()
+
+# Add nodes to graph
+G.add_nodes_from([node.name for node in node_objects])
+
+# Add edges to graph
+G.add_edges_from([(edge.source, edge.target, {'interaction': edge.interaction}) for edge in edge_objects])
+
+level0 = 2
+level1 = 1
+level2 = 0
+level3 = -1
+level4 = -2
+
+
+collll = -2
+colll = -1.5
+coll = -1
+col0 = -0.5
+colr = 0
+colrr = 0.5
+colrrr = 1
+
+
+
+# Node positions and attributes
 pos = {
 
-    'CD38 Activity': (-2, 2),
-    'NAD Levels': (-1.5, 0),
-    'DNA Damage': (0, 0),
-    'Mitochondrial Dysfunction': (1, 2),
+    'CD38 Activity': (collll, level0),
+    'Glycation': (col0, level0),
+    'Mitochondrial Dysfunction': (colrrr, level0),
 
-    'Sirtuin Activation': (-0.5, 1),
-    'mTOR Signaling': (-.5, -2),
+    'NAD Levels': (colll, level1),
+    'AGEs': (col0, level1),
+    'Oxidative Stress': (colrr, level1),
+
+    'Sirtuin Activation': (coll, level2),
+    'AMPK Signaling': (collll, level2),
+
+    'DNA Damage': (col0, level3),
+
+    'mTOR Signaling': (colll, level4),
     'Cellular Senescence': (1, -2),
-    'Oxidative Stress': (0.5, 1.5),
     'Inflammation': (1.5, -1),
 
-    'AMPK Signaling': (-2, -1),
 }
 
-# Define color map for edges
-edge_colors = ['green' if G[u][v]['interaction'] == 'upregulates' else 'red' if G[u][v]['interaction'] == 'downregulates' else 'blue' for u, v in G.edges()]
-
-# Draw the network
-nx.draw(G, pos, with_labels=True, node_color='lightblue', font_weight='bold',
-        node_size=700, font_size=18, edge_color=edge_colors)
+# Draw graph
+edge_colors = ['green' if G[u][v]['interaction'] == 'increase' else 'red' for u, v in G.edges()]
+nx.draw(G, pos, with_labels=True, node_color='lightblue', font_weight='bold', node_size=700, font_size=18, edge_color=edge_colors)
 labels = nx.get_edge_attributes(G, 'interaction')
 nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
 
