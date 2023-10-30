@@ -1,0 +1,15 @@
+﻿data_id,data_shared_name,data_diffusion_input,data_Label,data_name,data_SUID,data_category,data_selected,position_x,position_y,selected
+208,NAD Levels,0.0,NAD Levels,NAD Levels,208,mechanism,false,-487.76043753689993,-133.07450192889843,false
+206,Sirtuin Activation,0.0,Sirtuin Activation,Sirtuin Activation,206,mechanism,false,-537.4467029866265,68.93600965936518,false
+204,CD38 Activity,0.0,CD38 Activity,CD38 Activity,204,mechanism,false,-514.0340143136141,-280.9863218988807,false
+202,AMPK Signaling,0.0,AMPK Signaling,AMPK Signaling,202,mechanism,false,-139.05865690669293,-222.75091995896577,false
+200,mTOR Signaling,0.0,mTOR Signaling,mTOR Signaling,200,mechanism,false,-171.87276314308156,-74.58994787963746,false
+198,Cellular Senescence,0.0,Cellular Senescence,Cellular Senescence,198,mechanism,false,-140.15296601197193,64.16986510896331,false
+196,Oxidative Stress,0.0,Oxidative Stress,Oxidative Stress,196,mechanism,false,-133.49726637467484,280.75105455660446,false
+194,DNA Damage,0.0,DNA Damage,DNA Damage,194,mechanism,false,-396.3130005424751,133.01552214724956,false
+192,Mitochondrial Dysfunction,0.0,Mitochondrial Dysfunction,Mitochondrial Dysfunction,192,mechanism,false,-283.15081191342307,327.9632698013332,false
+190,Inflammation,0.0,Inflammation,Inflammation,190,mechanism,true,112.49801948224581,1.848701548132949,true
+188,Glycation,0.0,Glycation,Glycation,188,mechanism,false,467.85223597570865,-62.294412159159336,false
+186,AGEs,1.0,AGEs,AGEs,186,mechanism,false,363.1494514849255,116.86399850314774,false
+184,Insulin Sensitivity,0.0,Insulin Sensitivity,Insulin Sensitivity,184,mechanism,false,191.95459584717022,-192.7170395562609,false
+182,Quercetin,0.0,Quercetin,Quercetin,182,ingredient,false,-699.9580931923424,389.719362500213,false
