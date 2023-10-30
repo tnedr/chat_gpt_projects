@@ -79,11 +79,11 @@ class Edge:
 
 def load_nodes_and_edges():
     # Load nodes
-    df_nodes = pd.read_csv("network/nodes.csv")
+    df_nodes = pd.read_csv("network/nodes2.csv")
     node_objects = [Node(row['name'], row['category']) for index, row in df_nodes.iterrows()]
 
     # Load edges
-    df_edges = pd.read_csv("network/edges.csv")
+    df_edges = pd.read_csv("network/edges2.csv")
 
     # Replace string constants with numerical weights
     df_edges['weight'] = df_edges['weight'].map(WEIGHT_MAPPING)
