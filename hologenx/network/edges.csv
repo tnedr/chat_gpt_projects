@@ -1,0 +1,65 @@
+id,source,target,source_type,source_name,target_name,shared_name,shared_interaction,impact,name,interaction,weight,SUID,selected
+264,208,206,mechanism,NAD Levels,Sirtuin Activation,NAD Levels (increase) Sirtuin Activation,increase,good,NAD Levels (increase) Sirtuin Activation,increase,STRONG,264,False
+262,206,194,mechanism,Sirtuin Activation,DNA Damage,Sirtuin Activation (decrease) DNA Damage,decrease,good,Sirtuin Activation (decrease) DNA Damage,decrease,MODERATE,262,False
+260,204,208,mechanism,CD38 Activity,NAD Levels,CD38 Activity (decrease) NAD Levels,decrease,bad,CD38 Activity (decrease) NAD Levels,decrease,MODERATE,260,False
+258,202,208,mechanism,AMPK Signaling,NAD Levels,AMPK Signaling (increase) NAD Levels,increase,good,AMPK Signaling (increase) NAD Levels,increase,MODERATE,258,False
+256,202,200,mechanism,AMPK Signaling,mTOR Signaling,AMPK Signaling (decrease) mTOR Signaling,decrease,good,AMPK Signaling (decrease) mTOR Signaling,decrease,MODERATE,256,False
+254,202,184,mechanism,AMPK Signaling,Insulin Sensitivity,AMPK Signaling (increase) Insulin Sensitivity,increase,good,AMPK Signaling (increase) Insulin Sensitivity,increase,MODERATE,254,False
+252,200,198,mechanism,mTOR Signaling,Cellular Senescence,mTOR Signaling (increase) Cellular Senescence,increase,bad,mTOR Signaling (increase) Cellular Senescence,increase,STRONG,252,False
+250,198,190,mechanism,Cellular Senescence,Inflammation,Cellular Senescence (increase) Inflammation,increase,bad,Cellular Senescence (increase) Inflammation,increase,MODERATE,250,False
+248,196,194,mechanism,Oxidative Stress,DNA Damage,Oxidative Stress (cause) DNA Damage,cause,bad,Oxidative Stress (cause) DNA Damage,cause,STRONG,248,False
+246,196,190,mechanism,Oxidative Stress,Inflammation,Oxidative Stress (bi-amplify) Inflammation,bi-amplify,bad,Oxidative Stress (bi-amplify) Inflammation,bi-amplify,MODERATE,246,False
+244,194,198,mechanism,DNA Damage,Cellular Senescence,DNA Damage (cause) Cellular Senescence,cause,bad,DNA Damage (cause) Cellular Senescence,cause,STRONG,244,False
+242,192,196,mechanism,Mitochondrial Dysfunction,Oxidative Stress,Mitochondrial Dysfunction (cause) Oxidative Stress,cause,bad,Mitochondrial Dysfunction (cause) Oxidative Stress,cause,MODERATE,242,False
+240,190,196,mechanism,Inflammation,Oxidative Stress,Inflammation (bi-amplify) Oxidative Stress,bi-amplify,bad,Inflammation (bi-amplify) Oxidative Stress,bi-amplify,MODERATE,240,False
+238,190,184,mechanism,Inflammation,Insulin Sensitivity,Inflammation (decrease) Insulin Sensitivity,decrease,bad,Inflammation (decrease) Insulin Sensitivity,decrease,MODERATE,238,False
+236,188,186,mechanism,Glycation,AGEs,Glycation (cause) AGEs,cause,bad,Glycation (cause) AGEs,cause,STRONG,236,False
+234,186,190,mechanism,AGEs,Inflammation,AGEs (increase) Inflammation,increase,bad,AGEs (increase) Inflammation,increase,MODERATE,234,False
+232,186,196,mechanism,AGEs,Oxidative Stress,AGEs (increase) Oxidative Stress,increase,bad,AGEs (increase) Oxidative Stress,increase,MODERATE,232,False
+230,186,198,mechanism,AGEs,Cellular Senescence,AGEs (increase) Cellular Senescence,increase,bad,AGEs (increase) Cellular Senescence,increase,MODERATE,230,False
+228,186,194,mechanism,AGEs,DNA Damage,AGEs (cause) DNA Damage,cause,bad,AGEs (cause) DNA Damage,cause,MODERATE,228,False
+226,186,184,mechanism,AGEs,Insulin Sensitivity,AGEs (decrease) Insulin Sensitivity,decrease,bad,AGEs (decrease) Insulin Sensitivity,decrease,MODERATE,226,False
+224,200,301,mechanism,mTOR Signaling,Autophagy,mTOR Signaling (decrease) Autophagy,decrease,bad,mTOR Signaling (decrease) Autophagy,decrease,MODERATE,300,False
+222,301,198,mechanism,Autophagy,Cellular Senescence,Autophagy (decrease) Cellular Senescence,decrease,good,Autophagy (decrease) Cellular Senescence,decrease,MODERATE,302,False
+220,301,196,mechanism,Autophagy,Oxidative Stress,Autophagy (decrease) Oxidative Stress,decrease,good,Autophagy (decrease) Oxidative Stress,decrease,MODERATE,304,False
+218,202,301,mechanism,AMPK Signaling,Autophagy,AMPK Signaling (increase) Autophagy,increase,good,AMPK Signaling (increase) Autophagy,increase,MODERATE,306,False
+216,301,194,mechanism,Autophagy,DNA Damage,Autophagy (decrease) DNA Damage,decrease,good,Autophagy (decrease) DNA Damage,decrease,MODERATE,308,False
+400,198,401,mechanism,Cellular Senescence,Telomere Shortening,Cellular Senescence (cause) Telomere Shortening,cause,bad,Cellular Senescence (cause) Telomere Shortening,cause,STRONG,400,False
+402,194,402,mechanism,DNA Damage,Epigenetic Changes,DNA Damage (cause) Epigenetic Changes,cause,bad,DNA Damage (cause) Epigenetic Changes,cause,MODERATE,402,False
+404,202,403,mechanism,AMPK Signaling,Caloric Restriction,AMPK Signaling (increase) Caloric Restriction,increase,good,AMPK Signaling (increase) Caloric Restriction,increase,MODERATE,404,False
+406,403,200,mechanism,Caloric Restriction,mTOR Signaling,Caloric Restriction (decrease) mTOR Signaling,decrease,good,Caloric Restriction (decrease) mTOR Signaling,decrease,MODERATE,406,False
+408,403,301,mechanism,Caloric Restriction,Autophagy,Caloric Restriction (increase) Autophagy,increase,good,Caloric Restriction (increase) Autophagy,increase,MODERATE,408,False
+410,402,198,mechanism,Epigenetic Changes,Cellular Senescence,Epigenetic Changes (cause) Cellular Senescence,cause,bad,Epigenetic Changes (cause) Cellular Senescence,cause,MODERATE,410,False
+412,402,196,mechanism,Epigenetic Changes,Oxidative Stress,Epigenetic Changes (increase) Oxidative Stress,increase,bad,Epigenetic Changes (increase) Oxidative Stress,increase,MODERATE,412,False
+414,401,206,mechanism,Telomere Shortening,Sirtuin Activation,Telomere Shortening (decrease) Sirtuin Activation,decrease,bad,Telomere Shortening (decrease) Sirtuin Activation,decrease,MODERATE,414,False
+416,401,194,mechanism,Telomere Shortening,DNA Damage,Telomere Shortening (cause) DNA Damage,cause,bad,Telomere Shortening (cause) DNA Damage,cause,STRONG,416,False
+418,198,420,mechanism,Cellular Senescence,Hormonal Changes,Cellular Senescence (increase) Hormonal Changes,increase,bad,Cellular Senescence (increase) Hormonal Changes,increase,MODERATE,418,False
+420,420,190,mechanism,Hormonal Changes,Inflammation,Hormonal Changes (increase) Inflammation,increase,bad,Hormonal Changes (increase) Inflammation,increase,MODERATE,420,False
+422,420,184,mechanism,Hormonal Changes,Insulin Sensitivity,Hormonal Changes (decrease) Insulin Sensitivity,decrease,bad,Hormonal Changes (decrease) Insulin Sensitivity,decrease,MODERATE,422,False
+424,420,200,mechanism,Hormonal Changes,mTOR Signaling,Hormonal Changes (modulate) mTOR Signaling,modulate,complex,Hormonal Changes (modulate) mTOR Signaling,modulate,MODERATE,424,False
+426,420,196,mechanism,Hormonal Changes,Oxidative Stress,Hormonal Changes (increase) Oxidative Stress,increase,bad,Hormonal Changes (increase) Oxidative Stress,increase,MODERATE,426,False
+
+
+1224,184,200,mechanism,Insulin Sensitivity,mTOR Signaling,Insulin Sensitivity (decrease) mTOR Signaling,decrease,good,Insulin Sensitivity (decrease) mTOR Signaling,decrease,MODERATE,224,False
+1222,182,196,ingredient,Quercetin,Oxidative Stress,Quercetin (decrease) Oxidative Stress,decrease,good,Quercetin (decrease) Oxidative Stress,decrease,STRONG,222,False
+1220,182,190,ingredient,Quercetin,Inflammation,Quercetin (decrease) Inflammation,decrease,good,Quercetin (decrease) Inflammation,decrease,STRONG,220,False
+1218,182,198,ingredient,Quercetin,Cellular Senescence,Quercetin (decrease) Cellular Senescence,decrease,good,Quercetin (decrease) Cellular Senescence,decrease,MODERATE,218,False
+1216,182,206,ingredient,Quercetin,Sirtuin Activation,Quercetin (increase) Sirtuin Activation,increase,good,Quercetin (increase) Sirtuin Activation,increase,WEAK,216,False
+1214,182,202,ingredient,Quercetin,AMPK Signaling,Quercetin (increase) AMPK Signaling,increase,good,Quercetin (increase) AMPK Signaling,increase,MODERATE,214,False
+1212,182,184,ingredient,Quercetin,Insulin Sensitivity,Quercetin (increase) Insulin Sensitivity,increase,good,Quercetin (increase) Insulin Sensitivity,increase,MODERATE,212,False
+1210,182,194,ingredient,Quercetin,DNA Damage,Quercetin (decrease) DNA Damage,decrease,good,Quercetin (decrease) DNA Damage,decrease,WEAK,210,False
+1300,180,208,ingredient,NR,NAD Levels,NR (increase) NAD Levels,increase,good,NR (increase) NAD Levels,increase,STRONG,300,False
+1302,180,206,ingredient,NR,Sirtuin Activation,NR (increase) Sirtuin Activation,increase,good,NR (increase) Sirtuin Activation,increase,MODERATE,302,False
+1304,180,202,ingredient,NR,AMPK Signaling,NR (increase) AMPK Signaling,increase,good,NR (increase) AMPK Signaling,increase,WEAK,304,False
+1306,180,204,ingredient,NR,CD38 Activity,NR (decrease) CD38 Activity,decrease,good,NR (decrease) CD38 Activity,decrease,MODERATE,306,False
+1308,178,206,ingredient,Resveratrol,Sirtuin Activation,Resveratrol (increase) Sirtuin Activation,increase,good,Resveratrol (increase) Sirtuin Activation,increase,STRONG,308,False
+1310,178,202,ingredient,Resveratrol,AMPK Signaling,Resveratrol (increase) AMPK Signaling,increase,good,Resveratrol (increase) AMPK Signaling,increase,MODERATE,310,False
+1312,178,196,ingredient,Resveratrol,Oxidative Stress,Resveratrol (decrease) Oxidative Stress,decrease,good,Resveratrol (decrease) Oxidative Stress,decrease,MODERATE,312,False
+1314,178,190,ingredient,Resveratrol,Inflammation,Resveratrol (decrease) Inflammation,decrease,good,Resveratrol (decrease) Inflammation,decrease,MODERATE,314,False
+1316,178,208,ingredient,Resveratrol,NAD Levels,Resveratrol (increase) NAD Levels,increase,good,Resveratrol (increase) NAD Levels,increase,WEAK,316,False
+1318,176,184,ingredient,Alpha Lipoic Acid,Insulin Sensitivity,Alpha Lipoic Acid (increase) Insulin Sensitivity,increase,good,Alpha Lipoic Acid (increase) Insulin Sensitivity,increase,MODERATE,318,False
+1320,176,196,ingredient,Alpha Lipoic Acid,Oxidative Stress,Alpha Lipoic Acid (decrease) Oxidative Stress,decrease,good,Alpha Lipoic Acid (decrease) Oxidative Stress,decrease,MODERATE,320,False
+1322,176,190,ingredient,Alpha Lipoic Acid,Inflammation,Alpha Lipoic Acid (decrease) Inflammation,decrease,good,Alpha Lipoic Acid (decrease) Inflammation,decrease,WEAK,322,False
+1324,176,208,ingredient,Alpha Lipoic Acid,NAD Levels,Alpha Lipoic Acid (increase) NAD Levels,increase,good,Alpha Lipoic Acid (increase) NAD Levels,increase,WEAK,324,False
+1326,176,186,ingredient,Alpha Lipoic Acid,AGEs,Alpha Lipoic Acid (decrease) AGEs,decrease,good,Alpha Lipoic Acid (decrease) AGEs,decrease,MODERATE,326,False
+1328,176,188,ingredient,Alpha Lipoic Acid,Glycation,Alpha Lipoic Acid (decrease) Glycation,decrease,good,Alpha Lipoic Acid (decrease) Glycation,decrease,MODERATE,328,False

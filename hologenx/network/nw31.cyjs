@@ -1,0 +1,1312 @@
+{
+  "format_version" : "1.0",
+  "generated_by" : "cytoscape-3.10.1",
+  "target_cytoscapejs_version" : "~2.1",
+  "data" : {
+    "shared_name" : "edges.csv_11",
+    "name" : "edges.csv_11",
+    "SUID" : 9454,
+    "shared_name" : "edges.csv_1",
+    "__Annotations" : [ "" ],
+    "selected" : true
+  },
+  "elements" : {
+    "nodes" : [ {
+      "data" : {
+        "id" : "9513",
+        "shared_name" : "NAD Levels",
+        "diffusion_input" : 0.0,
+        "Label" : "NAD Levels",
+        "name" : "NAD Levels",
+        "SUID" : 9513,
+        "shared_name" : "NAD Levels",
+        "id_original" : "208",
+        "category" : "mechanism",
+        "selected" : false
+      },
+      "position" : {
+        "x" : -527.3284281956829,
+        "y" : -206.5579131523525
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9511",
+        "shared_name" : "Sirtuin Activation",
+        "diffusion_input" : 0.0,
+        "Label" : "Sirtuin Activation",
+        "name" : "Sirtuin Activation",
+        "SUID" : 9511,
+        "shared_name" : "Sirtuin Activation",
+        "id_original" : "206",
+        "category" : "mechanism",
+        "selected" : false
+      },
+      "position" : {
+        "x" : -579.8409786924655,
+        "y" : -39.875964652288005
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9509",
+        "shared_name" : "CD38 Activity",
+        "diffusion_input" : 0.0,
+        "Label" : "CD38 Activity",
+        "name" : "CD38 Activity",
+        "SUID" : 9509,
+        "shared_name" : "CD38 Activity",
+        "id_original" : "204",
+        "category" : "mechanism",
+        "selected" : false
+      },
+      "position" : {
+        "x" : -501.3157316018624,
+        "y" : -372.8405859281984
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9507",
+        "shared_name" : "AMPK Signaling",
+        "diffusion_input" : 0.0,
+        "Label" : "AMPK Signaling",
+        "name" : "AMPK Signaling",
+        "SUID" : 9507,
+        "shared_name" : "AMPK Signaling",
+        "id_original" : "202",
+        "category" : "mechanism",
+        "selected" : false
+      },
+      "position" : {
+        "x" : -139.05865690669293,
+        "y" : -222.75091995896577
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9505",
+        "shared_name" : "mTOR Signaling",
+        "diffusion_input" : 0.0,
+        "Label" : "mTOR Signaling",
+        "name" : "mTOR Signaling",
+        "SUID" : 9505,
+        "shared_name" : "mTOR Signaling",
+        "id_original" : "200",
+        "category" : "mechanism",
+        "selected" : false
+      },
+      "position" : {
+        "x" : -171.87276314308156,
+        "y" : -74.58994787963746
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9503",
+        "shared_name" : "Cellular Senescence",
+        "diffusion_input" : 0.0,
+        "Label" : "Cellular Senescence",
+        "name" : "Cellular Senescence",
+        "SUID" : 9503,
+        "shared_name" : "Cellular Senescence",
+        "id_original" : "198",
+        "category" : "mechanism",
+        "selected" : false
+      },
+      "position" : {
+        "x" : -229.18094499423373,
+        "y" : 95.25900062657853
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9501",
+        "shared_name" : "Oxidative Stress",
+        "diffusion_input" : 0.0,
+        "Label" : "Oxidative Stress",
+        "name" : "Oxidative Stress",
+        "SUID" : 9501,
+        "shared_name" : "Oxidative Stress",
+        "id_original" : "196",
+        "category" : "mechanism",
+        "selected" : false
+      },
+      "position" : {
+        "x" : -133.49726637467484,
+        "y" : 280.75105455660446
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9499",
+        "shared_name" : "DNA Damage",
+        "diffusion_input" : 0.0,
+        "Label" : "DNA Damage",
+        "name" : "DNA Damage",
+        "SUID" : 9499,
+        "shared_name" : "DNA Damage",
+        "id_original" : "194",
+        "category" : "mechanism",
+        "selected" : false
+      },
+      "position" : {
+        "x" : -471.2095542894572,
+        "y" : 151.38637495311306
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9497",
+        "shared_name" : "Mitochondrial Dysfunction",
+        "diffusion_input" : 0.0,
+        "Label" : "Mitochondrial Dysfunction",
+        "name" : "Mitochondrial Dysfunction",
+        "SUID" : 9497,
+        "shared_name" : "Mitochondrial Dysfunction",
+        "id_original" : "192",
+        "category" : "mechanism",
+        "selected" : false
+      },
+      "position" : {
+        "x" : -283.15081191342307,
+        "y" : 327.9632698013332
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9495",
+        "shared_name" : "Inflammation",
+        "diffusion_input" : 0.0,
+        "Label" : "Inflammation",
+        "name" : "Inflammation",
+        "SUID" : 9495,
+        "shared_name" : "Inflammation",
+        "id_original" : "190",
+        "category" : "mechanism",
+        "selected" : false
+      },
+      "position" : {
+        "x" : 112.4980194822458,
+        "y" : 1.848701548132949
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9493",
+        "shared_name" : "Glycation",
+        "diffusion_input" : 0.0,
+        "Label" : "Glycation",
+        "name" : "Glycation",
+        "SUID" : 9493,
+        "shared_name" : "Glycation",
+        "id_original" : "188",
+        "category" : "mechanism",
+        "selected" : false
+      },
+      "position" : {
+        "x" : 467.8522359757087,
+        "y" : -62.294412159159336
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9491",
+        "shared_name" : "AGEs",
+        "diffusion_input" : 1.0,
+        "Label" : "AGEs",
+        "name" : "AGEs",
+        "SUID" : 9491,
+        "shared_name" : "AGEs",
+        "id_original" : "186",
+        "category" : "mechanism",
+        "selected" : false
+      },
+      "position" : {
+        "x" : 363.1494514849255,
+        "y" : 116.86399850314774
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9489",
+        "shared_name" : "Insulin Sensitivity",
+        "diffusion_input" : 0.0,
+        "Label" : "Insulin Sensitivity",
+        "name" : "Insulin Sensitivity",
+        "SUID" : 9489,
+        "shared_name" : "Insulin Sensitivity",
+        "id_original" : "184",
+        "category" : "mechanism",
+        "selected" : false
+      },
+      "position" : {
+        "x" : 191.95459584717025,
+        "y" : -192.7170395562609
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9487",
+        "shared_name" : "Quercetin",
+        "diffusion_input" : 0.0,
+        "Label" : "Quercetin",
+        "name" : "Quercetin",
+        "SUID" : 9487,
+        "shared_name" : "Quercetin",
+        "id_original" : "182",
+        "category" : "ingredient",
+        "selected" : false
+      },
+      "position" : {
+        "x" : -1023.736977942091,
+        "y" : 253.353384657794
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9485",
+        "shared_name" : "NR",
+        "diffusion_input" : 0.0,
+        "Label" : "NR",
+        "name" : "NR",
+        "SUID" : 9485,
+        "shared_name" : "NR",
+        "id_original" : "180",
+        "category" : "ingredient",
+        "selected" : true
+      },
+      "position" : {
+        "x" : -31.837169341854505,
+        "y" : -372.52394801006085
+      },
+      "selected" : true
+    }, {
+      "data" : {
+        "id" : "9483",
+        "shared_name" : "Resveratrol",
+        "diffusion_input" : 0.0,
+        "Label" : "Resveratrol",
+        "name" : "Resveratrol",
+        "SUID" : 9483,
+        "shared_name" : "Resveratrol",
+        "id_original" : "178",
+        "category" : "ingredient",
+        "selected" : false
+      },
+      "position" : {
+        "x" : -996.5481317834498,
+        "y" : 47.19006826042136
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9481",
+        "shared_name" : "Alpha Lipoic Acid",
+        "diffusion_input" : 0.0,
+        "Label" : "Alpha Lipoic Acid",
+        "name" : "Alpha Lipoic Acid",
+        "SUID" : 9481,
+        "shared_name" : "Alpha Lipoic Acid",
+        "id_original" : "176",
+        "category" : "ingredient",
+        "selected" : false
+      },
+      "position" : {
+        "x" : 710.9157048909419,
+        "y" : -210.81380519292472
+      },
+      "selected" : false
+    } ],
+    "edges" : [ {
+      "data" : {
+        "id" : "9599",
+        "source" : "9513",
+        "target" : "9511",
+        "shared_interaction" : "increase",
+        "target_name" : "Sirtuin Activation",
+        "impact" : "good",
+        "weight" : "STRONG",
+        "source_type" : "mechanism",
+        "source_original" : "208",
+        "shared_name" : "NAD Levels (increase) Sirtuin Activation",
+        "target_original" : "206",
+        "shared_name" : "NAD Levels (increase) Sirtuin Activation",
+        "shared_interaction" : "increase",
+        "name" : "NAD Levels (increase) Sirtuin Activation",
+        "interaction" : "increase",
+        "SUID" : 9599,
+        "id_original" : "264",
+        "selected" : false,
+        "source_name" : "NAD Levels"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9597",
+        "source" : "9511",
+        "target" : "9499",
+        "shared_interaction" : "decrease",
+        "target_name" : "DNA Damage",
+        "impact" : "good",
+        "weight" : "MODERATE",
+        "source_type" : "mechanism",
+        "source_original" : "206",
+        "shared_name" : "Sirtuin Activation (decrease) DNA Damage",
+        "target_original" : "194",
+        "shared_name" : "Sirtuin Activation (decrease) DNA Damage",
+        "shared_interaction" : "decrease",
+        "name" : "Sirtuin Activation (decrease) DNA Damage",
+        "interaction" : "decrease",
+        "SUID" : 9597,
+        "id_original" : "262",
+        "selected" : false,
+        "source_name" : "Sirtuin Activation"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9595",
+        "source" : "9509",
+        "target" : "9513",
+        "shared_interaction" : "decrease",
+        "target_name" : "NAD Levels",
+        "impact" : "bad",
+        "weight" : "MODERATE",
+        "source_type" : "mechanism",
+        "source_original" : "204",
+        "shared_name" : "CD38 Activity (decrease) NAD Levels",
+        "target_original" : "208",
+        "shared_name" : "CD38 Activity (decrease) NAD Levels",
+        "shared_interaction" : "decrease",
+        "name" : "CD38 Activity (decrease) NAD Levels",
+        "interaction" : "decrease",
+        "SUID" : 9595,
+        "id_original" : "260",
+        "selected" : false,
+        "source_name" : "CD38 Activity"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9593",
+        "source" : "9507",
+        "target" : "9513",
+        "shared_interaction" : "increase",
+        "target_name" : "NAD Levels",
+        "impact" : "good",
+        "weight" : "MODERATE",
+        "source_type" : "mechanism",
+        "source_original" : "202",
+        "shared_name" : "AMPK Signaling (increase) NAD Levels",
+        "target_original" : "208",
+        "shared_name" : "AMPK Signaling (increase) NAD Levels",
+        "shared_interaction" : "increase",
+        "name" : "AMPK Signaling (increase) NAD Levels",
+        "interaction" : "increase",
+        "SUID" : 9593,
+        "id_original" : "258",
+        "selected" : false,
+        "source_name" : "AMPK Signaling"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9591",
+        "source" : "9507",
+        "target" : "9505",
+        "shared_interaction" : "decrease",
+        "target_name" : "mTOR Signaling",
+        "impact" : "good",
+        "weight" : "MODERATE",
+        "source_type" : "mechanism",
+        "source_original" : "202",
+        "shared_name" : "AMPK Signaling (decrease) mTOR Signaling",
+        "target_original" : "200",
+        "shared_name" : "AMPK Signaling (decrease) mTOR Signaling",
+        "shared_interaction" : "decrease",
+        "name" : "AMPK Signaling (decrease) mTOR Signaling",
+        "interaction" : "decrease",
+        "SUID" : 9591,
+        "id_original" : "256",
+        "selected" : false,
+        "source_name" : "AMPK Signaling"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9589",
+        "source" : "9507",
+        "target" : "9489",
+        "shared_interaction" : "increase",
+        "target_name" : "Insulin Sensitivity",
+        "impact" : "good",
+        "weight" : "MODERATE",
+        "source_type" : "mechanism",
+        "source_original" : "202",
+        "shared_name" : "AMPK Signaling (increase) Insulin Sensitivity",
+        "target_original" : "184",
+        "shared_name" : "AMPK Signaling (increase) Insulin Sensitivity",
+        "shared_interaction" : "increase",
+        "name" : "AMPK Signaling (increase) Insulin Sensitivity",
+        "interaction" : "increase",
+        "SUID" : 9589,
+        "id_original" : "254",
+        "selected" : false,
+        "source_name" : "AMPK Signaling"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9587",
+        "source" : "9505",
+        "target" : "9503",
+        "shared_interaction" : "increase",
+        "target_name" : "Cellular Senescence",
+        "impact" : "bad",
+        "weight" : "STRONG",
+        "source_type" : "mechanism",
+        "source_original" : "200",
+        "shared_name" : "mTOR Signaling (increase) Cellular Senescence",
+        "target_original" : "198",
+        "shared_name" : "mTOR Signaling (increase) Cellular Senescence",
+        "shared_interaction" : "increase",
+        "name" : "mTOR Signaling (increase) Cellular Senescence",
+        "interaction" : "increase",
+        "SUID" : 9587,
+        "id_original" : "252",
+        "selected" : false,
+        "source_name" : "mTOR Signaling"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9585",
+        "source" : "9503",
+        "target" : "9495",
+        "shared_interaction" : "increase",
+        "target_name" : "Inflammation",
+        "impact" : "bad",
+        "weight" : "MODERATE",
+        "source_type" : "mechanism",
+        "source_original" : "198",
+        "shared_name" : "Cellular Senescence (increase) Inflammation",
+        "target_original" : "190",
+        "shared_name" : "Cellular Senescence (increase) Inflammation",
+        "shared_interaction" : "increase",
+        "name" : "Cellular Senescence (increase) Inflammation",
+        "interaction" : "increase",
+        "SUID" : 9585,
+        "id_original" : "250",
+        "selected" : false,
+        "source_name" : "Cellular Senescence"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9583",
+        "source" : "9501",
+        "target" : "9499",
+        "shared_interaction" : "cause",
+        "target_name" : "DNA Damage",
+        "impact" : "bad",
+        "weight" : "STRONG",
+        "source_type" : "mechanism",
+        "source_original" : "196",
+        "shared_name" : "Oxidative Stress (cause) DNA Damage",
+        "target_original" : "194",
+        "shared_name" : "Oxidative Stress (cause) DNA Damage",
+        "shared_interaction" : "cause",
+        "name" : "Oxidative Stress (cause) DNA Damage",
+        "interaction" : "cause",
+        "SUID" : 9583,
+        "id_original" : "248",
+        "selected" : false,
+        "source_name" : "Oxidative Stress"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9581",
+        "source" : "9501",
+        "target" : "9495",
+        "shared_interaction" : "bi-amplify",
+        "target_name" : "Inflammation",
+        "impact" : "bad",
+        "weight" : "MODERATE",
+        "source_type" : "mechanism",
+        "source_original" : "196",
+        "shared_name" : "Oxidative Stress (bi-amplify) Inflammation",
+        "target_original" : "190",
+        "shared_name" : "Oxidative Stress (bi-amplify) Inflammation",
+        "shared_interaction" : "bi-amplify",
+        "name" : "Oxidative Stress (bi-amplify) Inflammation",
+        "interaction" : "bi-amplify",
+        "SUID" : 9581,
+        "id_original" : "246",
+        "selected" : false,
+        "source_name" : "Oxidative Stress"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9579",
+        "source" : "9499",
+        "target" : "9503",
+        "shared_interaction" : "cause",
+        "target_name" : "Cellular Senescence",
+        "impact" : "bad",
+        "weight" : "STRONG",
+        "source_type" : "mechanism",
+        "source_original" : "194",
+        "shared_name" : "DNA Damage (cause) Cellular Senescence",
+        "target_original" : "198",
+        "shared_name" : "DNA Damage (cause) Cellular Senescence",
+        "shared_interaction" : "cause",
+        "name" : "DNA Damage (cause) Cellular Senescence",
+        "interaction" : "cause",
+        "SUID" : 9579,
+        "id_original" : "244",
+        "selected" : false,
+        "source_name" : "DNA Damage"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9577",
+        "source" : "9497",
+        "target" : "9501",
+        "shared_interaction" : "cause",
+        "target_name" : "Oxidative Stress",
+        "impact" : "bad",
+        "weight" : "MODERATE",
+        "source_type" : "mechanism",
+        "source_original" : "192",
+        "shared_name" : "Mitochondrial Dysfunction (cause) Oxidative Stress",
+        "target_original" : "196",
+        "shared_name" : "Mitochondrial Dysfunction (cause) Oxidative Stress",
+        "shared_interaction" : "cause",
+        "name" : "Mitochondrial Dysfunction (cause) Oxidative Stress",
+        "interaction" : "cause",
+        "SUID" : 9577,
+        "id_original" : "242",
+        "selected" : false,
+        "source_name" : "Mitochondrial Dysfunction"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9575",
+        "source" : "9495",
+        "target" : "9501",
+        "shared_interaction" : "bi-amplify",
+        "target_name" : "Oxidative Stress",
+        "impact" : "bad",
+        "weight" : "MODERATE",
+        "source_type" : "mechanism",
+        "source_original" : "190",
+        "shared_name" : "Inflammation (bi-amplify) Oxidative Stress",
+        "target_original" : "196",
+        "shared_name" : "Inflammation (bi-amplify) Oxidative Stress",
+        "shared_interaction" : "bi-amplify",
+        "name" : "Inflammation (bi-amplify) Oxidative Stress",
+        "interaction" : "bi-amplify",
+        "SUID" : 9575,
+        "id_original" : "240",
+        "selected" : false,
+        "source_name" : "Inflammation"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9573",
+        "source" : "9495",
+        "target" : "9489",
+        "shared_interaction" : "decrease",
+        "target_name" : "Insulin Sensitivity",
+        "impact" : "bad",
+        "weight" : "MODERATE",
+        "source_type" : "mechanism",
+        "source_original" : "190",
+        "shared_name" : "Inflammation (decrease) Insulin Sensitivity",
+        "target_original" : "184",
+        "shared_name" : "Inflammation (decrease) Insulin Sensitivity",
+        "shared_interaction" : "decrease",
+        "name" : "Inflammation (decrease) Insulin Sensitivity",
+        "interaction" : "decrease",
+        "SUID" : 9573,
+        "id_original" : "238",
+        "selected" : false,
+        "source_name" : "Inflammation"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9571",
+        "source" : "9493",
+        "target" : "9491",
+        "shared_interaction" : "cause",
+        "target_name" : "AGEs",
+        "impact" : "bad",
+        "weight" : "STRONG",
+        "source_type" : "mechanism",
+        "source_original" : "188",
+        "shared_name" : "Glycation (cause) AGEs",
+        "target_original" : "186",
+        "shared_name" : "Glycation (cause) AGEs",
+        "shared_interaction" : "cause",
+        "name" : "Glycation (cause) AGEs",
+        "interaction" : "cause",
+        "SUID" : 9571,
+        "id_original" : "236",
+        "selected" : false,
+        "source_name" : "Glycation"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9569",
+        "source" : "9491",
+        "target" : "9495",
+        "shared_interaction" : "increase",
+        "target_name" : "Inflammation",
+        "impact" : "bad",
+        "weight" : "MODERATE",
+        "source_type" : "mechanism",
+        "source_original" : "186",
+        "shared_name" : "AGEs (increase) Inflammation",
+        "target_original" : "190",
+        "shared_name" : "AGEs (increase) Inflammation",
+        "shared_interaction" : "increase",
+        "name" : "AGEs (increase) Inflammation",
+        "interaction" : "increase",
+        "SUID" : 9569,
+        "id_original" : "234",
+        "selected" : false,
+        "source_name" : "AGEs"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9567",
+        "source" : "9491",
+        "target" : "9501",
+        "shared_interaction" : "increase",
+        "target_name" : "Oxidative Stress",
+        "impact" : "bad",
+        "weight" : "MODERATE",
+        "source_type" : "mechanism",
+        "source_original" : "186",
+        "shared_name" : "AGEs (increase) Oxidative Stress",
+        "target_original" : "196",
+        "shared_name" : "AGEs (increase) Oxidative Stress",
+        "shared_interaction" : "increase",
+        "name" : "AGEs (increase) Oxidative Stress",
+        "interaction" : "increase",
+        "SUID" : 9567,
+        "id_original" : "232",
+        "selected" : false,
+        "source_name" : "AGEs"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9565",
+        "source" : "9491",
+        "target" : "9503",
+        "shared_interaction" : "increase",
+        "target_name" : "Cellular Senescence",
+        "impact" : "bad",
+        "weight" : "MODERATE",
+        "source_type" : "mechanism",
+        "source_original" : "186",
+        "shared_name" : "AGEs (increase) Cellular Senescence",
+        "target_original" : "198",
+        "shared_name" : "AGEs (increase) Cellular Senescence",
+        "shared_interaction" : "increase",
+        "name" : "AGEs (increase) Cellular Senescence",
+        "interaction" : "increase",
+        "SUID" : 9565,
+        "id_original" : "230",
+        "selected" : false,
+        "source_name" : "AGEs"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9563",
+        "source" : "9491",
+        "target" : "9499",
+        "shared_interaction" : "cause",
+        "target_name" : "DNA Damage",
+        "impact" : "bad",
+        "weight" : "MODERATE",
+        "source_type" : "mechanism",
+        "source_original" : "186",
+        "shared_name" : "AGEs (cause) DNA Damage",
+        "target_original" : "194",
+        "shared_name" : "AGEs (cause) DNA Damage",
+        "shared_interaction" : "cause",
+        "name" : "AGEs (cause) DNA Damage",
+        "interaction" : "cause",
+        "SUID" : 9563,
+        "id_original" : "228",
+        "selected" : false,
+        "source_name" : "AGEs"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9561",
+        "source" : "9491",
+        "target" : "9489",
+        "shared_interaction" : "decrease",
+        "target_name" : "Insulin Sensitivity",
+        "impact" : "bad",
+        "weight" : "MODERATE",
+        "source_type" : "mechanism",
+        "source_original" : "186",
+        "shared_name" : "AGEs (decrease) Insulin Sensitivity",
+        "target_original" : "184",
+        "shared_name" : "AGEs (decrease) Insulin Sensitivity",
+        "shared_interaction" : "decrease",
+        "name" : "AGEs (decrease) Insulin Sensitivity",
+        "interaction" : "decrease",
+        "SUID" : 9561,
+        "id_original" : "226",
+        "selected" : false,
+        "source_name" : "AGEs"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9559",
+        "source" : "9489",
+        "target" : "9505",
+        "shared_interaction" : "decrease",
+        "target_name" : "mTOR Signaling",
+        "impact" : "good",
+        "weight" : "MODERATE",
+        "source_type" : "mechanism",
+        "source_original" : "184",
+        "shared_name" : "Insulin Sensitivity (decrease) mTOR Signaling",
+        "target_original" : "200",
+        "shared_name" : "Insulin Sensitivity (decrease) mTOR Signaling",
+        "shared_interaction" : "decrease",
+        "name" : "Insulin Sensitivity (decrease) mTOR Signaling",
+        "interaction" : "decrease",
+        "SUID" : 9559,
+        "id_original" : "224",
+        "selected" : false,
+        "source_name" : "Insulin Sensitivity"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9557",
+        "source" : "9487",
+        "target" : "9501",
+        "shared_interaction" : "decrease",
+        "target_name" : "Oxidative Stress",
+        "impact" : "good",
+        "weight" : "STRONG",
+        "source_type" : "ingredient",
+        "source_original" : "182",
+        "shared_name" : "Quercetin (decrease) Oxidative Stress",
+        "target_original" : "196",
+        "shared_name" : "Quercetin (decrease) Oxidative Stress",
+        "shared_interaction" : "decrease",
+        "name" : "Quercetin (decrease) Oxidative Stress",
+        "interaction" : "decrease",
+        "SUID" : 9557,
+        "id_original" : "222",
+        "selected" : false,
+        "source_name" : "Quercetin"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9555",
+        "source" : "9487",
+        "target" : "9495",
+        "shared_interaction" : "decrease",
+        "target_name" : "Inflammation",
+        "impact" : "good",
+        "weight" : "STRONG",
+        "source_type" : "ingredient",
+        "source_original" : "182",
+        "shared_name" : "Quercetin (decrease) Inflammation",
+        "target_original" : "190",
+        "shared_name" : "Quercetin (decrease) Inflammation",
+        "shared_interaction" : "decrease",
+        "name" : "Quercetin (decrease) Inflammation",
+        "interaction" : "decrease",
+        "SUID" : 9555,
+        "id_original" : "220",
+        "selected" : false,
+        "source_name" : "Quercetin"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9553",
+        "source" : "9487",
+        "target" : "9503",
+        "shared_interaction" : "decrease",
+        "target_name" : "Cellular Senescence",
+        "impact" : "good",
+        "weight" : "MODERATE",
+        "source_type" : "ingredient",
+        "source_original" : "182",
+        "shared_name" : "Quercetin (decrease) Cellular Senescence",
+        "target_original" : "198",
+        "shared_name" : "Quercetin (decrease) Cellular Senescence",
+        "shared_interaction" : "decrease",
+        "name" : "Quercetin (decrease) Cellular Senescence",
+        "interaction" : "decrease",
+        "SUID" : 9553,
+        "id_original" : "218",
+        "selected" : false,
+        "source_name" : "Quercetin"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9551",
+        "source" : "9487",
+        "target" : "9511",
+        "shared_interaction" : "increase",
+        "target_name" : "Sirtuin Activation",
+        "impact" : "good",
+        "weight" : "WEAK",
+        "source_type" : "ingredient",
+        "source_original" : "182",
+        "shared_name" : "Quercetin (increase) Sirtuin Activation",
+        "target_original" : "206",
+        "shared_name" : "Quercetin (increase) Sirtuin Activation",
+        "shared_interaction" : "increase",
+        "name" : "Quercetin (increase) Sirtuin Activation",
+        "interaction" : "increase",
+        "SUID" : 9551,
+        "id_original" : "216",
+        "selected" : false,
+        "source_name" : "Quercetin"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9549",
+        "source" : "9487",
+        "target" : "9507",
+        "shared_interaction" : "increase",
+        "target_name" : "AMPK Signaling",
+        "impact" : "good",
+        "weight" : "MODERATE",
+        "source_type" : "ingredient",
+        "source_original" : "182",
+        "shared_name" : "Quercetin (increase) AMPK Signaling",
+        "target_original" : "202",
+        "shared_name" : "Quercetin (increase) AMPK Signaling",
+        "shared_interaction" : "increase",
+        "name" : "Quercetin (increase) AMPK Signaling",
+        "interaction" : "increase",
+        "SUID" : 9549,
+        "id_original" : "214",
+        "selected" : false,
+        "source_name" : "Quercetin"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9547",
+        "source" : "9487",
+        "target" : "9489",
+        "shared_interaction" : "increase",
+        "target_name" : "Insulin Sensitivity",
+        "impact" : "good",
+        "weight" : "MODERATE",
+        "source_type" : "ingredient",
+        "source_original" : "182",
+        "shared_name" : "Quercetin (increase) Insulin Sensitivity",
+        "target_original" : "184",
+        "shared_name" : "Quercetin (increase) Insulin Sensitivity",
+        "shared_interaction" : "increase",
+        "name" : "Quercetin (increase) Insulin Sensitivity",
+        "interaction" : "increase",
+        "SUID" : 9547,
+        "id_original" : "212",
+        "selected" : false,
+        "source_name" : "Quercetin"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9545",
+        "source" : "9487",
+        "target" : "9499",
+        "shared_interaction" : "decrease",
+        "target_name" : "DNA Damage",
+        "impact" : "good",
+        "weight" : "WEAK",
+        "source_type" : "ingredient",
+        "source_original" : "182",
+        "shared_name" : "Quercetin (decrease) DNA Damage",
+        "target_original" : "194",
+        "shared_name" : "Quercetin (decrease) DNA Damage",
+        "shared_interaction" : "decrease",
+        "name" : "Quercetin (decrease) DNA Damage",
+        "interaction" : "decrease",
+        "SUID" : 9545,
+        "id_original" : "210",
+        "selected" : false,
+        "source_name" : "Quercetin"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9543",
+        "source" : "9485",
+        "target" : "9513",
+        "shared_interaction" : "increase",
+        "target_name" : "NAD Levels",
+        "impact" : "good",
+        "weight" : "STRONG",
+        "source_type" : "ingredient",
+        "source_original" : "180",
+        "shared_name" : "NR (increase) NAD Levels",
+        "target_original" : "208",
+        "shared_name" : "NR (increase) NAD Levels",
+        "shared_interaction" : "increase",
+        "name" : "NR (increase) NAD Levels",
+        "interaction" : "increase",
+        "SUID" : 9543,
+        "id_original" : "300",
+        "selected" : false,
+        "source_name" : "NR"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9541",
+        "source" : "9485",
+        "target" : "9511",
+        "shared_interaction" : "increase",
+        "target_name" : "Sirtuin Activation",
+        "impact" : "good",
+        "weight" : "MODERATE",
+        "source_type" : "ingredient",
+        "source_original" : "180",
+        "shared_name" : "NR (increase) Sirtuin Activation",
+        "target_original" : "206",
+        "shared_name" : "NR (increase) Sirtuin Activation",
+        "shared_interaction" : "increase",
+        "name" : "NR (increase) Sirtuin Activation",
+        "interaction" : "increase",
+        "SUID" : 9541,
+        "id_original" : "302",
+        "selected" : false,
+        "source_name" : "NR"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9539",
+        "source" : "9485",
+        "target" : "9507",
+        "shared_interaction" : "increase",
+        "target_name" : "AMPK Signaling",
+        "impact" : "good",
+        "weight" : "WEAK",
+        "source_type" : "ingredient",
+        "source_original" : "180",
+        "shared_name" : "NR (increase) AMPK Signaling",
+        "target_original" : "202",
+        "shared_name" : "NR (increase) AMPK Signaling",
+        "shared_interaction" : "increase",
+        "name" : "NR (increase) AMPK Signaling",
+        "interaction" : "increase",
+        "SUID" : 9539,
+        "id_original" : "304",
+        "selected" : false,
+        "source_name" : "NR"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9537",
+        "source" : "9485",
+        "target" : "9509",
+        "shared_interaction" : "decrease",
+        "target_name" : "CD38 Activity",
+        "impact" : "good",
+        "weight" : "MODERATE",
+        "source_type" : "ingredient",
+        "source_original" : "180",
+        "shared_name" : "NR (decrease) CD38 Activity",
+        "target_original" : "204",
+        "shared_name" : "NR (decrease) CD38 Activity",
+        "shared_interaction" : "decrease",
+        "name" : "NR (decrease) CD38 Activity",
+        "interaction" : "decrease",
+        "SUID" : 9537,
+        "id_original" : "306",
+        "selected" : false,
+        "source_name" : "NR"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9535",
+        "source" : "9483",
+        "target" : "9511",
+        "shared_interaction" : "increase",
+        "target_name" : "Sirtuin Activation",
+        "impact" : "good",
+        "weight" : "STRONG",
+        "source_type" : "ingredient",
+        "source_original" : "178",
+        "shared_name" : "Resveratrol (increase) Sirtuin Activation",
+        "target_original" : "206",
+        "shared_name" : "Resveratrol (increase) Sirtuin Activation",
+        "shared_interaction" : "increase",
+        "name" : "Resveratrol (increase) Sirtuin Activation",
+        "interaction" : "increase",
+        "SUID" : 9535,
+        "id_original" : "308",
+        "selected" : false,
+        "source_name" : "Resveratrol"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9533",
+        "source" : "9483",
+        "target" : "9507",
+        "shared_interaction" : "increase",
+        "target_name" : "AMPK Signaling",
+        "impact" : "good",
+        "weight" : "MODERATE",
+        "source_type" : "ingredient",
+        "source_original" : "178",
+        "shared_name" : "Resveratrol (increase) AMPK Signaling",
+        "target_original" : "202",
+        "shared_name" : "Resveratrol (increase) AMPK Signaling",
+        "shared_interaction" : "increase",
+        "name" : "Resveratrol (increase) AMPK Signaling",
+        "interaction" : "increase",
+        "SUID" : 9533,
+        "id_original" : "310",
+        "selected" : false,
+        "source_name" : "Resveratrol"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9531",
+        "source" : "9483",
+        "target" : "9501",
+        "shared_interaction" : "decrease",
+        "target_name" : "Oxidative Stress",
+        "impact" : "good",
+        "weight" : "MODERATE",
+        "source_type" : "ingredient",
+        "source_original" : "178",
+        "shared_name" : "Resveratrol (decrease) Oxidative Stress",
+        "target_original" : "196",
+        "shared_name" : "Resveratrol (decrease) Oxidative Stress",
+        "shared_interaction" : "decrease",
+        "name" : "Resveratrol (decrease) Oxidative Stress",
+        "interaction" : "decrease",
+        "SUID" : 9531,
+        "id_original" : "312",
+        "selected" : false,
+        "source_name" : "Resveratrol"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9529",
+        "source" : "9483",
+        "target" : "9495",
+        "shared_interaction" : "decrease",
+        "target_name" : "Inflammation",
+        "impact" : "good",
+        "weight" : "MODERATE",
+        "source_type" : "ingredient",
+        "source_original" : "178",
+        "shared_name" : "Resveratrol (decrease) Inflammation",
+        "target_original" : "190",
+        "shared_name" : "Resveratrol (decrease) Inflammation",
+        "shared_interaction" : "decrease",
+        "name" : "Resveratrol (decrease) Inflammation",
+        "interaction" : "decrease",
+        "SUID" : 9529,
+        "id_original" : "314",
+        "selected" : false,
+        "source_name" : "Resveratrol"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9527",
+        "source" : "9483",
+        "target" : "9513",
+        "shared_interaction" : "increase",
+        "target_name" : "NAD Levels",
+        "impact" : "good",
+        "weight" : "WEAK",
+        "source_type" : "ingredient",
+        "source_original" : "178",
+        "shared_name" : "Resveratrol (increase) NAD Levels",
+        "target_original" : "208",
+        "shared_name" : "Resveratrol (increase) NAD Levels",
+        "shared_interaction" : "increase",
+        "name" : "Resveratrol (increase) NAD Levels",
+        "interaction" : "increase",
+        "SUID" : 9527,
+        "id_original" : "316",
+        "selected" : false,
+        "source_name" : "Resveratrol"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9525",
+        "source" : "9481",
+        "target" : "9489",
+        "shared_interaction" : "increase",
+        "target_name" : "Insulin Sensitivity",
+        "impact" : "good",
+        "weight" : "MODERATE",
+        "source_type" : "ingredient",
+        "source_original" : "176",
+        "shared_name" : "Alpha Lipoic Acid (increase) Insulin Sensitivity",
+        "target_original" : "184",
+        "shared_name" : "Alpha Lipoic Acid (increase) Insulin Sensitivity",
+        "shared_interaction" : "increase",
+        "name" : "Alpha Lipoic Acid (increase) Insulin Sensitivity",
+        "interaction" : "increase",
+        "SUID" : 9525,
+        "id_original" : "318",
+        "selected" : false,
+        "source_name" : "Alpha Lipoic Acid"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9523",
+        "source" : "9481",
+        "target" : "9501",
+        "shared_interaction" : "decrease",
+        "target_name" : "Oxidative Stress",
+        "impact" : "good",
+        "weight" : "MODERATE",
+        "source_type" : "ingredient",
+        "source_original" : "176",
+        "shared_name" : "Alpha Lipoic Acid (decrease) Oxidative Stress",
+        "target_original" : "196",
+        "shared_name" : "Alpha Lipoic Acid (decrease) Oxidative Stress",
+        "shared_interaction" : "decrease",
+        "name" : "Alpha Lipoic Acid (decrease) Oxidative Stress",
+        "interaction" : "decrease",
+        "SUID" : 9523,
+        "id_original" : "320",
+        "selected" : false,
+        "source_name" : "Alpha Lipoic Acid"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9521",
+        "source" : "9481",
+        "target" : "9495",
+        "shared_interaction" : "decrease",
+        "target_name" : "Inflammation",
+        "impact" : "good",
+        "weight" : "WEAK",
+        "source_type" : "ingredient",
+        "source_original" : "176",
+        "shared_name" : "Alpha Lipoic Acid (decrease) Inflammation",
+        "target_original" : "190",
+        "shared_name" : "Alpha Lipoic Acid (decrease) Inflammation",
+        "shared_interaction" : "decrease",
+        "name" : "Alpha Lipoic Acid (decrease) Inflammation",
+        "interaction" : "decrease",
+        "SUID" : 9521,
+        "id_original" : "322",
+        "selected" : false,
+        "source_name" : "Alpha Lipoic Acid"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9519",
+        "source" : "9481",
+        "target" : "9513",
+        "shared_interaction" : "increase",
+        "target_name" : "NAD Levels",
+        "impact" : "good",
+        "weight" : "WEAK",
+        "source_type" : "ingredient",
+        "source_original" : "176",
+        "shared_name" : "Alpha Lipoic Acid (increase) NAD Levels",
+        "target_original" : "208",
+        "shared_name" : "Alpha Lipoic Acid (increase) NAD Levels",
+        "shared_interaction" : "increase",
+        "name" : "Alpha Lipoic Acid (increase) NAD Levels",
+        "interaction" : "increase",
+        "SUID" : 9519,
+        "id_original" : "324",
+        "selected" : false,
+        "source_name" : "Alpha Lipoic Acid"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9517",
+        "source" : "9481",
+        "target" : "9491",
+        "shared_interaction" : "decrease",
+        "target_name" : "AGEs",
+        "impact" : "good",
+        "weight" : "MODERATE",
+        "source_type" : "ingredient",
+        "source_original" : "176",
+        "shared_name" : "Alpha Lipoic Acid (decrease) AGEs",
+        "target_original" : "186",
+        "shared_name" : "Alpha Lipoic Acid (decrease) AGEs",
+        "shared_interaction" : "decrease",
+        "name" : "Alpha Lipoic Acid (decrease) AGEs",
+        "interaction" : "decrease",
+        "SUID" : 9517,
+        "id_original" : "326",
+        "selected" : false,
+        "source_name" : "Alpha Lipoic Acid"
+      },
+      "selected" : false
+    }, {
+      "data" : {
+        "id" : "9515",
+        "source" : "9481",
+        "target" : "9493",
+        "shared_interaction" : "decrease",
+        "target_name" : "Glycation",
+        "impact" : "good",
+        "weight" : "MODERATE",
+        "source_type" : "ingredient",
+        "source_original" : "176",
+        "shared_name" : "Alpha Lipoic Acid (decrease) Glycation",
+        "target_original" : "188",
+        "shared_name" : "Alpha Lipoic Acid (decrease) Glycation",
+        "shared_interaction" : "decrease",
+        "name" : "Alpha Lipoic Acid (decrease) Glycation",
+        "interaction" : "decrease",
+        "SUID" : 9515,
+        "id_original" : "328",
+        "selected" : false,
+        "source_name" : "Alpha Lipoic Acid"
+      },
+      "selected" : false
+    } ]
+  }
+}

@@ -3,6 +3,12 @@ import json
 from jsondiff import diff
 import pandas as pd
 
+# use case:
+# - cytoscape export the file into cyjs format
+# - we should create csvs
+# - we can add records to csvs (manually or programmatically), we should set x and y position manually
+# - we can create a new cyjs file from csvs
+# - we can upload the modified cyjs file to cytoscape
 
 def create_nodes_json(csv_filepath):
     nodes_list = []
@@ -29,6 +35,7 @@ def create_nodes_json(csv_filepath):
             node['position'] = position
 
             node['selected'] = row["selected"] == "True"
+            # node['selected'] = row["selected"] == "True"
 
             nodes_list.append(node)
     return nodes_list
@@ -44,13 +51,16 @@ def create_edges_json(csv_path):
                     "id": row["id"],
                     "source": row["source"],
                     "target": row["target"],
+                    "source_type": row["source_type"],
+                    "source_name": row["source_name"],
+                    "target_name": row["target_name"],
                     "shared_name": row["shared_name"],
                     "shared_interaction": row["shared_interaction"],
                     "impact": row["impact"],
                     "name": row["name"],
                     "interaction": row["interaction"],
                     "weight": row["weight"],
-                    "SUID": row["SUID"],
+                    "SUID": int(row["SUID"]),
                     "selected": False if row.get("selected", "false").lower() == "false" else True
                 },
                 "selected": False if row.get("selected", "false").lower() == "false" else True
@@ -59,7 +69,7 @@ def create_edges_json(csv_path):
     return edges
 
 
-def merge_nodes_and_edges(output_json_path, nodes_csv_path, edges_csv_path):
+def save_new_network_json_from_nodes_and_edges(output_json_path, nodes_csv_path, edges_csv_path):
     nodes_json = create_nodes_json(nodes_csv_path)
     edges_json = create_edges_json(edges_csv_path)
 
@@ -125,40 +135,79 @@ def json_to_dfs_multi_index(json_path):
     for node in nodes_list:
         node_data = {'data_' + k: v for k, v in node['data'].items()}
         pos_data = {'position_' + k: v for k, v in node.get('position', {}).items()}
-        merged_data = {**node_data, **pos_data}
+        # merged_data = {**node_data, **pos_data}
+        merged_data = {**node_data, **pos_data, 'selected': node.get('selected', False)}
         nodes_data.append(merged_data)
 
     edges_data = [edge['data'] for edge in edges_list]
 
     nodes_df = pd.DataFrame(nodes_data)
+    # nodes_df.columns = pd.MultiIndex.from_tuples(
+    #     [(col.split('_', 1)[0], col.split('_', 1)[1]) for col in nodes_df.columns])
     nodes_df.columns = pd.MultiIndex.from_tuples(
-        [(col.split('_', 1)[0], col.split('_', 1)[1]) for col in nodes_df.columns])
+        [(col.split('_', 1)[0], col.split('_', 1)[1]) if '_' in col else (col, '') for col in nodes_df.columns])
 
     edges_df = pd.DataFrame(edges_data)
 
     return nodes_df, edges_df
 
 def save_dfs_to_csv(nodes_df, edges_df, nodes_file_path='nodes2.csv', edges_file_path='edges2.csv'):
-    nodes_df.columns = ['_'.join(col).strip() for col in nodes_df.columns.values]
+    # nodes_df.columns = ['_'.join(col).strip() for col in nodes_df.columns.values]
+    nodes_df.columns = ['_'.join(filter(None, col)).strip() for col in nodes_df.columns.values]
     nodes_df.to_csv(nodes_file_path, index=False)
     edges_df.to_csv(edges_file_path, index=False)
 
 
+def modify_edges_csv(file_path):
+    # 1. Open the CSV as a DataFrame
+    df = pd.read_csv(file_path)
+
+    # 2. Add the new columns, initializing with empty strings
+    df['source_name'] = ''
+    df['target_name'] = ''
+
+    # 3. Fill up the columns by splitting 'shared_name'
+    for index, row in df.iterrows():
+        shared_name = row['shared_name']
+        source_name, _, target_name = shared_name.partition(' (')
+        target_name = target_name.rpartition(') ')[2]
+
+        df.at[index, 'source_name'] = source_name
+        df.at[index, 'target_name'] = target_name
+
+    # Reorder columns to place 'source_name' and 'target_name' after 'target'
+    if False:
+        cols = df.columns.tolist()
+        source_name_index = cols.index('source_name')
+        target_name_index = cols.index('target_name')
+        target_index = cols.index('target')
+
+        reordered_cols = cols[:target_index + 1] + [cols[source_name_index], cols[target_name_index]] + cols[
+                                                                                                        target_index + 1:source_name_index] + cols[
+                                                                                                                                              source_name_index + 1:target_name_index] + cols[
+                                                                                                                                                                                         target_name_index + 1:]
+
+        df = df[reordered_cols]
+
+    # 4. Save the DataFrame back to the original CSV file
+    df.to_csv(file_path, index=False)
+# modify_edges_csv('network/edges.csv')
+# import sys
+# sys.exit()
+
 # Example usage:
-output_json_path = 'network/merged.json'
-nodes_csv_path = 'network/nodes2.csv'
-edges_csv_path = 'network/edges2.csv'
-merged_json_str = merge_nodes_and_edges(output_json_path, nodes_csv_path, edges_csv_path)
 
-json1 = 'network/merged.json'
-
-json_input = 'network/nw3.cyjs'
-nodes_df, edges_df = json_to_dfs_multi_index(json_input)
+# convert to cytoscape to csvs
+# json_cyjs = 'network/nw3.cyjs'
+# nodes_df, edges_df = json_to_dfs_multi_index(json_cyjs)
 # Usage example with the previously generated DataFrames
-save_dfs_to_csv(nodes_df, edges_df, 'network/nodes.csv', 'network/edges.csv')
+# save_dfs_to_csv(nodes_df, edges_df, 'network/nodes.csv', 'network/edges.csv')
 
-# Example usage:
-# compare_json_files(json1, json2)
+nodes_csv_path = 'network/nodes.csv'
+edges_csv_path = 'network/edges.csv'
+output_json_path = 'network/merged.json'
+merged_json_str = save_new_network_json_from_nodes_and_edges(output_json_path, nodes_csv_path, edges_csv_path)
 
-
+# compare cyjs with json
+# compare_json_files(output_json_path, json_cyjs)
 
