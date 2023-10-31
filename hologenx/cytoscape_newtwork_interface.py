@@ -2,6 +2,10 @@ import csv
 import json
 from jsondiff import diff
 import pandas as pd
+import os
+import sys
+from openpyxl import load_workbook
+import xlwings as xw
 
 # use case:
 # - cytoscape export the file into cyjs format
@@ -22,9 +26,10 @@ def create_nodes_json(csv_filepath):
                 "diffusion_input": float(row["data_diffusion_input"]),
                 "Label": row["data_Label"],
                 "name": row["data_name"],
-                "SUID": int(row["data_SUID"]),
+                "SUID": int(float(row["data_SUID"])),
                 "category": row["data_category"],
-                "selected": row["data_selected"] == "True"
+                "selected": row["data_selected"] == "True",
+                "show": row["show"]
             }
             node['data'] = data
 
@@ -60,7 +65,7 @@ def create_edges_json(csv_path):
                     "name": row["name"],
                     "interaction": row["interaction"],
                     "weight": row["weight"],
-                    "SUID": int(row["SUID"]),
+                    "SUID": int(float(row["SUID"])),
                     "selected": False if row.get("selected", "false").lower() == "false" else True
                 },
                 "selected": False if row.get("selected", "false").lower() == "false" else True
@@ -151,12 +156,39 @@ def json_to_dfs_multi_index(json_path):
 
     return nodes_df, edges_df
 
+
 def save_dfs_to_csv(nodes_df, edges_df, nodes_file_path='nodes2.csv', edges_file_path='edges2.csv'):
     # nodes_df.columns = ['_'.join(col).strip() for col in nodes_df.columns.values]
     nodes_df.columns = ['_'.join(filter(None, col)).strip() for col in nodes_df.columns.values]
     nodes_df.to_csv(nodes_file_path, index=False)
     edges_df.to_csv(edges_file_path, index=False)
 
+
+def save_excel_sheets_to_csv(excel_file_path, output_directory):
+    # Create the output directory if it doesn't exist
+    if not os.path.exists(output_directory):
+        os.makedirs(output_directory)
+
+    # Open the workbook with xlwings
+    wb = xw.Book(excel_file_path)
+
+    # Loop through each sheet in the Excel workbook
+    for sheet in wb.sheets:
+        # Convert the sheet to a DataFrame
+        df = sheet.used_range.options(pd.DataFrame, index=False, header=True).value
+
+        # Create the CSV file path
+        csv_file_path = os.path.join(output_directory, f"{sheet.name}.csv")
+
+        # Save the DataFrame to CSV
+        df.to_csv(csv_file_path, index=False)
+
+    # Close the workbook
+    wb.close()
+
+
+# save_excel_sheets_to_csv("network/aging_network.xlsx", "network")
+# sys.exit()
 
 def modify_edges_csv(file_path):
     # 1. Open the CSV as a DataFrame
@@ -197,16 +229,53 @@ def modify_edges_csv(file_path):
 
 # Example usage:
 
-# convert to cytoscape to csvs
-# json_cyjs = 'network/nw3.cyjs'
-# nodes_df, edges_df = json_to_dfs_multi_index(json_cyjs)
-# Usage example with the previously generated DataFrames
-# save_dfs_to_csv(nodes_df, edges_df, 'network/nodes.csv', 'network/edges.csv')
+def update_coordinates_in_excel_file(excel_file_path, node_csv_file_path):
 
-nodes_csv_path = 'network/nodes.csv'
-edges_csv_path = 'network/edges.csv'
-output_json_path = 'network/merged.json'
-merged_json_str = save_new_network_json_from_nodes_and_edges(output_json_path, nodes_csv_path, edges_csv_path)
+    nodes_sheet = pd.read_excel(excel_file_path, sheet_name='nodes')
+    csv_data = pd.read_csv(node_csv_file_path)
+
+    for index, row in csv_data.iterrows():
+        node_name = row['data_shared_name']
+        position_x_csv = row['position_x']
+        position_y_csv = row['position_y']
+
+        # Update the corresponding row in the 'nodes' sheet
+        nodes_sheet.loc[nodes_sheet['data_shared_name'] == node_name, 'position_x'] = position_x_csv
+        nodes_sheet.loc[nodes_sheet['data_shared_name'] == node_name, 'position_y'] = position_y_csv
+
+    # Save the modified 'nodes' sheet back to the Excel file
+    with pd.ExcelWriter(excel_file_path, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
+        nodes_sheet.to_excel(writer, sheet_name='nodes', index=False)
+
+    print('Excel file updated successfully!')
+# update_coordinates_in_excel_file('network/aging_network.xlsx', 'network/nodes_cyjs.csv')
+
+
+
+def create_cyjs():
+    # step 5: create nodes and edges csvs from excel
+    save_excel_sheets_to_csv("network/aging_network.xlsx", "network")
+    # step 6: create cyjs from csvs
+    nodes_csv_path = 'network/nodes.csv'
+    edges_csv_path = 'network/edges.csv'
+    output_json_path = 'network/result.json'
+    merged_json_str = save_new_network_json_from_nodes_and_edges(output_json_path, nodes_csv_path, edges_csv_path)
+
+
+def refresh_coordinates_in_result_json(json_cyjs, excel_file_path):
+    # get the new coordinates from json cyjs
+    nodes_df, edges_df = json_to_dfs_multi_index(json_cyjs)
+    # save the results to cyjs nodes
+    save_dfs_to_csv(nodes_df, edges_df, 'network/nodes_cyjs.csv', 'network/edges_cyjs.csv')
+    # update the
+    update_coordinates_in_excel_file(excel_file_path, 'network/nodes_cyjs.csv')
+    create_cyjs()
+refresh_coordinates_in_result_json('network/nw501.cyjs', 'network/aging_network.xlsx')
+sys.exit()
+
+
+
+#step 7: upload the cyjs to cytoscape
 
 # compare cyjs with json
 # compare_json_files(output_json_path, json_cyjs)
