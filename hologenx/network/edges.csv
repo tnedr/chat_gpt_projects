@@ -70,63 +70,69 @@ id,source_name,interaction,target_name,impact,weight,scientific_evidence,source_
 1070.0,Telomere Shortening,increase,Cellular Senescence,bad,5.0,5.0,mechanism,118.0,106.0,Telomere Shortening (increase) Cellular Senescence,increase,Telomere Shortening (increase) Cellular Senescence,1070.0,False
 1071.0,Telomere Shortening,increase,DNA Damage,bad,5.0,5.0,mechanism,118.0,107.0,Telomere Shortening (increase) DNA Damage,increase,Telomere Shortening (increase) DNA Damage,1071.0,False
 1072.0,Telomere Shortening,decrease,Sirtuin Activation,bad,3.0,3.0,mechanism,118.0,117.0,Telomere Shortening (decrease) Sirtuin Activation,decrease,Telomere Shortening (decrease) Sirtuin Activation,1072.0,False
-2001.0,Alpha Lipoic Acid,decrease,AGEs,effect,3.0,3.0,ingredient,176.0,101.0,Alpha Lipoic Acid (decrease) AGEs,decrease,Alpha Lipoic Acid (decrease) AGEs,2001.0,False
-2002.0,Alpha Lipoic Acid,increase,Glutathione Levels,effect,4.0,4.0,ingredient,176.0,119.0,Alpha Lipoic Acid (increase) Glutathione Levels,increase,Alpha Lipoic Acid (increase) Glutathione Levels,2002.0,False
-2003.0,Alpha Lipoic Acid,decrease,Glycation,effect,3.0,3.0,ingredient,176.0,109.0,Alpha Lipoic Acid (decrease) Glycation,decrease,Alpha Lipoic Acid (decrease) Glycation,2003.0,False
-2004.0,Alpha Lipoic Acid,decrease,Inflammation,effect,2.0,3.0,ingredient,176.0,111.0,Alpha Lipoic Acid (decrease) Inflammation,decrease,Alpha Lipoic Acid (decrease) Inflammation,2004.0,False
-2005.0,Alpha Lipoic Acid,increase,Insulin Sensitivity,effect,3.0,3.0,ingredient,176.0,112.0,Alpha Lipoic Acid (increase) Insulin Sensitivity,increase,Alpha Lipoic Acid (increase) Insulin Sensitivity,2005.0,False
-2006.0,Alpha Lipoic Acid,increase,NAD Levels,effect,2.0,3.0,ingredient,176.0,115.0,Alpha Lipoic Acid (increase) NAD Levels,increase,Alpha Lipoic Acid (increase) NAD Levels,2006.0,False
-2007.0,Alpha Lipoic Acid,decrease,Oxidative Stress (incl. ROS),effect,3.0,3.0,ingredient,176.0,116.0,Alpha Lipoic Acid (decrease) Oxidative Stress (incl. ROS),decrease,Alpha Lipoic Acid (decrease) Oxidative Stress (incl. ROS),2007.0,False
-2008.0,Astaxanthin,decrease,DNA Damage,effect,2.0,3.0,ingredient,507.0,107.0,Astaxanthin (decrease) DNA Damage,decrease,Astaxanthin (decrease) DNA Damage,2008.0,False
-2009.0,Astaxanthin,decrease,Inflammation,effect,3.0,3.0,ingredient,507.0,111.0,Astaxanthin (decrease) Inflammation,decrease,Astaxanthin (decrease) Inflammation,2009.0,False
-2010.0,Astaxanthin,decrease,Oxidative Stress (incl. ROS),effect,4.0,4.0,ingredient,507.0,116.0,Astaxanthin (decrease) Oxidative Stress (incl. ROS),decrease,Astaxanthin (decrease) Oxidative Stress (incl. ROS),2010.0,False
-2011.0,Berberine,increase,AMPK Signaling,effect,5.0,5.0,ingredient,501.0,102.0,Berberine (increase) AMPK Signaling,increase,Berberine (increase) AMPK Signaling,2011.0,False
-2012.0,Berberine,decrease,Inflammation,effect,4.0,4.0,ingredient,501.0,111.0,Berberine (decrease) Inflammation,decrease,Berberine (decrease) Inflammation,2012.0,False
-2013.0,Berberine,increase,Insulin Sensitivity,effect,5.0,5.0,ingredient,501.0,112.0,Berberine (increase) Insulin Sensitivity,increase,Berberine (increase) Insulin Sensitivity,2013.0,False
-2014.0,Berberine,decrease,Oxidative Stress (incl. ROS),effect,4.0,4.0,ingredient,501.0,116.0,Berberine (decrease) Oxidative Stress (incl. ROS),decrease,Berberine (decrease) Oxidative Stress (incl. ROS),2014.0,False
-2015.0,Curcumin,decrease,Cellular Senescence,effect,4.0,4.0,ingredient,502.0,106.0,Curcumin (decrease) Cellular Senescence,decrease,Curcumin (decrease) Cellular Senescence,2015.0,False
-2016.0,Curcumin,decrease,Inflammation,effect,5.0,5.0,ingredient,502.0,111.0,Curcumin (decrease) Inflammation,decrease,Curcumin (decrease) Inflammation,2016.0,False
-2017.0,Curcumin,decrease,Oxidative Stress (incl. ROS),effect,5.0,5.0,ingredient,502.0,116.0,Curcumin (decrease) Oxidative Stress (incl. ROS),decrease,Curcumin (decrease) Oxidative Stress (incl. ROS),2017.0,False
-2018.0,EGCG,decrease,AGEs,effect,3.0,3.0,ingredient,509.0,101.0,EGCG (decrease) AGEs,decrease,EGCG (decrease) AGEs,2018.0,False
-2019.0,EGCG,increase,AMPK Signaling,effect,3.0,3.0,ingredient,509.0,102.0,EGCG (increase) AMPK Signaling,increase,EGCG (increase) AMPK Signaling,2019.0,False
-2020.0,EGCG,decrease,Cellular Senescence,effect,3.0,3.0,ingredient,509.0,106.0,EGCG (decrease) Cellular Senescence,decrease,EGCG (decrease) Cellular Senescence,2020.0,False
-2021.0,EGCG,decrease,DNA Damage,effect,3.0,3.0,ingredient,509.0,107.0,EGCG (decrease) DNA Damage,decrease,EGCG (decrease) DNA Damage,2021.0,False
-2022.0,EGCG,decrease,Inflammation,effect,4.0,4.0,ingredient,509.0,111.0,EGCG (decrease) Inflammation,decrease,EGCG (decrease) Inflammation,2022.0,False
-2023.0,EGCG,decrease,Oxidative Stress (incl. ROS),effect,4.0,4.0,ingredient,509.0,116.0,EGCG (decrease) Oxidative Stress (incl. ROS),decrease,EGCG (decrease) Oxidative Stress (incl. ROS),2023.0,False
-2024.0,EGCG,increase,Sirtuin Activation,effect,3.0,3.0,ingredient,509.0,117.0,EGCG (increase) Sirtuin Activation,increase,EGCG (increase) Sirtuin Activation,2024.0,False
-2025.0,Fisetin,decrease,Cellular Senescence,effect,4.0,3.0,ingredient,503.0,106.0,Fisetin (decrease) Cellular Senescence,decrease,Fisetin (decrease) Cellular Senescence,2025.0,False
-2026.0,Fisetin,decrease,Inflammation,effect,4.0,4.0,ingredient,503.0,111.0,Fisetin (decrease) Inflammation,decrease,Fisetin (decrease) Inflammation,2026.0,False
-2027.0,Fisetin,decrease,Oxidative Stress (incl. ROS),effect,4.0,3.0,ingredient,503.0,116.0,Fisetin (decrease) Oxidative Stress (incl. ROS),decrease,Fisetin (decrease) Oxidative Stress (incl. ROS),2027.0,False
-2028.0,Glycine,increase,Glutathione Levels,effect,3.0,3.0,ingredient,506.0,119.0,Glycine (increase) Glutathione Levels,increase,Glycine (increase) Glutathione Levels,2028.0,False
-2029.0,Glycine,decrease,Inflammation,effect,2.0,3.0,ingredient,506.0,111.0,Glycine (decrease) Inflammation,decrease,Glycine (decrease) Inflammation,2029.0,False
-2030.0,NAC,decrease,DNA Damage,effect,3.0,3.0,ingredient,504.0,107.0,NAC (decrease) DNA Damage,decrease,NAC (decrease) DNA Damage,2030.0,False
-2031.0,NAC,increase,Glutathione Levels,effect,5.0,5.0,ingredient,504.0,119.0,NAC (increase) Glutathione Levels,increase,NAC (increase) Glutathione Levels,2031.0,False
-2032.0,NAC,decrease,Inflammation,effect,4.0,4.0,ingredient,504.0,111.0,NAC (decrease) Inflammation,decrease,NAC (decrease) Inflammation,2032.0,False
-2033.0,NAC,decrease,Oxidative Stress (incl. ROS),effect,5.0,4.0,ingredient,504.0,116.0,NAC (decrease) Oxidative Stress (incl. ROS),decrease,NAC (decrease) Oxidative Stress (incl. ROS),2033.0,False
-2034.0,NR,increase,AMPK Signaling,effect,2.0,3.0,ingredient,180.0,102.0,NR (increase) AMPK Signaling,increase,NR (increase) AMPK Signaling,2034.0,False
-2035.0,NR,decrease,CD38 Activity,effect,3.0,3.0,ingredient,180.0,105.0,NR (decrease) CD38 Activity,decrease,NR (decrease) CD38 Activity,2035.0,False
-2036.0,NR,increase,NAD Levels,effect,5.0,5.0,ingredient,180.0,115.0,NR (increase) NAD Levels,increase,NR (increase) NAD Levels,2036.0,False
-2037.0,NR,decrease,Oxidative Stress (incl. ROS),effect,2.0,3.0,ingredient,180.0,116.0,NR (decrease) Oxidative Stress (incl. ROS),decrease,NR (decrease) Oxidative Stress (incl. ROS),2037.0,False
-2038.0,NR,increase,Sirtuin Activation,effect,3.0,3.0,ingredient,180.0,117.0,NR (increase) Sirtuin Activation,increase,NR (increase) Sirtuin Activation,2038.0,False
-2039.0,Pterostilbene,decrease,Inflammation,effect,3.0,3.0,ingredient,505.0,111.0,Pterostilbene (decrease) Inflammation,decrease,Pterostilbene (decrease) Inflammation,2039.0,False
-2040.0,Pterostilbene,decrease,Oxidative Stress (incl. ROS),effect,4.0,4.0,ingredient,505.0,116.0,Pterostilbene (decrease) Oxidative Stress (incl. ROS),decrease,Pterostilbene (decrease) Oxidative Stress (incl. ROS),2040.0,False
-2041.0,Pterostilbene,increase,Sirtuin Activation,effect,3.0,3.0,ingredient,505.0,117.0,Pterostilbene (increase) Sirtuin Activation,increase,Pterostilbene (increase) Sirtuin Activation,2041.0,False
-2042.0,Quercetin,increase,AMPK Signaling,effect,3.0,3.0,ingredient,201.0,102.0,Quercetin (increase) AMPK Signaling,increase,Quercetin (increase) AMPK Signaling,2042.0,False
-2043.0,Quercetin,decrease,Cellular Senescence,effect,3.0,3.0,ingredient,201.0,106.0,Quercetin (decrease) Cellular Senescence,decrease,Quercetin (decrease) Cellular Senescence,2043.0,False
-2044.0,Quercetin,decrease,DNA Damage,effect,2.0,3.0,ingredient,201.0,107.0,Quercetin (decrease) DNA Damage,decrease,Quercetin (decrease) DNA Damage,2044.0,False
-2045.0,Quercetin,decrease,Inflammation,effect,5.0,5.0,ingredient,201.0,111.0,Quercetin (decrease) Inflammation,decrease,Quercetin (decrease) Inflammation,2045.0,False
-2046.0,Quercetin,increase,Insulin Sensitivity,effect,3.0,3.0,ingredient,201.0,112.0,Quercetin (increase) Insulin Sensitivity,increase,Quercetin (increase) Insulin Sensitivity,2046.0,False
-2047.0,Quercetin,decrease,Oxidative Stress (incl. ROS),effect,5.0,5.0,ingredient,201.0,116.0,Quercetin (decrease) Oxidative Stress (incl. ROS),decrease,Quercetin (decrease) Oxidative Stress (incl. ROS),2047.0,False
-2048.0,Quercetin,increase,Sirtuin Activation,effect,2.0,3.0,ingredient,201.0,117.0,Quercetin (increase) Sirtuin Activation,increase,Quercetin (increase) Sirtuin Activation,2048.0,False
-2049.0,Resveratrol,increase,AMPK Signaling,effect,3.0,3.0,ingredient,202.0,102.0,Resveratrol (increase) AMPK Signaling,increase,Resveratrol (increase) AMPK Signaling,2049.0,False
-2050.0,Resveratrol,decrease,Inflammation,effect,3.0,3.0,ingredient,202.0,111.0,Resveratrol (decrease) Inflammation,decrease,Resveratrol (decrease) Inflammation,2050.0,False
-2051.0,Resveratrol,increase,NAD Levels,effect,2.0,3.0,ingredient,202.0,115.0,Resveratrol (increase) NAD Levels,increase,Resveratrol (increase) NAD Levels,2051.0,False
-2052.0,Resveratrol,decrease,Oxidative Stress (incl. ROS),effect,3.0,3.0,ingredient,202.0,116.0,Resveratrol (decrease) Oxidative Stress (incl. ROS),decrease,Resveratrol (decrease) Oxidative Stress (incl. ROS),2052.0,False
-2053.0,Resveratrol,increase,Sirtuin Activation,effect,5.0,5.0,ingredient,202.0,117.0,Resveratrol (increase) Sirtuin Activation,increase,Resveratrol (increase) Sirtuin Activation,2053.0,False
-2054.0,Spermidine,increase,Autophagy,effect,4.0,4.0,ingredient,510.0,103.0,Spermidine (increase) Autophagy,increase,Spermidine (increase) Autophagy,2054.0,False
-2055.0,Spermidine,decrease,Cellular Senescence,effect,3.0,3.0,ingredient,510.0,106.0,Spermidine (decrease) Cellular Senescence,decrease,Spermidine (decrease) Cellular Senescence,2055.0,False
-2056.0,Spermidine,decrease,Inflammation,effect,3.0,3.0,ingredient,510.0,111.0,Spermidine (decrease) Inflammation,decrease,Spermidine (decrease) Inflammation,2056.0,False
-2057.0,Spermidine,decrease,Oxidative Stress (incl. ROS),effect,4.0,4.0,ingredient,510.0,116.0,Spermidine (decrease) Oxidative Stress (incl. ROS),decrease,Spermidine (decrease) Oxidative Stress (incl. ROS),2057.0,False
-2058.0,Sulforaphane,increase,Glutathione Levels,effect,4.0,4.0,ingredient,508.0,119.0,Sulforaphane (increase) Glutathione Levels,increase,Sulforaphane (increase) Glutathione Levels,2058.0,False
-2059.0,Sulforaphane,decrease,Inflammation,effect,4.0,3.0,ingredient,508.0,111.0,Sulforaphane (decrease) Inflammation,decrease,Sulforaphane (decrease) Inflammation,2059.0,False
-2060.0,Sulforaphane,decrease,Oxidative Stress (incl. ROS),effect,4.0,4.0,ingredient,508.0,116.0,Sulforaphane (decrease) Oxidative Stress (incl. ROS),decrease,Sulforaphane (decrease) Oxidative Stress (incl. ROS),2060.0,False
+2001.0,Alpha Lipoic Acid,decrease,AGEs,good,3.0,3.0,ingredient,176.0,101.0,Alpha Lipoic Acid (decrease) AGEs,decrease,Alpha Lipoic Acid (decrease) AGEs,2001.0,False
+2002.0,Alpha Lipoic Acid,increase,Glutathione Levels,good,4.0,4.0,ingredient,176.0,119.0,Alpha Lipoic Acid (increase) Glutathione Levels,increase,Alpha Lipoic Acid (increase) Glutathione Levels,2002.0,False
+2003.0,Alpha Lipoic Acid,decrease,Glycation,good,3.0,3.0,ingredient,176.0,109.0,Alpha Lipoic Acid (decrease) Glycation,decrease,Alpha Lipoic Acid (decrease) Glycation,2003.0,False
+2004.0,Alpha Lipoic Acid,decrease,Inflammation,good,2.0,3.0,ingredient,176.0,111.0,Alpha Lipoic Acid (decrease) Inflammation,decrease,Alpha Lipoic Acid (decrease) Inflammation,2004.0,False
+2005.0,Alpha Lipoic Acid,increase,Insulin Sensitivity,good,3.0,3.0,ingredient,176.0,112.0,Alpha Lipoic Acid (increase) Insulin Sensitivity,increase,Alpha Lipoic Acid (increase) Insulin Sensitivity,2005.0,False
+2006.0,Alpha Lipoic Acid,increase,NAD Levels,good,2.0,3.0,ingredient,176.0,115.0,Alpha Lipoic Acid (increase) NAD Levels,increase,Alpha Lipoic Acid (increase) NAD Levels,2006.0,False
+2007.0,Alpha Lipoic Acid,decrease,Oxidative Stress (incl. ROS),good,3.0,3.0,ingredient,176.0,116.0,Alpha Lipoic Acid (decrease) Oxidative Stress (incl. ROS),decrease,Alpha Lipoic Acid (decrease) Oxidative Stress (incl. ROS),2007.0,False
+2008.0,Astaxanthin,decrease,DNA Damage,good,2.0,3.0,ingredient,507.0,107.0,Astaxanthin (decrease) DNA Damage,decrease,Astaxanthin (decrease) DNA Damage,2008.0,False
+2009.0,Astaxanthin,decrease,Inflammation,good,3.0,3.0,ingredient,507.0,111.0,Astaxanthin (decrease) Inflammation,decrease,Astaxanthin (decrease) Inflammation,2009.0,False
+2010.0,Astaxanthin,decrease,Oxidative Stress (incl. ROS),good,4.0,4.0,ingredient,507.0,116.0,Astaxanthin (decrease) Oxidative Stress (incl. ROS),decrease,Astaxanthin (decrease) Oxidative Stress (incl. ROS),2010.0,False
+2011.0,Berberine,increase,AMPK Signaling,good,5.0,5.0,ingredient,501.0,102.0,Berberine (increase) AMPK Signaling,increase,Berberine (increase) AMPK Signaling,2011.0,False
+2012.0,Berberine,decrease,Inflammation,good,4.0,4.0,ingredient,501.0,111.0,Berberine (decrease) Inflammation,decrease,Berberine (decrease) Inflammation,2012.0,False
+2013.0,Berberine,increase,Insulin Sensitivity,good,5.0,5.0,ingredient,501.0,112.0,Berberine (increase) Insulin Sensitivity,increase,Berberine (increase) Insulin Sensitivity,2013.0,False
+2014.0,Berberine,decrease,Oxidative Stress (incl. ROS),good,4.0,4.0,ingredient,501.0,116.0,Berberine (decrease) Oxidative Stress (incl. ROS),decrease,Berberine (decrease) Oxidative Stress (incl. ROS),2014.0,False
+2015.0,Curcumin,decrease,Cellular Senescence,good,4.0,4.0,ingredient,502.0,106.0,Curcumin (decrease) Cellular Senescence,decrease,Curcumin (decrease) Cellular Senescence,2015.0,False
+2016.0,Curcumin,decrease,Inflammation,good,5.0,5.0,ingredient,502.0,111.0,Curcumin (decrease) Inflammation,decrease,Curcumin (decrease) Inflammation,2016.0,False
+2017.0,Curcumin,decrease,Oxidative Stress (incl. ROS),good,5.0,5.0,ingredient,502.0,116.0,Curcumin (decrease) Oxidative Stress (incl. ROS),decrease,Curcumin (decrease) Oxidative Stress (incl. ROS),2017.0,False
+2018.0,EGCG,decrease,AGEs,good,3.0,3.0,ingredient,509.0,101.0,EGCG (decrease) AGEs,decrease,EGCG (decrease) AGEs,2018.0,False
+2019.0,EGCG,increase,AMPK Signaling,good,3.0,3.0,ingredient,509.0,102.0,EGCG (increase) AMPK Signaling,increase,EGCG (increase) AMPK Signaling,2019.0,False
+2020.0,EGCG,decrease,Cellular Senescence,good,3.0,3.0,ingredient,509.0,106.0,EGCG (decrease) Cellular Senescence,decrease,EGCG (decrease) Cellular Senescence,2020.0,False
+2021.0,EGCG,decrease,DNA Damage,good,3.0,3.0,ingredient,509.0,107.0,EGCG (decrease) DNA Damage,decrease,EGCG (decrease) DNA Damage,2021.0,False
+2022.0,EGCG,decrease,Inflammation,good,4.0,4.0,ingredient,509.0,111.0,EGCG (decrease) Inflammation,decrease,EGCG (decrease) Inflammation,2022.0,False
+2023.0,EGCG,decrease,Oxidative Stress (incl. ROS),good,4.0,4.0,ingredient,509.0,116.0,EGCG (decrease) Oxidative Stress (incl. ROS),decrease,EGCG (decrease) Oxidative Stress (incl. ROS),2023.0,False
+2024.0,EGCG,increase,Sirtuin Activation,good,3.0,3.0,ingredient,509.0,117.0,EGCG (increase) Sirtuin Activation,increase,EGCG (increase) Sirtuin Activation,2024.0,False
+2025.0,Fisetin,decrease,Cellular Senescence,good,4.0,3.0,ingredient,503.0,106.0,Fisetin (decrease) Cellular Senescence,decrease,Fisetin (decrease) Cellular Senescence,2025.0,False
+2026.0,Fisetin,decrease,Inflammation,good,4.0,4.0,ingredient,503.0,111.0,Fisetin (decrease) Inflammation,decrease,Fisetin (decrease) Inflammation,2026.0,False
+2027.0,Fisetin,decrease,Oxidative Stress (incl. ROS),good,4.0,3.0,ingredient,503.0,116.0,Fisetin (decrease) Oxidative Stress (incl. ROS),decrease,Fisetin (decrease) Oxidative Stress (incl. ROS),2027.0,False
+2028.0,Glycine,increase,Glutathione Levels,good,3.0,3.0,ingredient,506.0,119.0,Glycine (increase) Glutathione Levels,increase,Glycine (increase) Glutathione Levels,2028.0,False
+2029.0,Glycine,decrease,Inflammation,good,2.0,3.0,ingredient,506.0,111.0,Glycine (decrease) Inflammation,decrease,Glycine (decrease) Inflammation,2029.0,False
+2030.0,NAC,decrease,DNA Damage,good,3.0,3.0,ingredient,504.0,107.0,NAC (decrease) DNA Damage,decrease,NAC (decrease) DNA Damage,2030.0,False
+2031.0,NAC,increase,Glutathione Levels,good,5.0,5.0,ingredient,504.0,119.0,NAC (increase) Glutathione Levels,increase,NAC (increase) Glutathione Levels,2031.0,False
+2032.0,NAC,decrease,Inflammation,good,4.0,4.0,ingredient,504.0,111.0,NAC (decrease) Inflammation,decrease,NAC (decrease) Inflammation,2032.0,False
+2033.0,NAC,decrease,Oxidative Stress (incl. ROS),good,5.0,4.0,ingredient,504.0,116.0,NAC (decrease) Oxidative Stress (incl. ROS),decrease,NAC (decrease) Oxidative Stress (incl. ROS),2033.0,False
+2034.0,NR,increase,AMPK Signaling,good,2.0,3.0,ingredient,180.0,102.0,NR (increase) AMPK Signaling,increase,NR (increase) AMPK Signaling,2034.0,False
+2035.0,NR,decrease,CD38 Activity,good,3.0,3.0,ingredient,180.0,105.0,NR (decrease) CD38 Activity,decrease,NR (decrease) CD38 Activity,2035.0,False
+2036.0,NR,increase,NAD Levels,good,5.0,5.0,ingredient,180.0,115.0,NR (increase) NAD Levels,increase,NR (increase) NAD Levels,2036.0,False
+2037.0,NR,decrease,Oxidative Stress (incl. ROS),good,2.0,3.0,ingredient,180.0,116.0,NR (decrease) Oxidative Stress (incl. ROS),decrease,NR (decrease) Oxidative Stress (incl. ROS),2037.0,False
+2038.0,NR,increase,Sirtuin Activation,good,3.0,3.0,ingredient,180.0,117.0,NR (increase) Sirtuin Activation,increase,NR (increase) Sirtuin Activation,2038.0,False
+2039.0,Pterostilbene,decrease,Inflammation,good,3.0,3.0,ingredient,505.0,111.0,Pterostilbene (decrease) Inflammation,decrease,Pterostilbene (decrease) Inflammation,2039.0,False
+2040.0,Pterostilbene,decrease,Oxidative Stress (incl. ROS),good,4.0,4.0,ingredient,505.0,116.0,Pterostilbene (decrease) Oxidative Stress (incl. ROS),decrease,Pterostilbene (decrease) Oxidative Stress (incl. ROS),2040.0,False
+2041.0,Pterostilbene,increase,Sirtuin Activation,good,3.0,3.0,ingredient,505.0,117.0,Pterostilbene (increase) Sirtuin Activation,increase,Pterostilbene (increase) Sirtuin Activation,2041.0,False
+2042.0,Quercetin,increase,AMPK Signaling,good,3.0,3.0,ingredient,201.0,102.0,Quercetin (increase) AMPK Signaling,increase,Quercetin (increase) AMPK Signaling,2042.0,False
+2043.0,Quercetin,decrease,Cellular Senescence,good,3.0,3.0,ingredient,201.0,106.0,Quercetin (decrease) Cellular Senescence,decrease,Quercetin (decrease) Cellular Senescence,2043.0,False
+2044.0,Quercetin,decrease,DNA Damage,good,2.0,3.0,ingredient,201.0,107.0,Quercetin (decrease) DNA Damage,decrease,Quercetin (decrease) DNA Damage,2044.0,False
+2045.0,Quercetin,decrease,Inflammation,good,5.0,5.0,ingredient,201.0,111.0,Quercetin (decrease) Inflammation,decrease,Quercetin (decrease) Inflammation,2045.0,False
+2046.0,Quercetin,increase,Insulin Sensitivity,good,3.0,3.0,ingredient,201.0,112.0,Quercetin (increase) Insulin Sensitivity,increase,Quercetin (increase) Insulin Sensitivity,2046.0,False
+2047.0,Quercetin,decrease,Oxidative Stress (incl. ROS),good,5.0,5.0,ingredient,201.0,116.0,Quercetin (decrease) Oxidative Stress (incl. ROS),decrease,Quercetin (decrease) Oxidative Stress (incl. ROS),2047.0,False
+2048.0,Quercetin,increase,Sirtuin Activation,good,2.0,3.0,ingredient,201.0,117.0,Quercetin (increase) Sirtuin Activation,increase,Quercetin (increase) Sirtuin Activation,2048.0,False
+2049.0,Resveratrol,increase,AMPK Signaling,good,3.0,3.0,ingredient,202.0,102.0,Resveratrol (increase) AMPK Signaling,increase,Resveratrol (increase) AMPK Signaling,2049.0,False
+2050.0,Resveratrol,decrease,Inflammation,good,3.0,3.0,ingredient,202.0,111.0,Resveratrol (decrease) Inflammation,decrease,Resveratrol (decrease) Inflammation,2050.0,False
+2051.0,Resveratrol,increase,NAD Levels,good,2.0,3.0,ingredient,202.0,115.0,Resveratrol (increase) NAD Levels,increase,Resveratrol (increase) NAD Levels,2051.0,False
+2052.0,Resveratrol,decrease,Oxidative Stress (incl. ROS),good,3.0,3.0,ingredient,202.0,116.0,Resveratrol (decrease) Oxidative Stress (incl. ROS),decrease,Resveratrol (decrease) Oxidative Stress (incl. ROS),2052.0,False
+2053.0,Resveratrol,increase,Sirtuin Activation,good,5.0,5.0,ingredient,202.0,117.0,Resveratrol (increase) Sirtuin Activation,increase,Resveratrol (increase) Sirtuin Activation,2053.0,False
+2054.0,Spermidine,increase,Autophagy,good,4.0,4.0,ingredient,510.0,103.0,Spermidine (increase) Autophagy,increase,Spermidine (increase) Autophagy,2054.0,False
+2055.0,Spermidine,decrease,Cellular Senescence,good,3.0,3.0,ingredient,510.0,106.0,Spermidine (decrease) Cellular Senescence,decrease,Spermidine (decrease) Cellular Senescence,2055.0,False
+2056.0,Spermidine,decrease,Inflammation,good,3.0,3.0,ingredient,510.0,111.0,Spermidine (decrease) Inflammation,decrease,Spermidine (decrease) Inflammation,2056.0,False
+2057.0,Spermidine,decrease,Oxidative Stress (incl. ROS),good,4.0,4.0,ingredient,510.0,116.0,Spermidine (decrease) Oxidative Stress (incl. ROS),decrease,Spermidine (decrease) Oxidative Stress (incl. ROS),2057.0,False
+2058.0,Sulforaphane,increase,Glutathione Levels,good,4.0,4.0,ingredient,508.0,119.0,Sulforaphane (increase) Glutathione Levels,increase,Sulforaphane (increase) Glutathione Levels,2058.0,False
+2059.0,Sulforaphane,decrease,Inflammation,good,4.0,3.0,ingredient,508.0,111.0,Sulforaphane (decrease) Inflammation,decrease,Sulforaphane (decrease) Inflammation,2059.0,False
+2060.0,Sulforaphane,decrease,Oxidative Stress (incl. ROS),good,4.0,4.0,ingredient,508.0,116.0,Sulforaphane (decrease) Oxidative Stress (incl. ROS),decrease,Sulforaphane (decrease) Oxidative Stress (incl. ROS),2060.0,False
+2061.0,Apigenin,decrease,Inflammation,good,3.0,3.0,ingredient,511.0,111.0,Apigenin (decrease) Inflammation,decrease,Apigenin (decrease) Inflammation,2061.0,False
+2062.0,Apigenin,decrease,Oxidative Stress (incl. ROS),good,3.0,3.0,ingredient,511.0,116.0,Apigenin (decrease) Oxidative Stress (incl. ROS),decrease,Apigenin (decrease) Oxidative Stress (incl. ROS),2062.0,False
+2063.0,Apigenin,decrease,Cellular Senescence,good,2.0,2.0,ingredient,511.0,106.0,Apigenin (decrease) Cellular Senescence,decrease,Apigenin (decrease) Cellular Senescence,2063.0,False
+2064.0,Luteolin,decrease,Inflammation,good,3.0,3.0,ingredient,512.0,111.0,Luteolin (decrease) Inflammation,decrease,Luteolin (decrease) Inflammation,2064.0,False
+2065.0,Luteolin,decrease,Oxidative Stress (incl. ROS),good,3.0,3.0,ingredient,512.0,116.0,Luteolin (decrease) Oxidative Stress (incl. ROS),decrease,Luteolin (decrease) Oxidative Stress (incl. ROS),2065.0,False
+2066.0,Luteolin,decrease,DNA Damage,good,2.0,2.0,ingredient,512.0,107.0,Luteolin (decrease) DNA Damage,decrease,Luteolin (decrease) DNA Damage,2066.0,False

@@ -1,293 +1,221 @@
 import csv
 import json
-from jsondiff import diff
 import pandas as pd
 import os
-import sys
-from openpyxl import load_workbook
 import xlwings as xw
+from jsondiff import diff
+from openpyxl import load_workbook
+import sys
 
-# use case:
-# - cytoscape export the file into cyjs format
-# - we should create csvs
-# - we can add records to csvs (manually or programmatically), we should set x and y position manually
-# - we can create a new cyjs file from csvs
-# - we can upload the modified cyjs file to cytoscape
-
-def create_nodes_json(csv_filepath):
-    nodes_list = []
-    with open(csv_filepath, mode='r', encoding='utf-8-sig') as csv_file:
-        csv_reader = csv.DictReader(csv_file)
-        for row in csv_reader:
-            node = {}
-            data = {
-                "id": row["data_id"],
-                "shared_name": row["data_shared_name"],
-                "diffusion_input": float(row["data_diffusion_input"]),
-                "Label": row["data_Label"],
-                "name": row["data_name"],
-                "SUID": int(float(row["data_SUID"])),
-                "category": row["data_category"],
-                "selected": row["data_selected"] == "True",
-                "show": row["show"]
-            }
-            node['data'] = data
-
-            position = {
-                "x": float(row["position_x"]),
-                "y": float(row["position_y"])
-            }
-            node['position'] = position
-
-            node['selected'] = row["selected"] == "True"
-            # node['selected'] = row["selected"] == "True"
-
-            nodes_list.append(node)
-    return nodes_list
+import csv
+import json
+import pandas as pd
+import xlwings as xw
+import os
+from openpyxl import load_workbook
+from jsondiff import diff
 
 
-def create_edges_json(csv_path):
-    edges = []
-    with open(csv_path, mode='r', encoding='utf-8-sig') as file:
-        csvreader = csv.DictReader(file)
-        for row in csvreader:
-            edge = {
-                "data": {
-                    "id": row["id"],
-                    "source": row["source"],
-                    "target": row["target"],
-                    "source_type": row["source_type"],
-                    "source_name": row["source_name"],
-                    "target_name": row["target_name"],
-                    "shared_name": row["shared_name"],
-                    "shared_interaction": row["shared_interaction"],
-                    "impact": row["impact"],
-                    "name": row["name"],
-                    "interaction": row["interaction"],
-                    "weight": row["weight"],
-                    "SUID": int(float(row["SUID"])),
-                    "selected": False if row.get("selected", "false").lower() == "false" else True
+class CSVHandler:
+    @staticmethod
+    def read_csv_to_dict(csv_filepath, encoding='utf-8-sig'):
+        with open(csv_filepath, mode='r', encoding=encoding) as csv_file:
+            return list(csv.DictReader(csv_file))
+
+    @staticmethod
+    def write_dict_to_csv(data, csv_file_path):
+        with open(csv_file_path, mode='w', newline='') as file:
+            writer = csv.DictWriter(file, fieldnames=data[0].keys())
+            writer.writeheader()
+            writer.writerows(data)
+
+
+class JSONHandler:
+    @staticmethod
+    def load_json(file_path):
+        with open(file_path, 'r') as file:
+            return json.load(file)
+
+    @staticmethod
+    def save_json(data, file_path):
+        with open(file_path, 'w') as file:
+            json.dump(data, file, indent=2)
+
+    @staticmethod
+    def compare_json_files(file1, file2):
+        json_data1 = JSONHandler.load_json(file1)
+        json_data2 = JSONHandler.load_json(file2)
+        return diff(json_data1, json_data2)
+
+
+class ExcelHandler:
+    @staticmethod
+    def create_csv_from_excel(excel_file_path, output_directory):
+        if not os.path.exists(output_directory):
+            os.makedirs(output_directory)
+        wb = xw.Book(excel_file_path)
+        for sheet in wb.sheets:
+            df = sheet.used_range.options(pd.DataFrame, index=False, header=True).value
+            csv_file_path = os.path.join(output_directory, f"{sheet.name}.csv")
+            df.to_csv(csv_file_path, index=False)
+        wb.close()
+
+    @staticmethod
+    def update_excel_with_csv(excel_file_path, csv_data, sheet_name):
+        nodes_sheet = pd.read_excel(excel_file_path, sheet_name=sheet_name)
+        for index, row in csv_data.iterrows():
+            nodes_sheet.loc[nodes_sheet['data_shared_name'] == row['shared_name'], ['position_x', 'position_y']] = \
+            row[['x', 'y']].values
+        with pd.ExcelWriter(excel_file_path, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
+            nodes_sheet.to_excel(writer, sheet_name=sheet_name, index=False)
+
+
+class NetworkDataProcessor:
+    def __init__(self):
+        self.json_handler = JSONHandler()
+        self.csv_handler = CSVHandler()
+        self.excel_handler = ExcelHandler()
+
+    def process1_cyjs_file_to_csvs(self, json_path, nodes_csv_path, edges_csv_path):
+        json_data = self.json_handler.load_json(json_path)
+        nodes_json, edges_json = self._extract_nodes_edges_from_cyjs(json_data)
+        nodes_data = self._nodes_json_to_dict(nodes_json)
+        edges_data = self._edges_json_to_dict(edges_json)
+        self.csv_handler.write_dict_to_csv(nodes_data, nodes_csv_path)
+        self.csv_handler.write_dict_to_csv(edges_data, edges_csv_path)
+
+    def process3_cyjs_file_to_csvs(self, json_path, excel_path, nodes_sheet_name='nodes'):
+        # Step 1: Convert the CYJS JSON to CSVs (Nodes and Edges)
+        self.process1_cyjs_file_to_csvs(json_path, 'temp_nodes.csv', 'temp_edges.csv')
+
+        # Step 2: Load the nodes CSV data
+        nodes_df = pd.read_csv('temp_nodes.csv')
+
+        # Step 3: Update the Excel file with the new coordinates
+        self.excel_handler.update_excel_with_csv(excel_path, nodes_df, nodes_sheet_name)
+
+        # Cleanup the temporary files
+        os.remove('temp_nodes.csv')
+        os.remove('temp_edges.csv')
+
+        print(f'Updated the Excel file {excel_path} with coordinates from {json_path}')
+
+    def process4_create_cyjs_from_network_excel(self, excel_path, nodes_csv_path, edges_csv_path, output_json_path):
+        # Step 1: Convert the Excel sheets to CSV files
+        self.excel_handler.create_csv_from_excel(excel_path, os.path.dirname(nodes_csv_path))
+
+        # Step 2: Create CYJS JSON from the CSVs
+        nodes_json = self._create_nodes_json(nodes_csv_path)
+        edges_json = self._create_edges_json(edges_csv_path)
+
+        # Step 3: Merge the nodes and edges into a single CYJS JSON structure
+        merged_json = self._merge_cyjs(nodes_json, edges_json)
+
+        # Step 4: Save the merged JSON to the output file
+        self.json_handler.save_json(merged_json, output_json_path)
+
+        print(f'Created CYJS JSON file at {output_json_path} from Excel data at {excel_path}')
+
+    def _create_nodes_json(self, csv_path):
+        nodes_data = CSVHandler.read_csv_to_dict(csv_path)
+        nodes_json = []
+        for row in nodes_data:
+            node = {
+                'data': {
+                    'id': row["data_id"],
+                    'shared_name': row["data_shared_name"],
+                    'diffusion_input': float(row["data_diffusion_input"]),
+                    'Label': row["data_Label"],
+                    'name': row["data_name"],
+                    'SUID': int(float(row["data_SUID"])),
+                    'category': row["data_category"],
+                    'selected': row["data_selected"] == "True",
                 },
-                "selected": False if row.get("selected", "false").lower() == "false" else True
+                'position': {
+                    'x': float(row["position_x"]),
+                    'y': float(row["position_y"])
+                },
+                'selected': row["selected"] == "True"
             }
-            edges.append(edge)
-    return edges
+            nodes_json.append(node)
+        return nodes_json
 
-
-def creating_cyjs_from_nodes_and_edges_csvs(output_json_path, nodes_csv_path, edges_csv_path):
-    nodes_json = create_nodes_json(nodes_csv_path)
-    edges_json = create_edges_json(edges_csv_path)
-
-    merged_json = {
-        "format_version": "1.0",
-        "generated_by": "cytoscape-3.10.1",
-        "target_cytoscapejs_version": "~2.1",
-        "data": {
-            "shared_name": "edges.csv_1",
-            "name": "edges.csv_1",
-            "SUID": 155,
-            "__Annotations": [""],
-            "selected": True
-        },
-        "elements": {
-            "nodes": nodes_json,
-            "edges": edges_json
+    def _create_edges_json(self, csv_path):
+        edges_data = CSVHandler.read_csv_to_dict(csv_path)
+        edges_json = []
+        for row in edges_data:
+            edge = {
+                'data': {
+                    'id': row["id"],
+                    'source': row["source"],
+                    'target': row["target"],
+                    'source_type': row["source_type"],
+                    'source_name': row["source_name"],
+                    'target_name': row["target_name"],
+                    'shared_name': row["shared_name"],
+                    'shared_interaction': row["shared_interaction"],
+                    'impact': row["impact"],
+                    'name': row["name"],
+                    'interaction': row["interaction"],
+                    'weight': float(row["weight"]),
+                    'SUID': int(float(row["SUID"])),
+                    'selected': row.get("selected", "false").lower() == "true"
+                }
+            }
+            edges_json.append(edge)
+        return edges_json
+    def _merge_cyjs(self, nodes_json, edges_json):
+        merged_json = {
+            "format_version": "1.0",
+            "generated_by": "NetworkDataProcessor",
+            "target_cytoscapejs_version": "~2.1",
+            "data": {
+                # ... any additional metadata ...
+            },
+            "elements": {
+                "nodes": nodes_json,
+                "edges": edges_json
+            }
         }
-    }
-
-    json_str = json.dumps(merged_json, indent=2)
-
-    # Writing to a JSON file
-    with open(output_json_path, 'w') as json_file:
-        json_file.write(json_str)
-
-    return json_str
+        return merged_json
 
 
-def compare_json_files(path1, path2):
-    try:
-        # Load JSON data from the first file
-        with open(path1, 'r') as file1:
-            json_data1 = json.load(file1)
+    def _extract_nodes_edges_from_cyjs(self, cyjs_data):
+        nodes = cyjs_data['elements']['nodes']
+        edges = cyjs_data['elements']['edges']
+        return nodes, edges
 
-        # Load JSON data from the second file
-        with open(path2, 'r') as file2:
-            json_data2 = json.load(file2)
+    def _nodes_json_to_dict(self, nodes_json):
+        nodes_data = []
+        for node in nodes_json:
+            node_data = node['data']
+            node_data.update(node.get('position', {}))
+            node_data['selected'] = node.get('selected', False)
+            nodes_data.append(node_data)
+        return nodes_data
 
-        # Compare the two JSON data
-        differences = diff(json_data1, json_data2)
-
-        # Check if there are any differences
-        if differences:
-            print("The JSON files are different.")
-            print("Differences:", differences)
-        else:
-            print("The JSON files are equivalent.")
-
-    except Exception as e:
-        print(f"An error occurred: {e}")
-
-
-def json_to_dataframes(json_path):
-    with open(json_path, 'r') as f:
-        json_data = json.load(f)
-
-    nodes_list = json_data['elements']['nodes']
-    edges_list = json_data['elements']['edges']
-
-    # Multi-indexed data
-    nodes_data = []
-    for node in nodes_list:
-        node_data = {'data_' + k: v for k, v in node['data'].items()}
-        pos_data = {'position_' + k: v for k, v in node.get('position', {}).items()}
-        # merged_data = {**node_data, **pos_data}
-        merged_data = {**node_data, **pos_data, 'selected': node.get('selected', False)}
-        nodes_data.append(merged_data)
-
-    edges_data = [edge['data'] for edge in edges_list]
-
-    nodes_df = pd.DataFrame(nodes_data)
-    # nodes_df.columns = pd.MultiIndex.from_tuples(
-    #     [(col.split('_', 1)[0], col.split('_', 1)[1]) for col in nodes_df.columns])
-    nodes_df.columns = pd.MultiIndex.from_tuples(
-        [(col.split('_', 1)[0], col.split('_', 1)[1]) if '_' in col else (col, '') for col in nodes_df.columns])
-
-    edges_df = pd.DataFrame(edges_data)
-
-    return nodes_df, edges_df
+    def _edges_json_to_dict(self, edges_json):
+        edges_data = []
+        for edge in edges_json:
+            edge_data = edge['data']
+            edge_data['selected'] = edge.get('selected', False)
+            edges_data.append(edge_data)
+        return edges_data
 
 
-def save_edge_and_node_dataframes_to_csv(nodes_df, edges_df, nodes_file_path='nodes2.csv', edges_file_path='edges2.csv'):
-    # nodes_df.columns = ['_'.join(col).strip() for col in nodes_df.columns.values]
-    nodes_df.columns = ['_'.join(filter(None, col)).strip() for col in nodes_df.columns.values]
-    nodes_df.to_csv(nodes_file_path, index=False)
-    edges_df.to_csv(edges_file_path, index=False)
-
-
-def json_to_nodes_and_edges_csvs(json_path, nodes_file_path='nodes.csv', edges_file_path='edges.csv'):
-    nodes_df, edges_df = json_to_dataframes(json_path)
-    save_edge_and_node_dataframes_to_csv(nodes_df, edges_df, nodes_file_path, edges_file_path)
-
-
-def create_node_edge_csv_from_network_excel(excel_file_path, output_directory):
-    # Create the output directory if it doesn't exist
-    if not os.path.exists(output_directory):
-        os.makedirs(output_directory)
-
-    # Open the workbook with xlwings
-    wb = xw.Book(excel_file_path)
-
-    # Loop through each sheet in the Excel workbook
-    for sheet in wb.sheets:
-        # Convert the sheet to a DataFrame
-        df = sheet.used_range.options(pd.DataFrame, index=False, header=True).value
-
-        # Create the CSV file path
-        csv_file_path = os.path.join(output_directory, f"{sheet.name}.csv")
-
-        # Save the DataFrame to CSV
-        df.to_csv(csv_file_path, index=False)
-
-    # Close the workbook
-    wb.close()
-# save_excel_sheets_to_csv("network/aging_network.xlsx", "network")
-# sys.exit()
-
-
-def modify_edges_csv(file_path):
-    # 1. Open the CSV as a DataFrame
-    df = pd.read_csv(file_path)
-
-    # 2. Add the new columns, initializing with empty strings
-    df['source_name'] = ''
-    df['target_name'] = ''
-
-    # 3. Fill up the columns by splitting 'shared_name'
-    for index, row in df.iterrows():
-        shared_name = row['shared_name']
-        source_name, _, target_name = shared_name.partition(' (')
-        target_name = target_name.rpartition(') ')[2]
-
-        df.at[index, 'source_name'] = source_name
-        df.at[index, 'target_name'] = target_name
-
-    # Reorder columns to place 'source_name' and 'target_name' after 'target'
-    if False:
-        cols = df.columns.tolist()
-        source_name_index = cols.index('source_name')
-        target_name_index = cols.index('target_name')
-        target_index = cols.index('target')
-
-        reordered_cols = cols[:target_index + 1] + [cols[source_name_index], cols[target_name_index]] + cols[
-                                                                                                        target_index + 1:source_name_index] + cols[
-                                                                                                                                              source_name_index + 1:target_name_index] + cols[
-                                                                                                                                                                                         target_name_index + 1:]
-
-        df = df[reordered_cols]
-
-    # 4. Save the DataFrame back to the original CSV file
-    df.to_csv(file_path, index=False)
-# modify_edges_csv('network/edges.csv')
-# import sys
-# sys.exit()
-
-# Example usage:
-
-
-def update_coordinates_in_network_excel_file(excel_file_path, node_csv_file_path):
-
-    nodes_sheet = pd.read_excel(excel_file_path, sheet_name='nodes')
-    csv_data = pd.read_csv(node_csv_file_path)
-
-    for index, row in csv_data.iterrows():
-        node_name = row['data_shared_name']
-        position_x_csv = row['position_x']
-        position_y_csv = row['position_y']
-
-        # Update the corresponding row in the 'nodes' sheet
-        nodes_sheet.loc[nodes_sheet['data_shared_name'] == node_name, 'position_x'] = position_x_csv
-        nodes_sheet.loc[nodes_sheet['data_shared_name'] == node_name, 'position_y'] = position_y_csv
-
-    # Save the modified 'nodes' sheet back to the Excel file
-    with pd.ExcelWriter(excel_file_path, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
-        nodes_sheet.to_excel(writer, sheet_name='nodes', index=False)
-
-    print('Excel file updated successfully!')
-# update_coordinates_in_excel_file('network/aging_network.xlsx', 'network/nodes_cyjs.csv')
-
-
-def refresh_coordinates_in_network_excel_based_on_cyjs(json_cyjs, excel_file_path):
-    json_to_nodes_and_edges_csvs(json_cyjs, 'network/nodes_cyjs.csv', 'network/edges_cyjs.csv')
-    # update the
-    update_coordinates_in_network_excel_file(excel_file_path, 'network/nodes_cyjs.csv')
-# refresh_coordinates_in_network_excel_based_on_cyjs('network/nw801.cyjs', 'network/aging_network.xlsx')
-# sys.exit()
-
-def create_cyjs_from_network_excel():
-    # step 5: create nodes and edges csvs from excel
-    create_node_edge_csv_from_network_excel("network/aging_network.xlsx", "network")
-
-    # step 6: create cyjs from csvs
-    nodes_csv_path = 'network/nodes.csv'
-    edges_csv_path = 'network/edges.csv'
-    output_json_path = 'network/result.json'
-    merged_json_str = creating_cyjs_from_nodes_and_edges_csvs(output_json_path, nodes_csv_path, edges_csv_path)
-
-
-# process 1: get data from cyjs file to a network excel file
-# json_to_nodes_and_edges_csvs
-
-# process 2: manually modify network excel file
-# it should be done manually, except the refresh_coordinates_in_result_json function
-
-# process 3: refresh coordinates in network excel file based on cyjs file
-# refresh_coordinates_in_network_excel_based_on_cyjs
-
-# process 4: create cyjs file from network excel file
-# create_cyjs_from_network_excel
-
-# process 5: upload the cyjs to cytoscape
-
-# compare cyjs with json
-# compare_json_files(output_json_path, json_cyjs)
-
+processor = NetworkDataProcessor()
+# processor.process1_cyjs_file_to_csvs(
+#     'network/nw801b.cyjs',
+#     'network/nodes_cyjsb.csv',
+#     'network/edges_cyjsb.csv'
+# )
+# processor.process3_cyjs_file_to_csvs(
+#     'network/nw801b.cyjs',
+#     'network/aging_networkb.xlsx'
+# )
+processor.process4_create_cyjs_from_network_excel(
+    "network/aging_network.xlsx",
+    "network/nodes.csv",
+    "network/edges.csv",
+    "network/result.json"
+)
