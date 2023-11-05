@@ -210,8 +210,8 @@ processor = NetworkDataProcessor()
 #     'network/edges_cyjsb.csv'
 # )
 # processor.process3_cyjs_file_to_csvs(
-#     'network/nw801b.cyjs',
-#     'network/aging_networkb.xlsx'
+#     'network/nw801.cyjs',
+#     'network/aging_network.xlsx'
 # )
 processor.process4_create_cyjs_from_network_excel(
     "network/aging_network.xlsx",
