@@ -270,7 +270,7 @@ def refresh_coordinates_in_result_json(json_cyjs, excel_file_path):
     # update the
     update_coordinates_in_excel_file(excel_file_path, 'network/nodes_cyjs.csv')
     create_cyjs()
-refresh_coordinates_in_result_json('network/nw501.cyjs', 'network/aging_network.xlsx')
+refresh_coordinates_in_result_json('network/nw801.cyjs', 'network/aging_network.xlsx')
 sys.exit()
 
 
