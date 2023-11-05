@@ -74,7 +74,7 @@ def create_edges_json(csv_path):
     return edges
 
 
-def save_new_network_json_from_nodes_and_edges(output_json_path, nodes_csv_path, edges_csv_path):
+def creating_cyjs_from_nodes_and_edges_csvs(output_json_path, nodes_csv_path, edges_csv_path):
     nodes_json = create_nodes_json(nodes_csv_path)
     edges_json = create_edges_json(edges_csv_path)
 
@@ -128,7 +128,7 @@ def compare_json_files(path1, path2):
         print(f"An error occurred: {e}")
 
 
-def json_to_dfs_multi_index(json_path):
+def json_to_dataframes(json_path):
     with open(json_path, 'r') as f:
         json_data = json.load(f)
 
@@ -157,14 +157,19 @@ def json_to_dfs_multi_index(json_path):
     return nodes_df, edges_df
 
 
-def save_dfs_to_csv(nodes_df, edges_df, nodes_file_path='nodes2.csv', edges_file_path='edges2.csv'):
+def save_edge_and_node_dataframes_to_csv(nodes_df, edges_df, nodes_file_path='nodes2.csv', edges_file_path='edges2.csv'):
     # nodes_df.columns = ['_'.join(col).strip() for col in nodes_df.columns.values]
     nodes_df.columns = ['_'.join(filter(None, col)).strip() for col in nodes_df.columns.values]
     nodes_df.to_csv(nodes_file_path, index=False)
     edges_df.to_csv(edges_file_path, index=False)
 
 
-def save_excel_sheets_to_csv(excel_file_path, output_directory):
+def json_to_nodes_and_edges_csvs(json_path, nodes_file_path='nodes.csv', edges_file_path='edges.csv'):
+    nodes_df, edges_df = json_to_dataframes(json_path)
+    save_edge_and_node_dataframes_to_csv(nodes_df, edges_df, nodes_file_path, edges_file_path)
+
+
+def create_node_edge_csv_from_network_excel(excel_file_path, output_directory):
     # Create the output directory if it doesn't exist
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
@@ -185,10 +190,9 @@ def save_excel_sheets_to_csv(excel_file_path, output_directory):
 
     # Close the workbook
     wb.close()
-
-
 # save_excel_sheets_to_csv("network/aging_network.xlsx", "network")
 # sys.exit()
+
 
 def modify_edges_csv(file_path):
     # 1. Open the CSV as a DataFrame
@@ -229,7 +233,8 @@ def modify_edges_csv(file_path):
 
 # Example usage:
 
-def update_coordinates_in_excel_file(excel_file_path, node_csv_file_path):
+
+def update_coordinates_in_network_excel_file(excel_file_path, node_csv_file_path):
 
     nodes_sheet = pd.read_excel(excel_file_path, sheet_name='nodes')
     csv_data = pd.read_csv(node_csv_file_path)
@@ -251,31 +256,37 @@ def update_coordinates_in_excel_file(excel_file_path, node_csv_file_path):
 # update_coordinates_in_excel_file('network/aging_network.xlsx', 'network/nodes_cyjs.csv')
 
 
+def refresh_coordinates_in_network_excel_based_on_cyjs(json_cyjs, excel_file_path):
+    json_to_nodes_and_edges_csvs(json_cyjs, 'network/nodes_cyjs.csv', 'network/edges_cyjs.csv')
+    # update the
+    update_coordinates_in_network_excel_file(excel_file_path, 'network/nodes_cyjs.csv')
+# refresh_coordinates_in_network_excel_based_on_cyjs('network/nw801.cyjs', 'network/aging_network.xlsx')
+# sys.exit()
 
-def create_cyjs():
+def create_cyjs_from_network_excel():
     # step 5: create nodes and edges csvs from excel
-    save_excel_sheets_to_csv("network/aging_network.xlsx", "network")
+    create_node_edge_csv_from_network_excel("network/aging_network.xlsx", "network")
+
     # step 6: create cyjs from csvs
     nodes_csv_path = 'network/nodes.csv'
     edges_csv_path = 'network/edges.csv'
     output_json_path = 'network/result.json'
-    merged_json_str = save_new_network_json_from_nodes_and_edges(output_json_path, nodes_csv_path, edges_csv_path)
+    merged_json_str = creating_cyjs_from_nodes_and_edges_csvs(output_json_path, nodes_csv_path, edges_csv_path)
 
 
-def refresh_coordinates_in_result_json(json_cyjs, excel_file_path):
-    # get the new coordinates from json cyjs
-    nodes_df, edges_df = json_to_dfs_multi_index(json_cyjs)
-    # save the results to cyjs nodes
-    save_dfs_to_csv(nodes_df, edges_df, 'network/nodes_cyjs.csv', 'network/edges_cyjs.csv')
-    # update the
-    update_coordinates_in_excel_file(excel_file_path, 'network/nodes_cyjs.csv')
-    create_cyjs()
-refresh_coordinates_in_result_json('network/nw801.cyjs', 'network/aging_network.xlsx')
-sys.exit()
+# process 1: get data from cyjs file to a network excel file
+# json_to_nodes_and_edges_csvs
 
+# process 2: manually modify network excel file
+# it should be done manually, except the refresh_coordinates_in_result_json function
 
+# process 3: refresh coordinates in network excel file based on cyjs file
+# refresh_coordinates_in_network_excel_based_on_cyjs
 
-#step 7: upload the cyjs to cytoscape
+# process 4: create cyjs file from network excel file
+# create_cyjs_from_network_excel
+
+# process 5: upload the cyjs to cytoscape
 
 # compare cyjs with json
 # compare_json_files(output_json_path, json_cyjs)
